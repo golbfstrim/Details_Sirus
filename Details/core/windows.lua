@@ -1360,7 +1360,7 @@ local _utf8sub = string.utf8sub
 				f.WorkingFrame:Show()
 				f.WorkingAnimation:Play()
 
-				C_Timer.NewTicker (10, function (self)
+				C_Timer:NewTicker (10, function (self)
 					if (not _detalhes.LastGuildSyncReceived) then
 						f.GuildSyncButton:Enable()
 						f.EndAnimationHub:Play()
@@ -6397,7 +6397,7 @@ function Details:OpenCurrentRealDPSOptions (from_options_panel)
 
 			--> reopen the options panel
 			if (f.FromOptionsPanel) then
-				C_Timer.After (0.2, function()
+				C_Timer:After (0.2, function()
 					Details:OpenOptionsWindow(Details:GetInstance(1))
 				end)
 			end
@@ -6633,7 +6633,7 @@ function Details:OpenEventTrackerOptions (from_options_panel)
 		f:SetScript ("OnHide", function()
 			--> reopen the options panel
 			if (f.FromOptionsPanel) then
-				C_Timer.After (0.2, function()
+				C_Timer:After (0.2, function()
 					Details:OpenOptionsWindow(Details:GetInstance(1))
 				end)
 			end
@@ -6650,7 +6650,7 @@ end
 -- fazer painel de op��es
 -- fazer um painel de op��es "broadcaster settings"
 
-C_Timer.After (1, function()
+C_Timer:After (1, function()
 	--Details:OpenOptionsWindow(Details:GetInstance(1))
 end)
 
@@ -6778,7 +6778,7 @@ function Details:ScrollDamage()
 					local line = self:GetLine (i)
 					local time, token, sourceSerial, sourceName, sourceFlag, targetSerial, targetName, targetFlag, spellID, spellName, spellType, amount, overKill, school, resisted, blocked, absorbed, isCritical = unpack (spellTable)
 
-					local _, spellIcon
+					local spellName, _, spellIcon
 
 					if (token ~= "SWING_DAMAGE") then
 						spellName, _, spellIcon = GetSpellInfo (spellID)
@@ -7008,7 +7008,7 @@ function _detalhes:ShowImportWindow (defaultText, confirmFunc, titleText)
 	titleText = titleText or "Details! Dump String"
 	DetailsExportWindow.Title:SetText (titleText)
 
-	C_Timer.After (.2, function()
+	C_Timer:After (.2, function()
 		DetailsExportWindow.ImportEditor:SetFocus (true)
 		DetailsExportWindow.ImportEditor.editbox:HighlightText (0)
 	end)

@@ -27,7 +27,6 @@ local _math_floor = math.floor --> lua library local
 local _cstr = string.format --> lua library local
 local _ipairs = ipairs --> lua library local
 local _pairs = pairs --> lua library local
-local _next = next --> lua library local
 local _table_sort = table.sort --> lua library local
 local _table_insert = table.insert --> lua library local
 local _unpack = unpack --> lua library local
@@ -439,7 +438,7 @@ local function CreatePluginFrames ()
 	end
 
 	EncounterDetailsFrame:HookScript ("OnShow", function()
-		C_Timer.After (0.1, function()
+		C_Timer:After (0.1, function()
 			if (not EncounterDetails.LastOpenedTime or EncounterDetails.LastOpenedTime + 2 < GetTime()) then
 				if (_detalhes.AddOnStartTime and _detalhes.AddOnStartTime + 30 < GetTime()) then
 					EncounterDetails:OpenAndRefresh()
@@ -585,7 +584,7 @@ local function CreatePluginFrames ()
 	_detalhes.EncounterDetailsTempWindow = nil
 
 	--> ~remover ~autoabrir �brir ~abrir ~auto
-	--C_Timer.After (.5, EncounterDetails.OpenWindow)
+	--C_Timer:After (.5, EncounterDetails.OpenWindow)
 
 
 end
@@ -1378,7 +1377,11 @@ function EncounterDetails:OpenAndRefresh (_, segment)
 		end
 
 		local habilidades_usadas = {}
-		local have_pool = _next(habilidades_poll)
+		local have_pool = false
+		for spellid, _ in _pairs (habilidades_poll) do
+			have_pool = true
+			break
+		end
 
 		for index, jogador in _ipairs (DamageContainer._ActorTable) do
 

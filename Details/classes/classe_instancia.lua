@@ -618,7 +618,7 @@ end
 			if (_detalhes.WindowAutoHideTick [self.meu_id]) then
 				_detalhes.WindowAutoHideTick [self.meu_id]:Cancel()
 			end
-			_detalhes.WindowAutoHideTick [self.meu_id] = C_Timer.NewTicker (10, function()
+			_detalhes.WindowAutoHideTick [self.meu_id] = C_Timer:NewTicker (10, function()
 				if (self.last_interaction) then
 					if (self.last_interaction + 10 < _detalhes._tempo) then
 						self:SetCombatAlpha (nil, nil, true)
@@ -2605,6 +2605,8 @@ function _detalhes:MontaAtributosOption (instancia, func)
 
 	--removed the menu backdrop
 	--CoolTip:SetWallpaper (1, _detalhes.tooltip.menus_bg_texture, _detalhes.tooltip.menus_bg_coords, _detalhes.tooltip.menus_bg_color, true)
+
+	return menu_principal, sub_menus
 end
 
 function _detalhes:ChangeIcon (icon)
@@ -2939,8 +2941,7 @@ function _detalhes:FormatReportLines (report_table, data, f1, f2, f3)
 end
 
 local report_name_function = function (name)
-	local index
-	name, index = unpack(name)
+	local name, index = unpack (name)
 
 	if (_detalhes.remove_realm_from_name and name:find ("-")) then
 		return index .. ". " .. name:gsub (("%-.*"), "")
@@ -3105,7 +3106,6 @@ function _detalhes:monta_relatorio (este_relatorio, custom)
 		elseif (atributo == 5) then --> custom
 
 			if (_detalhes.custom [self.sub_atributo]) then
-				local nm
 				total, container, first, container_amount, nm = _detalhes.atributo_custom:RefreshWindow (self, self.showing, true, true)
 				if (nm) then
 					name_member = nm

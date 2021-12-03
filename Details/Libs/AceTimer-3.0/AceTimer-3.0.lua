@@ -201,7 +201,7 @@ end
 -- ---------------------------------------------------------------------
 -- Upgrading
 
--- Upgrade from old hash-bucket based timers to C_Timer.After timers.
+-- Upgrade from old hash-bucket based timers to C_Timer:After timers.
 if oldminor and oldminor < 10 then
 	-- disable old timer logic
 	AceTimer.frame:SetScript("OnUpdate", nil)
@@ -228,7 +228,7 @@ if oldminor and oldminor < 10 then
 	AceTimer.hash = nil
 	AceTimer.debug = nil
 elseif oldminor and oldminor < 17 then
-	-- Upgrade from old animation based timers to C_Timer.After timers.
+	-- Upgrade from old animation based timers to C_Timer:After timers.
 	AceTimer.inactiveTimers = nil
 	local oldTimers = AceTimer.activeTimers
 	-- Clear old timer table and update upvalue

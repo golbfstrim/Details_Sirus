@@ -509,7 +509,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 				if _detalhes.WhoAggroTimer then
 					_detalhes.WhoAggroTimer:Cancel()
 				end
-				_detalhes.WhoAggroTimer = C_Timer.NewTicker(0.5, who_aggro, 1)
+				_detalhes.WhoAggroTimer = C_Timer:NewTicker(0.5, who_aggro, 1)
 				_detalhes.WhoAggroTimer.HitBy = "|cFFFFFF00First Hit|r: "..(link or "").." from "..(who_name or UNKNOWN)
 			end
 		end
@@ -1189,7 +1189,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		if _bit_band(who_flags, OBJECT_TYPE_PETS) ~= 0 then
 			local mobid = tonumber(alvo_serial:sub(3+6,3+9),16)
 			if sub_pet_ids[mobid] then
-				C_Timer.After(0.1, function()
+				C_Timer:After(0.1, function()
 					parser:summon(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellName)
 				end)
 				return
@@ -2064,7 +2064,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			for _, applied_absorb in ipairs(escudo[alvo_name]) do
 				if applied_absorb.serial == who_serial and applied_absorb.spellid == spellid then
 					-- schedule removal of shield buff since absorbed damage is sent after unbuff is called.
-					C_Timer.After(0.1, function() parser:unbuff_shield(alvo_name, who_serial, spellid) end)
+					C_Timer:After(0.1, function() parser:unbuff_shield(alvo_name, who_serial, spellid) end)
 					break
 				end
 			end
@@ -3065,7 +3065,7 @@ local energy_types = {
 		if(not spell) then
 			spell = este_jogador.ress_spells:PegaHabilidade(spellid, true, token)
 		end
-		return spell_misc_func(spell, alvo_serial, alvo_name, alvo_flags, who_name, token, spellid, spellname)
+		return spell_misc_func(spell, alvo_serial, alvo_name, alvo_flags, who_name, token, extraSpellID, extraSpellName)
 	end
 
 	--serach key: ~cc
@@ -3849,11 +3849,11 @@ function _detalhes.parser_functions:ENCOUNTER_START(encounterID, encounterName, 
 --	end
 
 	if not _detalhes.WhoAggroTimer and _detalhes.announce_firsthit.enabled then
-		_detalhes.WhoAggroTimer = C_Timer.NewTicker(0.5, who_aggro, 1)
+		_detalhes.WhoAggroTimer = C_Timer:NewTicker(0.5, who_aggro, 1)
 	end
 
 	if IsInGuild() and IsInRaid() and _detalhes.announce_damagerecord.enabled and _detalhes.StorageLoaded then
-		_detalhes.TellDamageRecord = C_Timer.NewTicker(0.6, _detalhes.PrintEncounterRecord, 1)
+		_detalhes.TellDamageRecord = C_Timer:NewTicker(0.6, _detalhes.PrintEncounterRecord, 1)
 		_detalhes.TellDamageRecord.Boss = encounterID
 		_detalhes.TellDamageRecord.Diff = difficultyID
 	end
@@ -4184,14 +4184,14 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 	_detalhes.tabela_vigente.TotalElapsedCombatTime = _detalhes.tabela_vigente.CombatEndedAt -(_detalhes.tabela_vigente.CombatStartedAt or 0)
 
 	--
-	C_Timer.After(10, check_for_encounter_end)
+	C_Timer:After(10, check_for_encounter_end)
 
 	--> playing alone, just finish the combat right now
 	if not _IsInGroup() and not IsInRaid() then
-		C_Timer.After(1, sair_do_combate)
+		C_Timer:After(1, sair_do_combate)
 	else
 		--is in a raid or party group
-		C_Timer.After(1, function()
+		C_Timer:After(1, function()
 			local inCombat
 			if IsInRaid() then
 				--raid
@@ -4230,7 +4230,7 @@ function _detalhes.parser_functions:PLAYER_TALENT_UPDATE()
 			_detalhes.SendTalentTimer:Cancel()
 		end
 
-		_detalhes.SendTalentTimer = C_Timer.NewTicker(11, function()
+		_detalhes.SendTalentTimer = C_Timer:NewTicker(11, function()
 			_detalhes:SendCharacterData()
 		end, 1)
 	end
@@ -4253,7 +4253,7 @@ function _detalhes.parser_functions:ACTIVE_TALENT_GROUP_CHANGED()
 			_detalhes.SendTalentTimer:Cancel()
 		end
 
-		_detalhes.SendTalentTimer = C_Timer.NewTicker(11, function()
+		_detalhes.SendTalentTimer = C_Timer:NewTicker(11, function()
 			_detalhes:SendCharacterData()
 		end, 1)
 	end
@@ -4344,7 +4344,7 @@ function _detalhes.parser_functions:RAID_ROSTER_UPDATE(...)
 			_detalhes:DispatchAutoRunCode("on_groupchange")
 
 			wipe(_detalhes.trusted_characters)
-			C_Timer.After(5, _detalhes.ScheduleSyncPlayerActorData)
+			C_Timer:After(5, _detalhes.ScheduleSyncPlayerActorData)
 		end
 
 	else
@@ -4371,7 +4371,7 @@ function _detalhes.parser_functions:RAID_ROSTER_UPDATE(...)
 			if _detalhes.SendCharDataOnGroupChange and not _detalhes.SendCharDataOnGroupChange._cancelled then
 				return
 			end
-			_detalhes.SendCharDataOnGroupChange = C_Timer.NewTicker(11, function()
+			_detalhes.SendCharDataOnGroupChange = C_Timer:NewTicker(11, function()
 				_detalhes:SendCharacterData()
 				_detalhes.SendCharDataOnGroupChange = nil
 			end, 1)
