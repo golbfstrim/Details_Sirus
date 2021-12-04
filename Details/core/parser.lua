@@ -4836,6 +4836,7 @@ end
 
 --> get an actor
 function _detalhes:GetActor(_combat, _attribute, _actorname)
+	-- print(_combat, _attribute, _actorname)
 	if not _combat then
 		_combat = "current" --> current combat
 	end

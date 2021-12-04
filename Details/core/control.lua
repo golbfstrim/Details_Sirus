@@ -66,6 +66,7 @@ function _detalhes:FindEnemy()
 	end
 
 	for _, actor in _ipairs(_detalhes.tabela_vigente[class_type_dano]._ActorTable) do
+		
 		if not actor.grupo and not actor.owner and not actor.nome:find("[*]") and _bit_band(actor.flag_original, 0x00000060) ~= 0 then --> 0x20+0x40 neutral + enemy reaction
 			for name, _ in _pairs(actor.targets) do
 				if name == _detalhes.playername then
