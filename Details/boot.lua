@@ -71,9 +71,9 @@ do
 				[865] = true, -- Gruul's Lair
 				[868] = true, -- Karazhan
 				[862] = true, -- The Eye
-
+				[925] = true, -- The Bronze Sanctuary
 				[14] = true, -- Onyxia's Lair
-				[610] = true, -- The Ruby Sanctum
+				[610] = true, -- The Ruby Sanctum				
 				[605] = true, -- Icecrown Citadel
 				[544] = true, -- Trial of the Crusader
 				[536] = true, -- Naxxramas
@@ -125,6 +125,10 @@ do
 				[10184] = 1, -- Onyxia
 			-- The Ruby Sanctum
 				[39863] = 1, -- Halion
+			-- The Bronze Sanctuary
+				[50608] = 1, -- Imporus		
+				[50609] = 2, -- Elonus	
+				[50612] = 3, -- Murozond					
 			-- Icecrown Citadel
 				[36612] = 1, -- Lord Marrowgar
 				[36855] = 2, -- Lady Deathwhisper
