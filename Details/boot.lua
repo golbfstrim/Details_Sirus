@@ -102,6 +102,8 @@ do
 				[21214] = 4, -- Fathom-Lord Karathress
 				[21213] = 5, -- Morogrim Tidewalker
 				[21212] = 6, -- Lady Vashj
+				[55681] = 7, -- Gore'lats
+
 			-- Magtheridon's Lair
 				[17257] = 1, -- Magtheridon
 			-- Gruul's Lair
@@ -111,7 +113,7 @@ do
 				[34972] = 1, -- Attumen the Huntsman
 				[15687] = 2, -- Moroes
 				[16457] = 3, -- Maiden of Virtue
-				[1234567890] = 4,
+				[1234567890] = 4, --wtf
 				[34437] = 5, -- The Curator
 				[15688] = 6, -- Terestian Illhoof
 				[16524] = 7, -- Shade of Aran
@@ -175,25 +177,25 @@ do
 				[28860] = 1, -- Sartharion
 			-- The Eye of Eternity
 				[28859] = 1, -- Malygos
-				-- The Bronze Sanctuary
+			-- The Bronze Sanctuary
 				[50608] = 1, -- Imporus
 				[50609] = 2, -- Elonus
 				[50612] = 3, -- Murozond
 			-- Ulduar
-			[33113] = 1, -- Flame Leviathan
-			[33118] = 2, -- Ignis the Furnace Master
-			[33186] = 3, -- Razorscale
-			[33293] = 4, -- XT-002 Deconstructor
-			[32867] = 5, -- Assembly of Iron
-			[32930] = 6, -- Kologarn
-			[33515] = 7, -- Auriaya
-			[32845] = 8, -- Hodir
-			[32865] = 9, -- Thorim
-			[32906] = 10, -- Freya
-			[33350] = 11, -- Mimiron
-			[33271] = 12, -- General Vezax
-			[33288] = 13, -- Yogg-Saron
-			[32871] = 14, -- Algalon the Observer
+				[33113] = 1, -- Flame Leviathan
+				[33118] = 2, -- Ignis the Furnace Master
+				[33186] = 3, -- Razorscale
+				[33293] = 4, -- XT-002 Deconstructor
+				[32867] = 5, -- Assembly of Iron
+				[32930] = 6, -- Kologarn
+				[33515] = 7, -- Auriaya
+				[32845] = 8, -- Hodir
+				[32865] = 9, -- Thorim
+				[32906] = 10, -- Freya
+				[33350] = 11, -- Mimiron
+				[33271] = 12, -- General Vezax
+				[33288] = 13, -- Yogg-Saron
+				[32871] = 14, -- Algalon the Observer
 			}
 
 		--> armazena os escudos - Shields information for absorbs
