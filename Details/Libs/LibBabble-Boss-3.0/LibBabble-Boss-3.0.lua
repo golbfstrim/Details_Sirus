@@ -4557,6 +4557,14 @@ elseif GAME_LOCALE == "esMX" then
 }
 elseif GAME_LOCALE == "ruRU" then
 	lib:SetCurrentTranslations {
+		-- bronze sanct
+	["Imporus"] = "Импорус",
+	["Elonus"] = "Элонус",
+	["Murozond"]  = "Муразонд",
+	--- norigonr
+	["Norigonr"]  = "Норигор",
+
+
 	Acidmaw = "Кислотная Утроба",
 	Aeonus = "Эонус",
 	["Aerial Command Unit"] = "Воздушное судно",

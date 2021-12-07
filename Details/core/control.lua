@@ -1637,10 +1637,14 @@ function _detalhes:BuildInstanceBarTooltip(frame)
 	local anchorPoint = _detalhes.tooltip.anchor_relative
 	local x_Offset = _detalhes.tooltip.anchor_offset[1]
 	local y_Offset = _detalhes.tooltip.anchor_offset[2]
+	-- local esta_barra = self.barras[qual_barra]
+	local pp = frame:GetParent()
 
 	if _detalhes.tooltip.anchored_to == 1 then
 		GameCooltip:SetHost(frame, myPoint, anchorPoint, x_Offset, y_Offset)
+		-- print(frame, myPoint, anchorPoint, x_Offset, y_Offset)
 	else
+		-- print(DetailsTooltipAnchor, myPoint, anchorPoint, x_Offset, y_Offset)
 		GameCooltip:SetHost(DetailsTooltipAnchor, myPoint, anchorPoint, x_Offset, y_Offset)
 	end
 end

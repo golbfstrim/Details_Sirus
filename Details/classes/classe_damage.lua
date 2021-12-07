@@ -646,7 +646,7 @@
 		_detalhes:AddTooltipReportLineText()
 
 		GameCooltip:SetOption ("YSpacingMod", 0)
-		GameCooltip:SetOwner (esta_barra)
+		-- GameCooltip:SetOwner(nil)
 		GameCooltip:Show()
 
 	end
