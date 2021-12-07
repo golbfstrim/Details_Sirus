@@ -72,6 +72,7 @@ do
 				[865] = true, -- Gruul's Lair
 				[868] = true, -- Karazhan
 				[862] = true, -- The Eye
+				[530] = true, -- Ulduar
 
 				[14] = true, -- Onyxia's Lair
 				[610] = true, -- The Ruby Sanctum
@@ -80,7 +81,9 @@ do
 				[536] = true, -- Naxxramas
 				[533] = true, -- Vault of Archavon
 				[532] = true, -- The Obsidian Sanctum
+
 --				[] = true, -- The Eye of Eternity
+				[925] = true, -- The Bronze Sanctuary
 			}
 
 			--must fail in map and encounter id to not store data
@@ -172,6 +175,25 @@ do
 				[28860] = 1, -- Sartharion
 			-- The Eye of Eternity
 				[28859] = 1, -- Malygos
+				-- The Bronze Sanctuary
+				[50608] = 1, -- Imporus
+				[50609] = 2, -- Elonus
+				[50612] = 3, -- Murozond
+			-- Ulduar
+			[33113] = 1, -- Flame Leviathan
+			[33118] = 2, -- Ignis the Furnace Master
+			[33186] = 3, -- Razorscale
+			[33293] = 4, -- XT-002 Deconstructor
+			[32867] = 5, -- Assembly of Iron
+			[32930] = 6, -- Kologarn
+			[33515] = 7, -- Auriaya
+			[32845] = 8, -- Hodir
+			[32865] = 9, -- Thorim
+			[32906] = 10, -- Freya
+			[33350] = 11, -- Mimiron
+			[33271] = 12, -- General Vezax
+			[33288] = 13, -- Yogg-Saron
+			[32871] = 14, -- Algalon the Observer
 			}
 
 		--> armazena os escudos - Shields information for absorbs
