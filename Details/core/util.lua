@@ -881,7 +881,7 @@ function _detalhes:EstaEmCombate()
 			end
 		end
 	elseif _IsInGroup() then
-		for i = 1, _GetNumGroupMembers(), 1 do
+		for i = 1, _GetNumGroupMembers() - 1, 1 do
 			if _UnitAffectingCombat("party"..i) then
 				return true
 			end
@@ -889,12 +889,12 @@ function _detalhes:EstaEmCombate()
 	end
 
 	-- TODO
---	if _detalhes.encounter_table and _detalhes.encounter_table.id == 36597 then
---		if (_detalhes.debug) then
---			_detalhes:Msg ("(debug) in the lich king encounter, cannot leave the combat.")
---		end
---		return true
---	end
+	if _detalhes.encounter_table and _detalhes.encounter_table.id == 36597 then
+		if (_detalhes.debug) then
+			_detalhes:Msg ("(debug) in the lich king encounter, cannot leave the combat.")
+		end
+		return true
+	end
 
 	_detalhes:SairDoCombate()
 end
@@ -908,7 +908,7 @@ function _detalhes:FindGUIDFromName(name)
 			end
 		end
 	elseif _IsInGroup() then
-		for i = 1, _GetNumGroupMembers(), 1 do
+		for i = 1, _GetNumGroupMembers()-1, 1 do
 			local this_name, _ = UnitName("party"..i)
 			if this_name == name then
 				return UnitGUID("party"..i)

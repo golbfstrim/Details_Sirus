@@ -1925,7 +1925,6 @@ elseif GAME_LOCALE == "ruRU" then
 	["Theramore Isle"] = "Остров Терамор",
 	["The Ring of Valor"] = "Круг Доблести",
 	["The Ruby Sanctum"] = "Рубиновое святилище",
-	["The Bronze Sanctuary"] = "Бронзовое cвятилище",
 	["The Scarlet Enclave"] = "Анклав Алого ордена",
 	["The Shattered Halls"] = "Разрушенные залы",
 	["The Slave Pens"] = "Узилище",

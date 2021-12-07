@@ -18,7 +18,6 @@ local _bit_band = bit.band --lua local
 
 local _GetInstanceInfo = GetInstanceInfo --wow api local
 local _GetCurrentMapAreaID = GetCurrentMapAreaID --wow api local
-local _GetRealZoneText = GetRealZoneText --wow api local
 local _GetInstanceDifficulty = GetInstanceDifficulty --wow api local
 local _UnitExists = UnitExists --wow api local
 local _UnitGUID = UnitGUID --wow api local
@@ -66,7 +65,6 @@ function _detalhes:FindEnemy()
 	end
 
 	for _, actor in _ipairs(_detalhes.tabela_vigente[class_type_dano]._ActorTable) do
-		
 		if not actor.grupo and not actor.owner and not actor.nome:find("[*]") and _bit_band(actor.flag_original, 0x00000060) ~= 0 then --> 0x20+0x40 neutral + enemy reaction
 			for name, _ in _pairs(actor.targets) do
 				if name == _detalhes.playername then
@@ -93,11 +91,39 @@ function _detalhes:FindEnemy()
 	return Loc["STRING_UNKNOW"]
 end
 
+-- try get the current encounter name during the encounter
+
+local boss_found_not_registered = function(t, ZoneName, ZoneMapID, DifficultyID)
+	local boss_table = {
+		index = 0,
+		name = t[1],
+		encounter = t[1],
+		zone = ZoneName,
+		mapid = ZoneMapID,
+		diff = DifficultyID,
+		diff_string = select(4, GetInstanceInfo()),
+		ej_instance_id = t[5],
+		id = t[2],
+		bossimage = t[4],
+	}
+
+	_detalhes.tabela_vigente.is_boss = boss_table
+end
+
 local boss_found = function(index, name, zone, mapid, diff, encounterid)
 	local mapID = GetCurrentMapAreaID()
+	local ejid
+	if mapID then
+		ejid = DetailsFramework.EncounterJournal.EJ_GetInstanceForMap(mapID)
+	end
+
 	if not mapID then
 		--print("Details! exeption handled: zone has no map")
 		return
+	end
+
+	if not ejid or ejid == 0 then
+		ejid = _detalhes:GetInstanceEJID()
 	end
 
 	local boss_table = {
@@ -108,6 +134,7 @@ local boss_found = function(index, name, zone, mapid, diff, encounterid)
 		mapid = mapid,
 		diff = diff,
 		diff_string = select(4, GetInstanceInfo()),
+		ej_instance_id = ejid,
 		id = encounterid,
 	}
 
@@ -218,7 +245,7 @@ function _detalhes:ReadBossFrames()
 end
 
 --try to get the encounter name after the encounter(can be called during the combat as well)
-function _detalhes:FindBoss()
+function _detalhes:FindBoss(noJournalSearch)
 	if _detalhes.encounter_table.name then
 		local encounter_table = _detalhes.encounter_table
 		return boss_found(encounter_table.index, encounter_table.name, encounter_table.zone, encounter_table.mapid, encounter_table.diff, encounter_table.id)
@@ -228,15 +255,6 @@ function _detalhes:FindBoss()
 	local ZoneMapID = _GetCurrentMapAreaID()
 	local DifficultyID = _GetInstanceDifficulty()
 	local BossIds = _detalhes:GetBossIds(ZoneMapID)
-	if not BossIds then
-		for id, data in _pairs(_detalhes.EncounterInformation) do
-			if data.name == ZoneName then
-				BossIds = _detalhes:GetBossIds(id)
-				ZoneMapID = id
-				break
-			end
-		end
-	end
 
 	if BossIds then
 		local BossIndex = nil
@@ -258,6 +276,28 @@ function _detalhes:FindBoss()
 		end
 	end
 
+	noJournalSearch = true --> disabling the scan on encounter journal
+
+	if not noJournalSearch then
+		local in_instance = IsInInstance() --> garrison returns party as instance type.
+		if (InstanceType == "party" or InstanceType == "raid") and in_instance then
+			local boss_list = _detalhes:GetCurrentDungeonBossListFromEJ()
+			if boss_list then
+				local ActorsContainer = _detalhes.tabela_vigente[class_type_dano]._ActorTable
+				if ActorsContainer then
+					for index, Actor in _ipairs(ActorsContainer) do
+						if not Actor.grupo then
+							if boss_list[Actor.nome] then
+								Actor.boss = true
+								return boss_found_not_registered(boss_list[Actor.nome], ZoneName, ZoneMapID, DifficultyID)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
 	return false
 end
 
@@ -269,12 +309,55 @@ function _detalhes:StartCombat(...)
 	return _detalhes:EntrarEmCombate(...)
 end
 
+local check_for_encounter_start = function()
+	if _current_encounter_id then
+		return
+	end
+
+	local mapid = _GetCurrentMapAreaID()
+	local boss_ids = _detalhes:GetBossIds(mapid)
+	if not boss_ids then
+		return
+	end
+
+	local unit_id = ((GetNumRaidMembers() == 0) and "party") or "raid"
+	for i = 0, math.max(GetNumRaidMembers(), GetNumPartyMembers()) do
+		local unit_target
+		if i == 0 then
+			unit_id = "player"
+			unit_target = (i == 0 and "target")
+		else
+			unit_id = ((GetNumRaidMembers() == 0) and "party") or "raid"
+			unit_target = unit_id..i.."target"
+		end
+
+		local guid = UnitGUID(unit_target)
+		if guid and (bit.band(guid:sub(1, 5), 0x00F) == 3 or bit.band(guid:sub(1, 5), 0x00F) == 5) then
+			local encounterID = tonumber(guid:sub(9, 12), 16)
+			local bossindex = boss_ids[encounterID]
+			if bossindex and UnitAffectingCombat(unit_id) then
+				local _, _, _, _, maxPlayers = GetInstanceInfo()
+				local difficulty = GetInstanceDifficulty()
+				_detalhes.parser_functions:ENCOUNTER_START(encounterID, _detalhes:GetBossName(mapid, bossindex), difficulty, maxPlayers)
+				break
+			elseif bossindex then
+				return true
+			end
+		end
+	end
+end
+
 -- ~start ~inicio ~novo �ovo
 function _detalhes:EntrarEmCombate(...)
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00started a new combat|r|cFFFF7700", _detalhes.encounter_table and _detalhes.encounter_table.name or "")
 --		local from = debugstack(2, 1, 0)
 --		print(from)
+	end
+
+	local check_combat = check_for_encounter_start()
+	if check_combat then
+		C_Timer:After(3, check_for_encounter_start)
 	end
 
 	if not _detalhes.tabela_historico.tabelas[1] then
@@ -317,7 +400,6 @@ function _detalhes:EntrarEmCombate(...)
 	_table_wipe(_detalhes.pets_no_owner)
 	_detalhes.container_pets:BuscarPets()
 
-	_table_wipe(_detalhes.cache_dead_npc)
 	_table_wipe(_detalhes.cache_damage_group)
 	_table_wipe(_detalhes.cache_healing_group)
 	_detalhes:UpdateParserGears()
@@ -334,7 +416,7 @@ function _detalhes:EntrarEmCombate(...)
 		boss_found(encounter_table.index, encounter_table.name, encounter_table.zone, encounter_table.mapid, encounter_table.diff, encounter_table.id)
 	else
 		--> if we don't have this infor right now, lets check in few seconds dop
-		if _detalhes:IsInInstance() then
+		if _detalhes.EncounterInformation[_detalhes.zone_id] then
 			_detalhes:ScheduleTimer("ReadBossFrames", 1)
 			_detalhes:ScheduleTimer("ReadBossFrames", 30)
 		end
@@ -512,6 +594,11 @@ function _detalhes:SairDoCombate(bossKilled, from_encounter_end)
 			local DifficultyID = _GetInstanceDifficulty()
 			local ZoneMapID = _GetCurrentMapAreaID()
 
+			local ejid = DetailsFramework.EncounterJournal.EJ_GetInstanceForMap(ZoneMapID)
+			if not ejid or ejid == 0 then
+				ejid = _detalhes:GetInstanceEJID()
+			end
+
 			local _, boss_index = _detalhes:GetBossEncounterDetailsFromEncounterId(ZoneMapID, encounterID)
 
 			_detalhes.tabela_vigente.is_boss = {
@@ -522,6 +609,7 @@ function _detalhes:SairDoCombate(bossKilled, from_encounter_end)
 				mapid = ZoneMapID,
 				diff = DifficultyID,
 				diff_string = DifficultyName,
+				ej_instance_id = ejid or 0,
 				id = encounterID,
 			}
 		end
@@ -821,13 +909,13 @@ function _detalhes:SairDoCombate(bossKilled, from_encounter_end)
 	_detalhes.pre_pot_used = nil
 
 	-- TODO
---	if _detalhes.encounter_table and _detalhes.encounter_table.id ~= 36597 then
+	if _detalhes.encounter_table and _detalhes.encounter_table.id ~= 36597 then
 		_table_wipe(_detalhes.encounter_table)
---	else
---		if _detalhes.debug then
---			_detalhes:Msg("(debug) in the lich king encounter, cannot wipe the encounter table.")
---		end
---	end
+	else
+		if _detalhes.debug then
+			_detalhes:Msg("(debug) in the lich king encounter, cannot wipe the encounter table.")
+		end
+	end
 
 	_detalhes:InstanceCall(_detalhes.CheckPsUpdate)
 

@@ -788,7 +788,7 @@ function atributo_energy:ToolTipRegenRecebido (instancia, numero, barra, keydown
 
 	_detalhes:AddTooltipSpellHeaderText (Loc ["STRING_PLAYERS"], headerColor, i, [[Interface\HELPFRAME\HelpIcon-HotIssues]], 0.21875, 0.78125, 0.21875, 0.78125)
 
-	ismaximized = false
+	local ismaximized = false
 	if (keydown == "ctrl" or TooltipMaximizedMethod == 2 or TooltipMaximizedMethod == 4) then
 		GameCooltip:AddIcon ([[Interface\AddOns\Details\images\key_ctrl]], 1, 2, _detalhes.tooltip_key_size_width, _detalhes.tooltip_key_size_height, 0, 1, 0, 0.640625, _detalhes.tooltip_key_overlay2)
 		_detalhes:AddTooltipHeaderStatusbar (r, g, b, 1)
@@ -940,7 +940,7 @@ function atributo_energy:MontaInfoRegenRecebido()
 
 		if (not barra) then
 			barra = gump:CriaNovaBarraInfo1 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 			barra.on_focus = false
 		end
 
@@ -1002,7 +1002,7 @@ function atributo_energy:MontaInfoRegenRecebido()
 
 		if (not barra) then
 			barra = gump:CriaNovaBarraInfo2 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 		end
 
 		if (index == 1) then
@@ -1098,7 +1098,7 @@ function atributo_energy:MontaDetalhesRegenRecebido (nome, barra)
 
 		if (not barra) then --> se a barra n�o existir, criar ela ent�o
 			barra = gump:CriaNovaBarraInfo3 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 		end
 
 		if (index == 1) then

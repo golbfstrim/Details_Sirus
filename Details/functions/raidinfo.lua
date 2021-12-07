@@ -4,6 +4,7 @@ local LBZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
 -- BK
 
 do --> data for Zul'Aman
+	local INSTANCE_EJID = 77
 	local INSTANCE_MAPID = 867
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "ZulAman"
@@ -30,6 +31,16 @@ do --> data for Zul'Aman
 		[23863] = 6, --Zul'jin
 	}
 
+	local ENCOUNTER_ID_EJ = {
+		186, 187, 188, 189, 190, 191,
+		[186] = 1, --Akil'zon
+		[187] = 2, --Nalorakk
+		[188] = 3, --Jan'alai
+		[189] = 4, --Halazzi
+		[190] = 5, --Malacrass
+		[191] = 6, --Zul'jin
+	}
+
 	--> install the raid
 	local BOSSNAMES = {
 		LBB["Akil'zon"],
@@ -52,6 +63,7 @@ do --> data for Zul'Aman
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Zul'Aman"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -59,6 +71,7 @@ do --> data for Zul'Aman
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -75,6 +88,7 @@ do --> data for Zul'Aman
 end
 
 do --> data for Serpentshrine Cavern
+	local INSTANCE_EJID = 748
 	local INSTANCE_MAPID = 863
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "SerpentshrineCavern"
@@ -101,6 +115,16 @@ do --> data for Serpentshrine Cavern
 		[21212] = 6, --Lady Vashj
 	}
 
+	local ENCOUNTER_ID_EJ = {
+		1567, 1568, 1569, 1570, 1571, 1572,
+		[1567] = 1, --Hydross the Unstable
+		[1568] = 2, --The Lurker Below
+		[1569] = 3, --Leotheras the Blind
+		[1570] = 4, --Fathom-Lord Karathress
+		[1571] = 5, --Morogrim Tidewalker
+		[1572] = 6, --Lady Vashj
+	}
+
 	--> install the raid
 	local BOSSNAMES = {
 		LBB["Hydross the Unstable"],
@@ -123,6 +147,7 @@ do --> data for Serpentshrine Cavern
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Serpentshrine Cavern"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -130,6 +155,7 @@ do --> data for Serpentshrine Cavern
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -146,6 +172,7 @@ do --> data for Serpentshrine Cavern
 end
 
 do --> data for Magtheridon's Lair
+	local INSTANCE_EJID = 747
 	local INSTANCE_MAPID = 866
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "MagtheridonLair"
@@ -160,6 +187,11 @@ do --> data for Magtheridon's Lair
 	local ENCOUNTER_ID_CL = {
 		17257,
 		[17257] = 1, --Magtheridon
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1566,
+		[1566] = 1, --Magtheridon
 	}
 
 	--> install the raid
@@ -179,6 +211,7 @@ do --> data for Magtheridon's Lair
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Magtheridon's Lair"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -186,6 +219,7 @@ do --> data for Magtheridon's Lair
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -197,6 +231,7 @@ do --> data for Magtheridon's Lair
 end
 
 do --> data for Gruul's Lair
+	local INSTANCE_EJID = 746
 	local INSTANCE_MAPID = 865
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "GruulLair"
@@ -213,6 +248,12 @@ do --> data for Gruul's Lair
 		18831, 19044,
 		[18831] = 1, --High King Maulgar
 		[19044] = 2, --Gruul the Dragonkiller
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1564, 1565,
+		[1564] = 1, --High King Maulgar
+		[1565] = 2, --Gruul the Dragonkiller
 	}
 
 	--> install the raid
@@ -233,6 +274,7 @@ do --> data for Gruul's Lair
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Gruul's Lair"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -240,6 +282,7 @@ do --> data for Gruul's Lair
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -252,6 +295,7 @@ do --> data for Gruul's Lair
 end
 
 do --> data for Karazhan
+	local INSTANCE_EJID = 745
 	local INSTANCE_MAPID = 868
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "Karazhan"
@@ -274,17 +318,39 @@ do --> data for Karazhan
 
 	-- TODO: Opera
 	local ENCOUNTER_ID_CL = {
-		16152, 15687, 16457, 17535, 34437, 15688, 16524, 15689, 17225, 15690,
-		[16152] = 1, --Attumen the Huntsman
+		15550, 15687, 16457, 1234567890, 34437, 15688, 16524, 15689, 17225, 15690,
+		[15550] = 1, --Attumen the Huntsman
 		[15687] = 2, --Moroes
 		[16457] = 3, --Maiden of Virtue
-		[17535] = 4, --Opera Event
+		[17535] = 4, --Dorothee
+		[17546] = 4, --Roar
+		[17543] = 4, --Strawman
+		[17547] = 4, --Tinhead
+		[17548] = 4, --Tito
+		[18168] = 4, --The Crone
+		[17521] = 4, --The Big Bad Wolf
+		[17533] = 4, --Romulo
+		[17534] = 4, --Julianne
 		[34437] = 5, --The Curator
 		[15688] = 6, --Terestian Illhoof
 		[16524] = 7, --Shade of Aran
 		[15689] = 8, --Netherspite
 		[17225] = 9, --Nightbane
 		[15690] = 10, --Prince Malchezaar
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1553, 1554, 1555, 1556, 1557, 1560, 1559, 1561, 1562, 1563,
+		[1553] = 1, --Attumen the Huntsman
+		[1554] = 2, --Moroes
+		[1555] = 3, --Maiden of Virtue
+		[1556] = 4, --Opera Event
+		[1557] = 5, --The Curator
+		[1560] = 6, --Terestian Illhoof
+		[1559] = 7, --Shade of Aran
+		[1561] = 8, --Netherspite
+		[1562] = 9, --Nightbane
+		[1563] = 10, --Prince Malchezaar
 	}
 
 	--> install the raid
@@ -313,6 +379,7 @@ do --> data for Karazhan
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Karazhan"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -320,13 +387,13 @@ do --> data for Karazhan
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
 
 		boss_ids = {
-			[16152] = 1, --Attumen the Huntsman
-			[16151] = 1, --Midnight
+			[15550] = 1, --Attumen the Huntsman
 			[15687] = 2, --Moroes
 			[16457] = 3, --Maiden of Virtue
 			[17535] = 4, --Dorothee
@@ -349,6 +416,7 @@ do --> data for Karazhan
 end
 
 do --> data for The Eye
+	local INSTANCE_EJID = 749
 	local INSTANCE_MAPID = 862
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TheEye"
@@ -372,6 +440,14 @@ do --> data for The Eye
 		[19622] = 4, --Kael'thas Sunstrider
 	}
 
+	local ENCOUNTER_ID_EJ = {
+		1573, 1574, 1575, 1576,
+		[1573] = 1, --Al'ar
+		[1574] = 2, --Void Reaver
+		[1575] = 3, --High Astromancer Solarian
+		[1576] = 4, --Kael'thas Sunstrider
+	}
+
 	--> install the raid
 	local BOSSNAMES = {
 		LBB["Al'ar"],
@@ -392,6 +468,7 @@ do --> data for The Eye
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["The Eye"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -399,6 +476,7 @@ do --> data for The Eye
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -415,6 +493,7 @@ end
 -- WotLK
 
 do --> data for Onyxia's Lair
+	local INSTANCE_EJID = 760
 	local INSTANCE_MAPID = 14
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "OnyxiaLair"
@@ -429,6 +508,11 @@ do --> data for Onyxia's Lair
 	local ENCOUNTER_ID_CL = {
 		10184,
 		[10184] = 1, --Onyxia
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1651,
+		[1651] = 1, --Onyxia
 	}
 
 	--> install the raid
@@ -448,6 +532,7 @@ do --> data for Onyxia's Lair
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Onyxia's Lair"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -455,6 +540,7 @@ do --> data for Onyxia's Lair
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -466,6 +552,7 @@ do --> data for Onyxia's Lair
 end
 
 do --> data for The Ruby Sanctum
+	local INSTANCE_EJID = 761
 	local INSTANCE_MAPID = 610
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TheRubySanctum"
@@ -480,6 +567,11 @@ do --> data for The Ruby Sanctum
 	local ENCOUNTER_ID_CL = {
 		39863,
 		[39863] = 1, --Halion
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1652,
+		[1652] = 1, --Halion
 	}
 
 	--> install the raid
@@ -499,6 +591,7 @@ do --> data for The Ruby Sanctum
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["The Ruby Sanctum"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -506,6 +599,7 @@ do --> data for The Ruby Sanctum
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -519,6 +613,7 @@ end
 do --> data for Icecrown Citadel
 	local faction = UnitFactionGroup("player")
 
+	local INSTANCE_EJID = 758
 	local INSTANCE_MAPID = 605
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "IcecrownCitadel"..faction
@@ -526,9 +621,9 @@ do --> data for Icecrown Citadel
 	local EJ_DUNGEONBG = "ui-ej-dungeonbutton-icecrowncitadel"
 	local EJ_LOREBG = "ui-ej-lorebg-icecrowncitadel"
 
-	local portrait, clID = "ui-ej-boss-gunship horde", 37540
+	local portrait, clID, ejID = "ui-ej-boss-gunship horde", 37540, 1626
 	if faction == "Alliance" then
-		portrait, clID = "ui-ej-boss-gunship alliance", 37215
+		portrait, clID, ejID = "ui-ej-boss-gunship alliance", 37215, 1627
 	end
 
 	local PORTRAIT_LIST = {
@@ -544,10 +639,11 @@ do --> data for Icecrown Citadel
 		"ui-ej-boss-valithria dreamwalker",
 		"ui-ej-boss-sindragosa",
 		"ui-ej-boss-lich king",
+		"UI-EJ-BOSS-Lady-Jaina-Proudmoure-ICC",
 	}
 
 	local ENCOUNTER_ID_CL = {
-		36612, 36855, clID, 37813, 36626, 36627, 36678, 37970, 37955, 36789, 36853, 36597,
+		36612, 36855, clID, 37813, 36626, 36627, 36678, 37970, 37955, 36789, 36853, 36597, 3392,
 		[36612] = 1, --Lord Marrowgar
 		[36855] = 2, --Lady Deathwhisper
 		[clID] = 3, --Icecrown Gunship Battle
@@ -560,6 +656,24 @@ do --> data for Icecrown Citadel
 		[36789] = 10, --Valithria Dreamwalker
 		[36853] = 11, --Sindragosa
 		[36597] = 12, --The Lich King
+		[3392] = 13, --Lady Jaina Proudmoore
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1624, 1625, ejID, 1628, 1629, 1630, 1631, 1632, 1633, 1634, 1635, 1636, 1637,
+		[1624] = 1, --Lord Marrowgar
+		[1625] = 2, --Lady Deathwhisper
+		[ejID] = 3, --Icecrown Gunship Battle
+		[1628] = 4, --Deathbringer Saurfang
+		[1629] = 5, --Festergut
+		[1630] = 6, --Rotface
+		[1631] = 7, --Professor Putricide
+		[1632] = 8, --Blood Prince Council
+		[1633] = 9, --Blood-Queen Lana'thel
+		[1634] = 10, --Valithria Dreamwalker
+		[1635] = 11, --Sindragosa
+		[1636] = 12, --The Lich King
+		[1637] = 13, --Lady Jaina Proudmoore
 	}
 
 	--> install the raid
@@ -576,6 +690,7 @@ do --> data for Icecrown Citadel
 		LBB["Valithria Dreamwalker"],
 		LBB["Sindragosa"],
 		LBB["The Lich King"],
+		LBB["Lady Jaina Proudmoore"],
 	}
 
 	local ENCOUNTERS = {}
@@ -590,6 +705,7 @@ do --> data for Icecrown Citadel
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Icecrown Citadel"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -597,6 +713,7 @@ do --> data for Icecrown Citadel
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -615,11 +732,13 @@ do --> data for Icecrown Citadel
 			[36789] = 10, --Valithria Dreamwalker
 			[36853] = 11, --Sindragosa
 			[36597] = 12, --The Lich King
+			[3392] = 13, --Lady Jaina Proudmoore
 		},
 	})
 end
 
 do --> data for Trial of the Crusader
+	local INSTANCE_EJID = 757
 	local INSTANCE_MAPID = 544
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TrialoftheCrusader"
@@ -627,9 +746,9 @@ do --> data for Trial of the Crusader
 	local EJ_DUNGEONBG = "ui-ej-dungeonbutton-trialofthecrusader"
 	local EJ_LOREBG = "ui-ej-lorebg-trialofthecrusader"
 
-	local portrait, clID = "ui-ej-boss-pvp event vs horde", 34467
+	local portrait, clID, ejID = "ui-ej-boss-pvp event vs horde", 34467, 1620
 	if UnitFactionGroup("player") == "Alliance" then
-		portrait, clID = "ui-ej-boss-pvp event vs alliance", 34451
+		portrait, clID, ejID = "ui-ej-boss-pvp event vs alliance", 34451, 1621
 	end
 
 	local PORTRAIT_LIST = {
@@ -647,6 +766,15 @@ do --> data for Trial of the Crusader
 		[clID] = 3, --Faction Champions
 		[34497] = 4, --The Twin Val'kyr
 		[34564] = 5, --Anub'arak
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1618, 1619, ejID, 1622, 1623,
+		[1618] = 1, --The Beasts of Northrend
+		[1619] = 2, --Lord Jaraxxus
+		[ejID] = 3, --Faction Champions
+		[1622] = 4, --The Twin Val'kyr
+		[1623] = 5, --Anub'arak
 	}
 
 	--> install the raid
@@ -670,6 +798,7 @@ do --> data for Trial of the Crusader
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Trial of the Crusader"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -677,15 +806,13 @@ do --> data for Trial of the Crusader
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
 
 		boss_ids = {
-			[34796] = 1, --Gormok the Impaler
-			[34799] = 1, --Dreadscale
-			[34797] = 1, --Icehowl
-			[35144] = 1, --Acidmaw
+			[34797] = 1, --The Beasts of Northrend
 			[34780] = 2, --Lord Jaraxxus
 			[34461] = 3, --Tyrius Duskblade <Death Knight>
 			[34460] = 3, --Kavina Grovesong <Druid>
@@ -715,14 +842,14 @@ do --> data for Trial of the Crusader
 			[34455] = 3, --Broln Stouthorn <Shaman>
 			[34450] = 3, --Harkzog <Warlock>
 			[34453] = 3, --Narrhok Steelbreaker <Warrior>
-			[34497] = 4, --Fjola Lightbane
-			[34496] = 4, --Eydis Darkbane
+			[34497] = 4, --The Twin Val'kyr
 			[34564] = 5, --Anub'arak
 		},
 	})
 end
 
 do --> data for Naxxramas
+	local INSTANCE_EJID = 754
 	local INSTANCE_MAPID = 536
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "Naxxramas"
@@ -767,6 +894,25 @@ do --> data for Naxxramas
 		[15990] = 15, --Kel'Thuzad
 	}
 
+	local ENCOUNTER_ID_EJ = {
+		1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614, 1615,
+		[1601] = 1, --Anub'Rekhan
+		[1602] = 2, --Grand Widow Faerlina
+		[1603] = 3, --Maexxna
+		[1604] = 4, --Noth the Plaguebringer
+		[1605] = 5, --Heigan the Unclean
+		[1606] = 6, --Loatheb
+		[1607] = 7, --Instructor Razuvious
+		[1608] = 8, --Gothik the Harvester
+		[1609] = 9, --The Four Horsemen
+		[1610] = 10, --Patchwerk
+		[1611] = 11, --Grobbulus
+		[1612] = 12, --Gluth
+		[1613] = 13, --Thaddius
+		[1614] = 14, --Sapphiron
+		[1615] = 15, --Kel'Thuzad
+	}
+
 	--> install the raid
 	local BOSSNAMES = {
 		LBB["Anub'Rekhan"],
@@ -798,6 +944,7 @@ do --> data for Naxxramas
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Naxxramas"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -805,6 +952,7 @@ do --> data for Naxxramas
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -818,11 +966,7 @@ do --> data for Naxxramas
 			[16011] = 6, --Loatheb
 			[16061] = 7, --Instructor Razuvious
 			[16060] = 8, --Gothik the Harvester
-			[30549] = 9, --Baron Rivendare
-			[16065] = 9, --Lady Blaumeux
-			[16064] = 9, --Thane Korth'azz
-			[16062] = 9, --Highlord Mograine
-			[16063] = 9, --Sir Zeliek
+			[30549] = 9, --The Four Horsemen
 			[16028] = 10, --Patchwerk
 			[15931] = 11, --Grobbulus
 			[15932] = 12, --Gluth
@@ -834,6 +978,7 @@ do --> data for Naxxramas
 end
 
 do --> data for Vault of Archavon
+	local INSTANCE_EJID = 753
 	local INSTANCE_MAPID = 533
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "VaultofArchavon"
@@ -856,6 +1001,14 @@ do --> data for Vault of Archavon
 		[38433] = 4, --Toravon the Ice Watcher
 	}
 
+	local ENCOUNTER_ID_EJ = {
+		1597, 1598, 1599, 1560,
+		[1597] = 1, --Archavon the Stone Watcher
+		[1598] = 2, --Emalon the Storm Watcher
+		[1599] = 3, --Koralon the Flame Watcher
+		[1560] = 4, --Toravon the Ice Watcher
+	}
+
 	--> install the raid
 	local BOSSNAMES = {
 		LBB["Archavon the Stone Watcher"],
@@ -876,6 +1029,7 @@ do --> data for Vault of Archavon
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["Vault of Archavon"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -883,6 +1037,7 @@ do --> data for Vault of Archavon
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -897,6 +1052,7 @@ do --> data for Vault of Archavon
 end
 
 do --> data for The Obsidian Sanctum
+	local INSTANCE_EJID = 755
 	local INSTANCE_MAPID = 532
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TheObsidianSanctum"
@@ -911,6 +1067,11 @@ do --> data for The Obsidian Sanctum
 	local ENCOUNTER_ID_CL = {
 		28860,
 		[28860] = 1, --Sartharion
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1616,
+		[1616] = 1, --Sartharion
 	}
 
 	--> install the raid
@@ -930,6 +1091,7 @@ do --> data for The Obsidian Sanctum
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["The Obsidian Sanctum"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -937,6 +1099,7 @@ do --> data for The Obsidian Sanctum
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
@@ -948,6 +1111,7 @@ do --> data for The Obsidian Sanctum
 end
 
 do --> data for The Eye of Eternity
+	local INSTANCE_EJID = 756
 	local INSTANCE_MAPID = 528
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TheEyeofEternity"
@@ -962,6 +1126,11 @@ do --> data for The Eye of Eternity
 	local ENCOUNTER_ID_CL = {
 		28859,
 		[28859] = 1, --Malygos
+	}
+
+	local ENCOUNTER_ID_EJ = {
+		1617,
+		[1617] = 1, --Malygos
 	}
 
 	--> install the raid
@@ -981,6 +1150,7 @@ do --> data for The Eye of Eternity
 
 	_detalhes:InstallEncounter({
 		id = INSTANCE_MAPID, --map id
+		ej_id = INSTANCE_EJID, --encounter journal id
 		name = LBZ["The Eye of Eternity"],
 		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
 		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
@@ -988,121 +1158,13 @@ do --> data for The Eye of Eternity
 		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
 		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
 
+		encounter_ids = ENCOUNTER_ID_EJ,
 		encounter_ids2 = ENCOUNTER_ID_CL,
 		boss_names = BOSSNAMES,
 		encounters = ENCOUNTERS,
 
 		boss_ids = {
 			[28859] = 1, --Malygos
-		},
-	})
-end
-
-do --> data for Ulduar
-	local INSTANCE_MAPID = 530
-	local HDIMAGESPATH = "Details\\images\\raid"
-	local HDFILEPREFIX = "Ulduar"
-	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenUlduarRaid", {0, 1, 285/1024, 875/1024}
-	local EJ_DUNGEONBG = "ui-ej-dungeonbutton-ulduar"
-	local EJ_LOREBG = "ui-ej-lorebg-ulduar"
-
-	local PORTRAIT_LIST = {
-		"ui-ej-boss-flame leviathan",
-		"ui-ej-boss-ignis the furnace master",
-		"ui-ej-boss-razorscale",
-		"ui-ej-boss-xt 002 deconstructor",
-		"ui-ej-boss-assembly of iron",
-		"ui-ej-boss-kologarn",
-		"ui-ej-boss-auriaya",
-		"ui-ej-boss-hodir",
-		"ui-ej-boss-thorim",
-		"ui-ej-boss-freya",
-		"ui-ej-boss-mimiron",
-		"ui-ej-boss-general vezax",
-		"ui-ej-boss-yogg saron",
-		"ui-ej-boss-algalon the observer",
-	}
-
-	local ENCOUNTER_ID_CL = {
-		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
-		[33113] = 1, --Flame Leviathan
-		[33118] = 2, --Ignis the Furnace Master
-		[33186] = 3, --Razorscale
-		[33293] = 4, --XT-002 Deconstructor
-		[32867] = 5, --Assembly of Iron
-		[32930] = 6, --Kologarn
-		[33515] = 7, --Auriaya
-		[32845] = 8, --Hodir
-		[32865] = 9, --Thorim
-		[32906] = 10, --Freya
-		[33350] = 11, --Mimiron
-		[33271] = 12, --General Vezax
-		[33136] = 13, --Yogg-Saron
-		[32871] = 14, --Algalon the Observer
-	}
-
-	--> install the raid
-	local BOSSNAMES = {
-		LBB["Flame Leviathan"],
-		LBB["Ignis the Furnace Master"],
-		LBB["Razorscale"],
-		LBB["XT-002 Deconstructor"],
-		LBB["Assembly of Iron"],
-		LBB["Kologarn"],
-		LBB["Auriaya"],
-		LBB["Hodir"],
-		LBB["Thorim"],
-		LBB["Freya"],
-		LBB["Mimiron"],
-		LBB["General Vezax"],
-		LBB["Yogg-Saron"],
-		LBB["Algalon the Observer"],
-	}
-
-	local ENCOUNTERS = {}
-
-	for i = 1, #PORTRAIT_LIST do
-		local encounterTable = {
-			boss = BOSSNAMES[i],
-			portrait = "Interface\\EncounterJournal\\"..PORTRAIT_LIST[i],
-		}
-		tinsert(ENCOUNTERS, encounterTable)
-	end
-
-	_detalhes:InstallEncounter({
-		id = INSTANCE_MAPID, --map id
-		name = LBZ["Ulduar"],
-		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
-		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
-		is_raid = true,
-		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
-		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
-
-		encounter_ids2 = ENCOUNTER_ID_CL,
-		boss_names = BOSSNAMES,
-		encounters = ENCOUNTERS,
-
-		boss_ids = {
-			[33113] = 1, --Flame Leviathan
-			[33118] = 2, --Ignis the Furnace Master
-			[33186] = 3, --Razorscale
-			[33293] = 4, --XT-002 Deconstructor
-			[32867] = 5, --Steelbreaker
-			[32927] = 5, --Runemaster Molgeim
-			[32857] = 5, --Stormcaller Brundir
-			[32930] = 6, --Kologarn
-			[32933] = 6, --Left Arm
-			[32934] = 6, --Right Arm
-			[33515] = 7, --Auriaya
-			[32845] = 8, --Hodir
-			[32865] = 9, --Thorim
-			[32882] = 9, --Jormungar Behemoth
-			[32906] = 10, --Freya
-			[33350] = 11, --Mimiron
-			[33271] = 12, --General Vezax
-			[33136] = 13, --Guardian of Yogg-Saron
-			[33288] = 13, --Yogg-Saron
-			[32871] = 14, --Algalon the Observer
 		},
 	})
 end

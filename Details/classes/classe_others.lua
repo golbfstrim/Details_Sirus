@@ -556,7 +556,7 @@ function atributo_misc:DeadAtualizarBarra (morte, qual_barra, colocacao, instanc
 	local esta_barra = instancia.barras[qual_barra] --> pega a refer�ncia da barra na janela
 
 	if (not esta_barra) then
-		print ("DEBUG: problema com <instancia.esta_barra> "..qual_barra)
+		print ("DEBUG: problema com <instancia.esta_barra> "..qual_barra.." "..lugar)
 		return
 	end
 
@@ -1317,7 +1317,7 @@ function _detalhes:CatchRaidDebuffUptime (in_or_out) -- "DEBUFF_UPTIME_IN"
 
 		local checked = {}
 
-		for raidIndex = 1, _GetNumGroupMembers() do
+		for raidIndex = 1, _GetNumGroupMembers()-1 do
 			local his_target = _UnitGUID ("party"..raidIndex.."target")
 			local rect = UnitReaction ("party"..raidIndex.."target", "player")
 			if (his_target and not checked [his_target] and rect and rect <= 4) then
@@ -1453,7 +1453,7 @@ function _detalhes:CatchRaidBuffUptime (in_or_out)
 		local focus_augmentation = {}
 
 		--party members
-		for groupIndex = 1, _GetNumGroupMembers() do
+		for groupIndex = 1, _GetNumGroupMembers() - 1 do
 			for buffIndex = 1, 41 do
 				local name, _, _, _, _, _, _, unitCaster, _, _, spellid  = _UnitAura ("party"..groupIndex, buffIndex, nil, "HELPFUL")
 				if (name and unitCaster and UnitExists (unitCaster) and UnitExists ("party" .. groupIndex) and UnitIsUnit (unitCaster, "party" .. groupIndex)) then
@@ -2036,7 +2036,7 @@ function atributo_misc:MontaInfoInterrupt()
 		if (not barra) then --> se a barra n�o existir, criar ela ent�o
 			barra = gump:CriaNovaBarraInfo1 (instancia, index)
 
-			barra.textura:SetStatusBarColor (1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
+			barra.textura:SetStatusBarColor (1, 1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
 			barra.on_focus = false --> isso aqui � a parte da sele��o e descele��o
 		end
 
@@ -2045,7 +2045,7 @@ function atributo_misc:MontaInfoInterrupt()
 		if (not info.mostrando_mouse_over) then
 			if (tabela[1] == self.detalhes) then --> tabela [1] = spellid = spellid que esta na caixa da direita
 				if (not barra.on_focus) then --> se a barra n�o tiver no foco
-					barra.textura:SetStatusBarColor (129/255, 125/255, 69/255)
+					barra.textura:SetStatusBarColor (129/255, 125/255, 69/255, 1)
 					barra.on_focus = true
 					if (not info.mostrando) then
 						info.mostrando = barra
@@ -2053,7 +2053,7 @@ function atributo_misc:MontaInfoInterrupt()
 				end
 			else
 				if (barra.on_focus) then
-					barra.textura:SetStatusBarColor (1, 1, 1) --> volta a cor antiga
+					barra.textura:SetStatusBarColor (1, 1, 1, 1) --> volta a cor antiga
 					barra:SetAlpha (.9) --> volta a alfa antiga
 					barra.on_focus = false
 				end
@@ -2102,7 +2102,7 @@ function atributo_misc:MontaInfoInterrupt()
 
 		if (not barra) then
 			barra = gump:CriaNovaBarraInfo2 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 		end
 
 		if (index == 1) then
@@ -2175,7 +2175,7 @@ function atributo_misc:MontaDetalhesInterrupt (spellid, barra)
 
 		if (not barra) then --> se a barra n�o existir, criar ela ent�o
 			barra = gump:CriaNovaBarraInfo3 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
+			barra.textura:SetStatusBarColor (1, 1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
 		end
 
 		if (index == 1) then

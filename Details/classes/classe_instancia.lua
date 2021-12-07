@@ -3352,24 +3352,48 @@ function _detalhes:envia_relatorio (linhas, custom)
 	local channel = to_who:find ("CHANNEL")
 	local is_btag = to_who:find ("REALID")
 
+	local send_report_channel = function (timerObject)
+		_SendChatMessage (timerObject.Arg1, timerObject.Arg2, timerObject.Arg3, timerObject.Arg4)
+	end
+
+	local send_report_bnet = function (timerObject)
+		BNSendWhisper (timerObject.Arg1, timerObject.Arg2)
+	end
+
+	local delay = 200
+
 	if (channel) then
+
 		channel = to_who:gsub ((".*|"), "")
 
 		for i = 1, #linhas do
-			_SendChatMessage(linhas[i], "CHANNEL", nil, GetChannelName(channel))
+			if (channel == "Trade") then
+				channel = "Trade - City"
+			end
+
+			local channelName = GetChannelName (channel)
+			local timer = C_Timer:NewTicker (i * delay / 1000, send_report_channel, 1)
+			timer.Arg1 = linhas[i]
+			timer.Arg2 = "CHANNEL"
+			timer.Arg3 = nil
+			timer.Arg4 = channelName
 		end
 
 		return
 
 	elseif (is_btag) then
+
 		local id = to_who:gsub ((".*|"), "")
 		local presenceID = tonumber (id)
 
 		for i = 1, #linhas do
-			BNSendWhisper (presenceID, linhas[i])
+			local timer = C_Timer:NewTicker (i * delay / 1000, send_report_bnet, 1)
+			timer.Arg1 = presenceID
+			timer.Arg2 = linhas[i]
 		end
 
 		return
+
 	elseif (to_who == "WHISPER") then --> whisper
 
 		local alvo = _detalhes.report_to_who
@@ -3380,7 +3404,11 @@ function _detalhes:envia_relatorio (linhas, custom)
 		end
 
 		for i = 1, #linhas do
-			_SendChatMessage(linhas[i], to_who, nil, alvo)
+			local timer = C_Timer:NewTicker (i * delay / 1000, send_report_channel, 1)
+			timer.Arg1 = linhas[i]
+			timer.Arg2 = to_who
+			timer.Arg3 = nil
+			timer.Arg4 = alvo
 		end
 		return
 
@@ -3405,15 +3433,25 @@ function _detalhes:envia_relatorio (linhas, custom)
 		end
 
 		for i = 1, #linhas do
-			_SendChatMessage(linhas[i], to_who, nil, alvo)
+			local timer = C_Timer:NewTicker (i * delay / 1000, send_report_channel, 1)
+			timer.Arg1 = linhas[i]
+			timer.Arg2 = to_who
+			timer.Arg3 = nil
+			timer.Arg4 = alvo
 		end
 
 		return
 	end
 
 	for i = 1, #linhas do
-		_SendChatMessage(linhas[i], to_who)
+		local timer = C_Timer:NewTicker (i * delay / 1000, send_report_channel, 1)
+		timer.Arg1 = linhas[i]
+		timer.Arg2 = to_who
+		timer.Arg3 = nil
+		timer.Arg4 = nil
+
 	end
+
 end
 
 -- enda elsef

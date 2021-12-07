@@ -617,7 +617,7 @@
 		GameCooltip:AddIcon ([[Interface\AddOns\Details\images\key_shift]], 1, 2, _detalhes.tooltip_key_size_width, _detalhes.tooltip_key_size_height, 0, 1, 0, 0.640625, _detalhes.tooltip_key_overlay2)
 		_detalhes:AddTooltipHeaderStatusbar (1, 1, 1, 0.5)
 
-		local topTarget = Targets[1] and Targets[1][2]
+		local top = Targets[1] and Targets[1][2]
 
 		local lineHeight = _detalhes.tooltip.line_height
 
@@ -625,7 +625,7 @@
 			GameCooltip:AddLine (_detalhes:GetOnlyName(t[1]), _detalhes:ToK (t[2]) .. " (" .. _cstr ("%.1f", t[2]/total*100) .. "%)")
 			local class, _, _, _, _, r, g, b = _detalhes:GetClass (t[1])
 
-			GameCooltip:AddStatusBar (t[2]/topTarget*100, 1, r, g, b, 0.8, false,  byspell_tooltip_background)
+			GameCooltip:AddStatusBar (t[2]/top*100, 1, r, g, b, 0.8, false,  byspell_tooltip_background)
 
 			if (class) then
 				local specID = _detalhes:GetSpec (t[1])
@@ -1087,7 +1087,7 @@
 		local esta_barra = instancia.barras [qual_barra] --> pega a refer�ncia da barra na janela
 
 		if (not esta_barra) then
-			print ("DEBUG: problema com <instancia.esta_barra> "..qual_barra)
+			print ("DEBUG: problema com <instancia.esta_barra> "..qual_barra.." "..lugar)
 			return
 		end
 
@@ -1491,7 +1491,7 @@
 		local esta_barra = instancia.barras [qual_barra]
 
 		if (not esta_barra) then
-			print ("DEBUG: problema com <instancia.esta_barra> "..qual_barra)
+			print ("DEBUG: problema com <instancia.esta_barra> "..qual_barra.." "..lugar)
 			return
 		end
 
@@ -2895,7 +2895,7 @@ function atributo_damage:ToolTip_DamageDone (instancia, numero, barra, keydown)
 		--> TOP HABILIDADES
 
 			--get variables
---			local ActorDamage = self.total_without_pet --mostrando os pets no tooltip
+			local ActorDamage = self.total_without_pet --mostrando os pets no tooltip
 			local ActorDamage = self.total
 			local ActorDamageWithPet = self.total
 			if (ActorDamage == 0) then
@@ -3397,6 +3397,21 @@ function atributo_damage:ToolTip_DamageTaken (instancia, numero, barra, keydown)
 						meus_agressores [#meus_agressores+1] = table_added
 					end
 				end
+
+				--special cases - Monk stagger
+				if (nome == self.nome and self.classe == "MONK") then
+					local ff = este_agressor.friendlyfire [nome]
+					if (ff and ff.total > 0) then
+						local staggerDamage = ff.spells [124255] or 0
+						if (staggerDamage > 0) then
+							if (table_added) then
+								table_added [2] = table_added [2] + staggerDamage
+							else
+								meus_agressores [#meus_agressores+1] = {name, staggerDamage, "MONK", este_agressor}
+							end
+						end
+					end
+				end
 			end
 		end
 
@@ -3701,14 +3716,14 @@ function atributo_damage:MontaInfoFriendlyFire()
 
 		if (not barra) then
 			barra = gump:CriaNovaBarraInfo1 (instancia, index)
-			barra.textura:SetStatusBarColor(1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 			barra.on_focus = false
 		end
 
 		if (not info.mostrando_mouse_over) then
 			if (tabela[1] == self.detalhes) then --> tabela [1] = NOME = NOME que esta na caixa da direita
 				if (not barra.on_focus) then --> se a barra n�o tiver no foco
-					barra.textura:SetStatusBarColor (129/255, 125/255, 69/255)
+					barra.textura:SetStatusBarColor (129/255, 125/255, 69/255, 1)
 					barra.on_focus = true
 					if (not info.mostrando) then
 						info.mostrando = barra
@@ -3716,7 +3731,7 @@ function atributo_damage:MontaInfoFriendlyFire()
 				end
 			else
 				if (barra.on_focus) then
-					barra.textura:SetStatusBarColor (1, 1, 1) --> volta a cor antiga
+					barra.textura:SetStatusBarColor (1, 1, 1, 1) --> volta a cor antiga
 					barra:SetAlpha (.9) --> volta a alfa antiga
 					barra.on_focus = false
 				end
@@ -3783,7 +3798,7 @@ function atributo_damage:MontaInfoFriendlyFire()
 
 		if (not barra) then
 			barra = gump:CriaNovaBarraInfo2 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 		end
 
 		if (index == 1) then
@@ -3859,84 +3874,89 @@ function atributo_damage:MontaInfoDamageTaken()
 
 end
 
---[[exported]] function _detalhes:UpdadeInfoBar(row, index, spellid, name, value, value_formated, max, percent, icon, detalhes, texCoords, spellschool, class)
+--[[exported]] function _detalhes:UpdadeInfoBar (row, index, spellid, name, value, value_formated, max, percent, icon, detalhes, texCoords, spellschool, class)
 	--> seta o tamanho da barra
-	if index == 1 then
-		row.textura:SetValue(100)
+	if (index == 1) then
+		row.textura:SetValue (100)
 	else
-		row.textura:SetValue(value / max * 100)
+		row.textura:SetValue (value/max*100)
 	end
 
-	if type(index) == "number" then
-		if debugmode then
+	if (type (index) == "number") then
+		if (debugmode) then
 			local _, rank = GetSpellInfo(spellid)
-			row.texto_esquerdo:SetText(index..". "..name.." > "..spellid..(rank and rank ~= "" and " ("..rank..")" or ""))
+			row.texto_esquerdo:SetText (index .. ". " .. name .. " > " .. spellid ..(rank and rank ~= "" and " ("..rank..")" or ""))
 		else
-			row.texto_esquerdo:SetText(index..". "..name)
+			row.texto_esquerdo:SetText (index .. ". " .. name)
 		end
 	else
-		row.texto_esquerdo:SetText(name)
+		row.texto_esquerdo:SetText (name)
 	end
 
 	row.texto_esquerdo.text = row.texto_esquerdo:GetText()
 
-	if value_formated then
-		row.texto_direita:SetText(value_formated.." (".._cstr ("%.1f", percent).."%)")
+	if (value_formated) then
+		row.texto_direita:SetText (value_formated .. " (" .. _cstr ("%.1f", percent) .."%)")
 	end
 
-	row.texto_esquerdo:SetSize(row:GetWidth() - row.texto_direita:GetStringWidth() - 40, 15)
+	row.texto_esquerdo:SetSize (row:GetWidth() - row.texto_direita:GetStringWidth() - 40, 15)
 
 	--> seta o icone
-	if icon then
+	if (icon) then
 		row.icone:SetTexture (icon)
-		if icon == "Interface\\AddOns\\Details\\images\\classes_small" then
-			row.icone:SetTexCoord(0.25, 0.49609375, 0.75, 1)
+		if (icon == "Interface\\AddOns\\Details\\images\\classes_small") then
+			row.icone:SetTexCoord (0.25, 0.49609375, 0.75, 1)
 		else
-			row.icone:SetTexCoord(0, 1, 0, 1)
+			row.icone:SetTexCoord (0, 1, 0, 1)
 		end
 	else
-		row.icone:SetTexture("")
+		row.icone:SetTexture ("")
 	end
 
-	if not row.IconUpBorder then
-		row.IconUpBorder = CreateFrame("Frame", nil, row)
-		row.IconUpBorder:SetAllPoints(row.icone)
-		row.IconUpBorder:SetBackdrop({edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1})
-		row.IconUpBorder:SetBackdropBorderColor(0, 0, 0, 0.75)
+	if (not row.IconUpBorder) then
+		row.IconUpBorder = CreateFrame ("Frame", nil, row)
+		row.IconUpBorder:SetAllPoints (row.icone)
+		row.IconUpBorder:SetBackdrop ({edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1})
+		row.IconUpBorder:SetBackdropBorderColor (0, 0, 0, 0.75)
 	end
 
-	if texCoords then
-		row.icone:SetTexCoord(_unpack(texCoords))
+	if (texCoords) then
+		row.icone:SetTexCoord (unpack (texCoords))
 	else
 		local icon_border = _detalhes.tooltip.icon_border_texcoord
-		row.icone:SetTexCoord(icon_border.L, icon_border.R, icon_border.T, icon_border.B)
+		row.icone:SetTexCoord (icon_border.L, icon_border.R, icon_border.T, icon_border.B)
 	end
 
 	row.minha_tabela = self
 	row.show = spellid
 	row:Show() --> mostra a barra
 
-	if spellschool then
-		local t = _detalhes.spells_school[spellschool]
-		if t and t.decimals then
-			row.textura:SetStatusBarColor(t.decimals[1], t.decimals[2], t.decimals[3])
+	if (spellschool) then
+		local t = _detalhes.spells_school [spellschool]
+		if (t and t.decimals) then
+			row.textura:SetStatusBarColor (t.decimals[1], t.decimals[2], t.decimals[3])
 		else
-			row.textura:SetStatusBarColor(1, 1, 1)
+			row.textura:SetStatusBarColor (1, 1, 1)
 		end
-	elseif class then
-		local color = _detalhes.class_colors[class]
-		if color then
-			row.textura:SetStatusBarColor(_unpack(color))
+
+	elseif (class) then
+		local color = _detalhes.class_colors [class]
+		if (color) then
+			row.textura:SetStatusBarColor (_unpack (color))
 		else
-			row.textura:SetStatusBarColor(1, 1, 1)
+			row.textura:SetStatusBarColor (1, 1, 1)
 		end
 	else
-		row.textura:SetStatusBarColor(1, 1, 1)
+		if (spellid == 98021) then --spirit linkl
+			row.textura:SetStatusBarColor (1, 0.4, 0.4)
+		else
+			row.textura:SetStatusBarColor (1, 1, 1)
+		end
 	end
 
-	if detalhes and self.detalhes and self.detalhes == spellid and info.showing == index then
+	if (detalhes and self.detalhes and self.detalhes == spellid and info.showing == index) then
 		--self:MontaDetalhes (spellid, row) --> poderia deixar isso pro final e montar uma tail call??
-		self:MontaDetalhes(row.show, row, info.instancia) --> poderia deixar isso pro final e montar uma tail call??
+		self:MontaDetalhes (row.show, row, info.instancia) --> poderia deixar isso pro final e montar uma tail call??
 	end
 end
 
@@ -3944,7 +3964,7 @@ end
 	if (not info.mostrando_mouse_over) then
 		if (spellid == self.detalhes) then --> tabela [1] = spellid = spellid que esta na caixa da direita
 			if (not row.on_focus) then --> se a barra n�o tiver no foco
-				row.textura:SetStatusBarColor (129/255, 125/255, 69/255)
+				row.textura:SetStatusBarColor (129/255, 125/255, 69/255, 1)
 				row.on_focus = true
 				if (not info.mostrando) then
 					info.mostrando = row
@@ -3952,7 +3972,7 @@ end
 			end
 		else
 			if (row.on_focus) then
-				row.textura:SetStatusBarColor (1, 1, 1) --> volta a cor antiga
+				row.textura:SetStatusBarColor (1, 1, 1, 1) --> volta a cor antiga
 				row:SetAlpha (.9) --> volta a alfa antiga
 				row.on_focus = false
 			end
@@ -4113,7 +4133,7 @@ function atributo_damage:MontaInfoDamageDone()
 
 			if (not barra) then --> se a barra n�o existir, criar ela ent�o
 				barra = gump:CriaNovaBarraInfo2 (instancia, index)
-				barra.textura:SetStatusBarColor (1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
+				barra.textura:SetStatusBarColor (1, 1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
 			end
 
 			if (index == 1) then
@@ -4189,7 +4209,7 @@ function atributo_damage:MontaInfoDamageDone()
 
 			if (not barra) then
 				barra = gump:CriaNovaBarraInfo2 (instancia, index)
-				barra.textura:SetStatusBarColor (1, 1, 1)
+				barra.textura:SetStatusBarColor (1, 1, 1, 1)
 			end
 
 			if (index == 1) then
@@ -4207,7 +4227,8 @@ function atributo_damage:MontaInfoDamageDone()
 				barra.icone:SetTexCoord (_unpack (texCoords))
 			end
 
-			barra.textura:SetStatusBarColor(1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 0.8, 0.8)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 
 			barra.texto_esquerdo:SetText (index .. ". " .. _detalhes:GetOnlyName (tabela[1]))
 
@@ -4277,7 +4298,7 @@ function atributo_damage:MontaDetalhesFriendlyFire (nome, barra)
 
 		if (not barra) then --> se a barra n�o existir, criar ela ent�o
 			barra = gump:CriaNovaBarraInfo3 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
+			barra.textura:SetStatusBarColor (1, 1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
 		end
 
 		if (index == 1) then
@@ -4344,7 +4365,7 @@ function atributo_damage:MontaDetalhesEnemy (spellid, barra)
 
 		if (not barra) then --> se a barra n�o existir, criar ela ent�o
 			barra = gump:CriaNovaBarraInfo3 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
+			barra.textura:SetStatusBarColor (1, 1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
 		end
 
 		if (index == 1) then
@@ -4371,7 +4392,7 @@ function atributo_damage:MontaDetalhesEnemy (spellid, barra)
 		if (color) then
 			barra.textura:SetStatusBarColor (_unpack (color))
 		else
-			barra.textura:SetStatusBarColor (1, 1, 1)
+			barra.textura:SetStatusBarColor (1, 1, 1, 1)
 		end
 
 		barra.icone:SetTexture ("Interface\\AddOns\\Details\\images\\classes_small_alpha")
@@ -4434,7 +4455,7 @@ function atributo_damage:MontaDetalhesDamageTaken (nome, barra)
 
 		if (not barra) then --> se a barra n�o existir, criar ela ent�o
 			barra = gump:CriaNovaBarraInfo3 (instancia, index)
-			barra.textura:SetStatusBarColor (1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
+			barra.textura:SetStatusBarColor (1, 1, 1, 1) --> isso aqui � a parte da sele��o e descele��o
 		end
 
 		if (index == 1) then

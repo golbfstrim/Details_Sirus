@@ -2089,7 +2089,7 @@ local icon_frame_on_enter = function(self)
 			end
 			_detalhes:AddTooltipHeaderStatusbar()
 
-			local talent_string = talents or ""
+			local talent_string = ""
 --[[ -- TEMP
 			if(talents) then
 				for i = 1, #talents do
@@ -2100,17 +2100,13 @@ local icon_frame_on_enter = function(self)
 ]]
 			-- TEMP
 			local got_info
-			local prefix = "Average Item Level"
 			if(ilvl) then
-				if GearScore_GetScore then 
-					prefix = "Gearscore"
-				end
-				GameCooltip:AddLine(prefix .. ":" , ilvl and "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t" .. _math_floor(ilvl.ilvl) or "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t ??") --> Loc from GlobalStrings.lua
+				GameCooltip:AddLine("STAT_AVERAGE_ITEM_LEVEL" .. ":" , ilvl and "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t" .. _math_floor(ilvl.ilvl) or "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t ??") --> Loc from GlobalStrings.lua
 				GameCooltip:AddIcon([[]], 1, 1, 1, 20)
 				_detalhes:AddTooltipBackgroundStatusbar()
 				got_info = true
 			else
-				GameCooltip:AddLine(prefix .. ":" , 0)
+				GameCooltip:AddLine("STAT_AVERAGE_ITEM_LEVEL" .. ":" , 0)
 				GameCooltip:AddIcon([[]], 1, 1, 1, 20)
 				_detalhes:AddTooltipBackgroundStatusbar()
 				got_info = true
@@ -2299,22 +2295,14 @@ end
 local icon_frame_on_click_down = function(self)
 	local instanceID = self.instance_id
 	local instanceObject = Details:GetInstance(instanceID)
-	local point = "left" 
-	if instanceObject.bars_inverted then 
-		point = "right"
-	end
-	self:GetParent():GetParent().icone_classe:SetPoint(point, self:GetParent():GetParent(), point, instanceObject.row_info.icon_offset[1] + 1, instanceObject.row_info.icon_offset[2] + -1)
+	self:GetParent():GetParent().icone_classe:SetPoint("left", self:GetParent():GetParent(), "left", instanceObject.row_info.icon_offset[1] + 1, instanceObject.row_info.icon_offset[2] + -1)
 end
 
 local icon_frame_on_click_up = function(self, button)
 
 	local instanceID = self.instance_id
 	local instanceObject = Details:GetInstance(instanceID)
-	local point = "left" 
-	if instanceObject.bars_inverted then 
-		point = "right"
-	end
-	self:GetParent():GetParent().icone_classe:SetPoint(point, self:GetParent():GetParent(), point, instanceObject.row_info.icon_offset[1], instanceObject.row_info.icon_offset[2])
+	self:GetParent():GetParent().icone_classe:SetPoint("left", self:GetParent():GetParent(), "left", instanceObject.row_info.icon_offset[1], instanceObject.row_info.icon_offset[2])
 
 	if(button == "LeftButton") then
 		--> open the rank panel
@@ -7081,13 +7069,7 @@ function _detalhes:SetCombatAlpha(modify_type, alpha_amount, interacting)
 
 		elseif(self.hide_in_combat_type == 7) then --"Raid Debug" = Out of Combat and Inside Raid or Dungeon
 			_detalhes:ScheduleTimer("DelayedCheckOutOfCombatAndGroupAlpha", 0.3, self)
-		elseif self.hide_in_combat_type == 8 then --"In Battlegrounds"
-			local isInInstance = IsInInstance()
-			if isInInstance and _detalhes.zone_type == "pvp" then
-				self:SetWindowAlphaForCombat(true, true) --> hida a janela
-			else
-				self:SetWindowAlphaForCombat(false) --> deshida a janela
-			end
+
 		end
 
 		return

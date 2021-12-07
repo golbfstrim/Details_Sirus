@@ -512,7 +512,7 @@ end
 function DropDownMetaFunctions:Open()
 	self.dropdown.dropdownframe:Show()
 	self.dropdown.dropdownborder:Show()
---	self.dropdown.arrowTexture:SetTexture ("Interface\\Buttons\\UI-ScrollBar-ScrollDownButton-Down")
+	self.dropdown.arrowTexture:SetTexture ("Interface\\Buttons\\UI-ScrollBar-ScrollDownButton-Down")
 	self.opened = true
 	if (last_opened) then
 		last_opened:Close()
@@ -527,7 +527,7 @@ function DropDownMetaFunctions:Close()
 		return
 	end
 	self.dropdown.dropdownframe:Hide()
---	self.dropdown.arrowTexture:SetTexture ("Interface\\Buttons\\UI-ScrollBar-ScrollDownButton-Up")
+	self.dropdown.arrowTexture:SetTexture ("Interface\\Buttons\\UI-ScrollBar-ScrollDownButton-Up")
 
 	local selectedTexture = _G [self:GetName() .. "_ScrollFrame_ScrollChild_SelectedTexture"]
 	selectedTexture:Hide()
@@ -616,8 +616,8 @@ function DetailsFrameworkDropDownOnMouseDown (button)
 
 						_this_row = DF:CreateDropdownButton (parent, name)
 						local anchor_i = i-1
-						_this_row:SetPoint ("topleft", parent, "topleft", 1, (-anchor_i*20)-0)
-						_this_row:SetPoint ("topright", parent, "topright", 0, (-anchor_i*20)-0)
+						_this_row:SetPoint ("topleft", parent, "topleft", 5, (-anchor_i*20)-5)
+						_this_row:SetPoint ("topright", parent, "topright", -5, (-anchor_i*20)-5)
 						_this_row.object = object
 						object.menus [i] = _this_row
 					end
@@ -732,7 +732,7 @@ function DetailsFrameworkDropDownOnMouseDown (button)
 				object:ShowScroll()
 				scrollFrame:EnableMouseWheel (true)
 				object.scroll:Altura (size-35)
-				object.scroll:SetMinMaxValues (0, (showing*20) - size + 2)
+				object.scroll:SetMinMaxValues (0, (showing*20) - size + 20)
 				--width
 				scrollBorder:SetWidth (frame_witdh+20)
 				scrollFrame:SetWidth (frame_witdh+20)
@@ -759,12 +759,12 @@ function DetailsFrameworkDropDownOnMouseDown (button)
 				scrollFrame:SetWidth (frame_witdh)
 				scrollChild:SetWidth (frame_witdh)
 				--height
-				scrollBorder:SetHeight ((showing*20) + 1)
-				scrollFrame:SetHeight ((showing*20) + 1)
+				scrollBorder:SetHeight ((showing*20) + 10)
+				scrollFrame:SetHeight ((showing*20) + 10)
 				--mouse over texture
-				mouseOverTexture:SetWidth (frame_witdh-1)
+				mouseOverTexture:SetWidth (frame_witdh-10)
 				--selected
-				selectedTexture:SetWidth (frame_witdh - 1)
+				selectedTexture:SetWidth (frame_witdh - 9)
 
 				for index, row in ipairs (object.menus) do
 					row:SetPoint ("topright", scrollChild, "topright", -5, ((-index-1)*20)-5)
@@ -884,7 +884,6 @@ end
 
 ------------------------------------------------------------------------------------------------------------
 function DropDownMetaFunctions:SetTemplate (template)
-	self.template = template
 
 	if (template.width) then
 		self:SetWidth (template.width)
@@ -927,38 +926,6 @@ function DropDownMetaFunctions:SetTemplate (template)
 		self.onleave_backdrop_border_color = {r, g, b, a}
 	end
 
-	self:RefreshDropIcon()
-end
-
-function DropDownMetaFunctions:RefreshDropIcon()
-	local template = self.template
-
-	if (not template) then
-		return
-	end
-
-	if (template.dropicon) then
-		self.dropdown.arrowTexture:SetTexture(template.dropicon)
-		self.dropdown.arrowTexture2:SetTexture(template.dropicon)
-
-		if (template.dropiconsize) then
-			self.dropdown.arrowTexture:SetSize(unpack(template.dropiconsize))
-			self.dropdown.arrowTexture2:SetSize(unpack(template.dropiconsize))
-		end
-
-		if (template.dropiconcoords) then
-			self.dropdown.arrowTexture:SetTexCoord(unpack(template.dropiconcoords))
-		else
-			self.dropdown.arrowTexture:SetTexCoord(0, 1, 0, 1)
-		end
-
-		if (template.dropiconpoints) then
-			self.dropdown.arrowTexture:ClearAllPoints()
-			self.dropdown.arrowTexture2:ClearAllPoints()
-			self.dropdown.arrowTexture:SetPoint("right", self.dropdown, "right", unpack(template.dropiconpoints))
-			self.dropdown.arrowTexture2:SetPoint("right", self.dropdown, "right", unpack(template.dropiconpoints))
-		end
-	end
 end
 
 ------------------------------------------------------------------------------------------------------------
@@ -1109,11 +1076,11 @@ function DF:CreateNewDropdownFrame (parent, name)
 	f:SetSize (150, 20)
 
 	local statusbar = f:CreateTexture ("$parent_StatusBarTexture", "BACKGROUND")
-	statusbar:SetPoint ("topleft", f, "topleft", 0, 0)
-	statusbar:SetPoint ("bottomright", f, "bottomright", 0, 0)
+	statusbar:SetPoint ("topleft", f, "topleft", 3, -3)
+	statusbar:SetPoint ("bottomright", f, "bottomright", -3, 3)
 	f.statusbar = statusbar
 
-	local icon = f:CreateTexture ("$parent_IconTexture", "BORDER")
+	local icon = f:CreateTexture ("$parent_IconTexture", "ARTWORK")
 	icon:SetPoint ("left", f, "left", 2, 0)
 	icon:SetSize (20, 20)
 	icon:SetTexture ([[Interface\COMMON\UI-ModelControlPanel]])
@@ -1121,7 +1088,7 @@ function DF:CreateNewDropdownFrame (parent, name)
 	icon:SetVertexColor (1, 1, 1, 0.4)
 	f.icon = icon
 
-	local text = f:CreateFontString ("$parent_Text", "BORDER", "GameFontHighlightSmall")
+	local text = f:CreateFontString ("$parent_Text", "ARTWORK", "GameFontHighlightSmall")
 	text:SetPoint ("left", icon, "right", 5, 0)
 	text:SetJustifyH ("left")
 	text:SetText ("no option selected")
@@ -1137,7 +1104,7 @@ function DF:CreateNewDropdownFrame (parent, name)
 	arrow:SetSize (32, 28)
 	f.arrowTexture2 = arrow
 
-	local buttonTexture = f:CreateTexture ("$parent_ArrowTexture", "ARTWORK")
+	local buttonTexture = f:CreateTexture ("$parent_ArrowTexture", "OVERLAY")
 	buttonTexture:SetPoint ("right", f, "right", 5, -1)
 	buttonTexture:SetTexture ([[Interface\Buttons\UI-ScrollBar-ScrollDownButton-Up]])
 	buttonTexture:SetSize (32, 28)
@@ -1149,6 +1116,8 @@ function DF:CreateNewDropdownFrame (parent, name)
 
 	--on load
 	f:SetBackdropColor (1, 1, 1, .5)
+	f.arrowTexture:SetDrawLayer ("OVERLAY", 1)
+	f.arrowTexture2:SetDrawLayer ("OVERLAY", 2)
 
 	--dropdown
 	local border = CreateFrame ("frame", "$Parent_Border", f)
@@ -1205,8 +1174,8 @@ function DF:CreateDropdownButton (parent, name)
 	f:SetSize (150, 20)
 
 	local statusbar = f:CreateTexture ("$parent_StatusBarTexture", "ARTWORK")
-	statusbar:SetPoint ("topleft", f, "topleft", 0, 0)
-	statusbar:SetPoint ("bottomright", f, "bottomright", 0, 0)
+	statusbar:SetPoint ("left", f, "left", 1, 0)
+	statusbar:SetPoint ("right", f, "right", -10, 0)
 	statusbar:SetSize (150, 20)
 	statusbar:SetTexture ([[Interface\Tooltips\UI-Tooltip-Background]])
 	f.statusbar = statusbar

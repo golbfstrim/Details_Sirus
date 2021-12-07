@@ -830,28 +830,6 @@ local align_rows = function (self)
 						entry.onleave_func = row.onleave
 					end
 				end
-			elseif (type == "checkbox") then	
-				for i = 1, #self.scrollframe.lines do
-					local line = self.scrollframe.lines [i]
-					local checkbox = tremove (line.checkbox_available)
-					if (not checkbox) then
-						self:CreateCheckbox (line)
-						checkbox = tremove (line.checkbox_available)
-					end
-
-					tinsert (line.checkbox_inuse, checkbox)
-
-					checkbox:SetPoint ("left", line, "left", self._anchors [#self._anchors] + ((row.width - 20) / 2), 0)
-					if (sindex == rows_shown) then
-						checkbox:SetWidth (20)
-						--checkbox:SetWidth (row.width - 25)
-					else
-						checkbox:SetWidth (20)
-					end
-
-					checkbox.onenter_func = nil
-					checkbox.onleave_func = nil
-				end
 			elseif (type == "button") then
 				for i = 1, #self.scrollframe.lines do
 					local line = self.scrollframe.lines [i]
@@ -1003,13 +981,6 @@ local update_rows = function (self, updated_rows)
 			row.button_available[i]:Hide()
 		end
 
-		for i = #row.checkbox_inuse, 1, -1 do
-			tinsert (row.checkbox_available, tremove (row.checkbox_inuse, i))
-		end
-		for i = 1, #row.checkbox_available do
-			row.checkbox_available[i]:Hide()
-		end
-
 		for i = #row.icon_inuse, 1, -1 do
 			tinsert (row.icon_available, tremove (row.icon_inuse, i))
 		end
@@ -1068,17 +1039,6 @@ local create_panel_entry = function (self, row)
 	editbox:SetTemplate (DF:GetTemplate ("dropdown", "OPTIONS_DROPDOWN_TEMPLATE"))
 
 	tinsert (row.entry_available, editbox)
-end
-
-local create_panel_checkbox = function (self, row)
-	--row.checkbox_available
-	row.checkbox_total = row.checkbox_total + 1
-
-	local switch = DF:NewSwitch (row, nil, "$parentCheckBox" .. row.checkbox_total, nil, 20, 20, nil, nil, false)
-	switch:SetAsCheckBox()
-	switch:SetTemplate(DF:GetTemplate ("switch", "OPTIONS_CHECKBOX_TEMPLATE"))
-
-	tinsert (row.checkbox_available, switch)
 end
 
 local create_panel_button = function (self, row)
@@ -1175,7 +1135,6 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 	panel.CreateRowText = create_panel_text
 	panel.CreateRowEntry = create_panel_entry
 	panel.CreateRowButton = create_panel_button
-	panel.CreateCheckbox = create_panel_checkbox
 	panel.CreateRowIcon = create_panel_icon
 	panel.CreateRowTexture = create_panel_texture
 	panel.SetFillFunction = set_fill_function
@@ -1215,7 +1174,7 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 				if (results and results [1]) then
 					row:Show()
 
-					local text, entry, button, icon, texture, checkbox = 1, 1, 1, 1, 1, 1
+					local text, entry, button, icon, texture = 1, 1, 1, 1, 1
 
 					for index, t in ipairs (panel.rows) do
 						if (not t.hidden) then
@@ -1243,17 +1202,7 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 								entrywidget:SetCursorPosition(0)
 
 								entrywidget:Show()
-							elseif (t.type == "checkbox") then
-								local checkboxwidget = row.checkbox_inuse [button]
-								checkbox = checkbox + 1
-								checkboxwidget.index = real_index
-								checkboxwidget:SetValue(results [index])
 
-								local func = function()
-									t.func (real_index, index)
-									panel:Refresh()
-								end
-								checkboxwidget.OnSwitch = func
 							elseif (t.type == "button") then
 								local buttonwidget = row.button_inuse [button]
 								button = button + 1
@@ -1304,26 +1253,10 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 								iconwidget.line = index
 								iconwidget.index = real_index
 
+								--print (index, results [index])
 								if (type (results [index]) == "string") then
 									local result = results [index]:gsub (".-%\\", "")
 									iconwidget._icon.texture = results [index]
-								elseif (type (results [index]) == "table") then
-									iconwidget._icon:SetTexture (results [index].texture)
-
-									local textCoord = results [index].texcoord
-									if (textCoord) then
-										iconwidget._icon:SetTexCoord (unpack(textCoord))
-									else
-										iconwidget._icon:SetTexCoord (0, 1, 0, 1)
-									end
-
-									local color = results [index].color
-									if (color) then
-										local r, g, b, a = DF:ParseColors(color)
-										iconwidget._icon:SetVertexColor(r, g, b, a)
-									else
-										iconwidget._icon:SetVertexColor(1, 1, 1, 1)
-									end
 								else
 									iconwidget._icon:SetTexture (results [index])
 								end
@@ -1340,23 +1273,6 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 								if (type (results [index]) == "string") then
 									local result = results [index]:gsub (".-%\\", "")
 									texturewidget.texture = results [index]
-								elseif (type (results [index]) == "table") then
-									texturewidget:SetTexture (results [index].texture)
-
-									local textCoord = results [index].texcoord
-									if (textCoord) then
-										texturewidget:SetTexCoord (unpack(textCoord))
-									else
-										texturewidget:SetTexCoord (0, 1, 0, 1)
-									end
-
-									local color = results [index].color
-									if (color) then
-										local r, g, b, a = DF:ParseColors(color)
-										texturewidget:SetVertexColor(r, g, b, a)
-									else
-										texturewidget:SetVertexColor(1, 1, 1, 1)
-									end
 								else
 									texturewidget:SetTexture (results [index])
 								end
@@ -1433,10 +1349,6 @@ function DF:NewFillPanel (parent, rows, name, member, w, h, total_lines, fill_ro
 			row.button_available = {}
 			row.button_inuse = {}
 			row.button_total = 0
-
-			row.checkbox_available = {}
-			row.checkbox_inuse = {}
-			row.checkbox_total = 0
 
 			row.icon_available = {}
 			row.icon_inuse = {}
@@ -3919,7 +3831,7 @@ function DF:CreateTabContainer (parent, title, frame_name, frame_list, options_t
 		title:SetPoint ("topleft", mainTitle, "bottomleft", 0, 0)
 
 		local tabButton = DF:CreateButton (mainFrame, DF.TabContainerFunctions.SelectIndex, button_width, button_height, frame.title, i, nil, nil, nil, nil, false, button_tab_template)
-		tabButton:SetSize ( button_width, button_height)
+		PixelUtil.SetSize (tabButton, button_width, button_height)
 		tabButton:SetFrameLevel (220)
 		tabButton.textsize = button_text_size
 		tabButton.mainFrame = mainFrame
@@ -3964,7 +3876,7 @@ function DF:CreateTabContainer (parent, title, frame_name, frame_list, options_t
 
 	for i = 2, #mainFrame.AllButtons do
 		local button = mainFrame.AllButtons [i]
-		button:SetPoint ("topleft", mainTitle, "topleft", x, y)
+		PixelUtil.SetPoint (button, "topleft", mainTitle, "topleft", x, y)
 		x = x + button_width + 2
 
 		if (i % amount_buttons_per_row == 0) then
@@ -4305,10 +4217,9 @@ DF.ScrollBoxFunctions.SetFramesHeight = function (self, new_height)
 	self:Refresh()
 end
 
-DF.ScrollBoxFunctions.OnSizeChanged = function (self, _, height)
+DF.ScrollBoxFunctions.OnSizeChanged = function (self)
 	if (self.ReajustNumFrames) then
 		--> how many lines the scroll can show
-		if height then self:SetHeight(height) end
 		local amountOfFramesToShow = floor (self:GetHeight() / self.LineHeight)
 
 		--> how many lines the scroll already have
@@ -5073,8 +4984,8 @@ DF.IconRowFunctions = {
 			local newIconFrame = CreateFrame ("frame", "$parentIcon" .. self.NextIcon, self)
 
 			newIconFrame.Texture = newIconFrame:CreateTexture (nil, "artwork")
-			newIconFrame.Texture:SetPoint ("topleft", newIconFrame, "topleft", 1, -1)
-			newIconFrame.Texture:SetPoint ("bottomright", newIconFrame, "bottomright", -1, 1)
+			PixelUtil.SetPoint (newIconFrame.Texture, "topleft", newIconFrame, "topleft", 1, -1)
+			PixelUtil.SetPoint (newIconFrame.Texture, "bottomright", newIconFrame, "bottomright", -1, 1)
 
 			newIconFrame.Border = newIconFrame:CreateTexture (nil, "background")
 			newIconFrame.Border:SetAllPoints()
@@ -5119,16 +5030,16 @@ DF.IconRowFunctions = {
 
 		if (growDirection == 1) then --grow to right
 			if (self.NextIcon == 1) then
-				iconFrame:SetPoint ("left", anchorTo, "left", xPadding, 0)
+				PixelUtil.SetPoint (iconFrame, "left", anchorTo, "left", xPadding, 0)
 			else
-				iconFrame:SetPoint ("left", anchorTo, "right", xPadding, 0)
+				PixelUtil.SetPoint (iconFrame, "left", anchorTo, "right", xPadding, 0)
 			end
 
 		elseif (growDirection == 2) then --grow to left
 			if (self.NextIcon == 1) then
-				iconFrame:SetPoint ("right", anchorTo, "right", xPadding, 0)
+				PixelUtil.SetPoint (iconFrame, "right", anchorTo, "right", xPadding, 0)
 			else
-				iconFrame:SetPoint ("right", anchorTo, "left", xPadding, 0)
+				PixelUtil.SetPoint (iconFrame, "right", anchorTo, "left", xPadding, 0)
 			end
 
 		end
@@ -5210,7 +5121,7 @@ DF.IconRowFunctions = {
 				iconFrame.StackText:Hide()
 			end
 
-			iconFrame:SetSize (self.options.icon_width, self.options.icon_height)
+			PixelUtil.SetSize (iconFrame, self.options.icon_width, self.options.icon_height)
 			iconFrame:Show()
 
 			--> update the size of the frame
@@ -6894,7 +6805,7 @@ function DF:BuildStatusbarAuthorInfo (f, addonBy, authorsNameString)
 
 	local options_dropdown_template = DF:GetTemplate ("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 	local discordTextEntry = DF:CreateTextEntry (f, function()end, 200, 18, "DiscordTextBox", _, _, options_dropdown_template)
-	discordTextEntry:SetText ("https://discord.gg/UXSc7nt")
+	discordTextEntry:SetText ("https://discord.gg/Cbc6KUP")
 	discordTextEntry:SetFrameLevel (5000)
 
 	authorName:SetPoint ("left", f, "left", 2, 0)
@@ -7155,8 +7066,8 @@ DF.StatusBarFunctions = {
 	end
 
 	healthBarMetaFunctions.Initialize = function (self)
-		self:SetWidth (self.Settings.Width, 1)
-		self:SetHeight (self.Settings.Height, 1)
+		PixelUtil.SetWidth (self, self.Settings.Width, 1)
+		PixelUtil.SetHeight (self, self.Settings.Height, 1)
 
 		self:SetTexture (self.Settings.Texture)
 
@@ -7203,7 +7114,7 @@ DF.StatusBarFunctions = {
 	healthBarMetaFunctions.UpdateHealth = function (self)
 		local health = UnitHealth (self.displayedUnit)
 		self.currentHealth = health
-		self:SetStatusBarValue (health)
+		PixelUtil.SetStatusBarValue (self, health)
 
 		self:RunHooksForWidget ("OnHealthChange", self, self.displayedUnit)
 	end
@@ -7223,9 +7134,9 @@ DF.StatusBarFunctions = {
 
 		if (self.Settings.ShowHealingPrediction) then
 			--incoming heal on the unit from all sources
-			local unitHealIncoming = self.displayedUnit and UnitGetIncomingHeals (self.displayedUnit) or 0
+			local unitHealIncoming = UnitGetIncomingHeals (self.displayedUnit) or 0
 			--heal absorbs
-			local unitHealAbsorb = self.displayedUnit and UnitGetTotalHealAbsorbs (self.displayedUnit) or 0
+			local unitHealAbsorb = UnitGetTotalHealAbsorbs (self.displayedUnit) or 0
 
 			if (unitHealIncoming > 0) then
 				--calculate what is the percent of health incoming based on the max health the player has
@@ -7251,7 +7162,7 @@ DF.StatusBarFunctions = {
 
 		if (self.Settings.ShowShields) then
 			--damage absorbs
-			local unitDamageAbsorb = self.displayedUnit and UnitGetTotalAbsorbs (self.displayedUnit) or 0
+			local unitDamageAbsorb = UnitGetTotalAbsorbs (self.displayedUnit) or 0
 
 			if (unitDamageAbsorb > 0) then
 				local damageAbsorbPercent = unitDamageAbsorb / currentHealthMax
@@ -7461,8 +7372,8 @@ DF.PowerFrameFunctions = {
 	end,
 
 	Initialize = function (self)
-		self:SetWidth (self.Settings.Width)
-		self:SetHeight (self.Settings.Height)
+		PixelUtil.SetWidth (self, self.Settings.Width)
+		PixelUtil.SetHeight (self, self.Settings.Height)
 
 		self:SetTexture (self.Settings.Texture)
 
@@ -7471,7 +7382,7 @@ DF.PowerFrameFunctions = {
 
 		if (self.Settings.ShowPercentText) then
 			self.percentText:Show()
-			self.percentText:SetPoint ("center", self, "center", 0, 0)
+			PixelUtil.SetPoint (self.percentText, "center", self, "center", 0, 0)
 
 			DF:SetFontSize (self.percentText, 9)
 			DF:SetFontColor (self.percentText, "white")
@@ -7513,7 +7424,7 @@ DF.PowerFrameFunctions = {
 	end,
 	UpdatePower = function (self)
 		self.currentPower = UnitPower (self.displayedUnit, self.powerType)
-		self:SetStatusBarValue (self.currentPower)
+		PixelUtil.SetStatusBarValue (self, self.currentPower)
 
 		if (self.Settings.ShowPercentText) then
 			self.percentText:SetText (floor (self.currentPower / self.currentPowerMax * 100) .. "%")
@@ -7708,8 +7619,8 @@ DF.CastFrameFunctions = {
 		self.Colors = self.Settings.Colors
 
 		self:SetUnit (nil)
-		self:SetWidth (self.Settings.Width)
-		self:SetHeight (self.Settings.Height)
+		PixelUtil.SetWidth (self, self.Settings.Width)
+		PixelUtil.SetHeight (self, self.Settings.Height)
 
 		self.background:SetTexture (self.Settings.BackgroundColor:GetColor())
 		self.background:SetAllPoints()
@@ -8556,10 +8467,10 @@ DF.BorderFunctions = {
 	end,
 
 	SetBorderThickness = function (self, newThickness)
-		self.leftBorder:SetWidth (newThickness, newThickness)
-		self.rightBorder:SetWidth (newThickness, newThickness)
-		self.topBorder:SetHeight (newThickness, newThickness)
-		self.bottomBorder:SetHeight (newThickness, newThickness)
+		PixelUtil.SetWidth (self.leftBorder, newThickness, newThickness)
+		PixelUtil.SetWidth (self.rightBorder, newThickness, newThickness)
+		PixelUtil.SetHeight (self.topBorder, newThickness, newThickness)
+		PixelUtil.SetHeight (self.bottomBorder, newThickness, newThickness)
 	end,
 
 	WidgetType = "border",
@@ -8584,9 +8495,9 @@ function DF:CreateBorderFrame (parent, name)
 		leftBorder:SetTexture (1, 1, 1, 1)
 		tinsert (f.allTextures, leftBorder)
 		f.leftBorder = leftBorder
-		leftBorder:SetPoint ("topright", f, "topleft", 0, 1, 0, 1)
-		leftBorder:SetPoint ("bottomright", f, "bottomleft", 0, -1, 0, -1)
-		leftBorder:SetWidth (1, 1)
+		PixelUtil.SetPoint (leftBorder, "topright", f, "topleft", 0, 1, 0, 1)
+		PixelUtil.SetPoint (leftBorder, "bottomright", f, "bottomleft", 0, -1, 0, -1)
+		PixelUtil.SetWidth (leftBorder, 1, 1)
 
 	--> create right border
 		local rightBorder = f:CreateTexture (nil, "overlay")
@@ -8594,9 +8505,9 @@ function DF:CreateBorderFrame (parent, name)
 		rightBorder:SetTexture (1, 1, 1, 1)
 		tinsert (f.allTextures, rightBorder)
 		f.rightBorder = rightBorder
-		rightBorder:SetPoint ("topleft", f, "topright", 0, 1, 0, 1)
-		rightBorder:SetPoint ("bottomleft", f, "bottomright", 0, -1, 0, -1)
-		rightBorder:SetWidth (1, 1)
+		PixelUtil.SetPoint (rightBorder, "topleft", f, "topright", 0, 1, 0, 1)
+		PixelUtil.SetPoint (rightBorder, "bottomleft", f, "bottomright", 0, -1, 0, -1)
+		PixelUtil.SetWidth (rightBorder, 1, 1)
 
 	--> create top border
 		local topBorder = f:CreateTexture (nil, "overlay")
@@ -8604,9 +8515,9 @@ function DF:CreateBorderFrame (parent, name)
 		topBorder:SetTexture (1, 1, 1, 1)
 		tinsert (f.allTextures, topBorder)
 		f.topBorder = topBorder
-		topBorder:SetPoint ("bottomleft", f, "topleft", 0, 0, 0, 0)
-		topBorder:SetPoint ("bottomright", f, "topright", 0, 0, 0, 0)
-		topBorder:SetHeight (1, 1)
+		PixelUtil.SetPoint (topBorder, "bottomleft", f, "topleft", 0, 0, 0, 0)
+		PixelUtil.SetPoint (topBorder, "bottomright", f, "topright", 0, 0, 0, 0)
+		PixelUtil.SetHeight (topBorder, 1, 1)
 
 	--> create  border
 		local bottomBorder = f:CreateTexture (nil, "overlay")
@@ -8614,9 +8525,9 @@ function DF:CreateBorderFrame (parent, name)
 		bottomBorder:SetTexture (1, 1, 1, 1)
 		tinsert (f.allTextures, bottomBorder)
 		f.bottomBorder = bottomBorder
-		bottomBorder:SetPoint ("topleft", f, "bottomleft", 0, 0, 0, 0)
-		bottomBorder:SetPoint ("topright", f, "bottomright", 0, 0, 0, 0)
-		bottomBorder:SetHeight (1, 1)
+		PixelUtil.SetPoint (bottomBorder, "topleft", f, "bottomleft", 0, 0, 0, 0)
+		PixelUtil.SetPoint (bottomBorder, "topright", f, "bottomright", 0, 0, 0, 0)
+		PixelUtil.SetHeight (bottomBorder, 1, 1)
 
 	return f
 end
@@ -8706,17 +8617,17 @@ end
 		Initialize = function (self)
 			self.border:SetBorderColor (self.Settings.BorderColor)
 
-			self:SetWidth (self.Settings.Width, 1)
-			self.SetHeight (self.Settings.Height, 1)
+			PixelUtil.SetWidth (self, self.Settings.Width, 1)
+			PixelUtil.SetHeight (self, self.Settings.Height, 1)
 
-			self.powerBar:SetPoint ("bottomleft", self, "bottomleft", 0, 0, 1, 1)
-			self.powerBar:SetPoint ("bottomright", self, "bottomright", 0, 0, 1, 1)
-			self.powerBar:SetHeight (self.Settings.PowerBarHeight, 1)
+			PixelUtil.SetPoint (self.powerBar, "bottomleft", self, "bottomleft", 0, 0, 1, 1)
+			PixelUtil.SetPoint (self.powerBar, "bottomright", self, "bottomright", 0, 0, 1, 1)
+			PixelUtil.SetHeight (self.powerBar, self.Settings.PowerBarHeight, 1)
 
 			--make the castbar overlap the powerbar
-			self.castBar:SetPoint ("bottomleft", self, "bottomleft", 0, 0, 1, 1)
-			self.castBar:SetPoint ("bottomright", self, "bottomright", 0, 0, 1, 1)
-			self.castBar:SetHeight (self.Settings.CastBarHeight, 1)
+			PixelUtil.SetPoint (self.castBar, "bottomleft", self, "bottomleft", 0, 0, 1, 1)
+			PixelUtil.SetPoint (self.castBar, "bottomright", self, "bottomright", 0, 0, 1, 1)
+			PixelUtil.SetHeight (self.castBar, self.Settings.CastBarHeight, 1)
 		end,
 
 		SetHealthBarColor = function (self, r, g, b, a)
@@ -9109,7 +9020,7 @@ function DF:CreateUnitFrame (parent, name, unitFrameSettingsOverride, healthBarS
 		do
 			--artwork
 			f.unitName = f:CreateFontString (nil, "artwork", "GameFontHighlightSmall")
-			f.unitName:SetPoint ("topleft", healthBar, "topleft", 2, -2, 1, 1)
+			PixelUtil.SetPoint (f.unitName, "topleft", healthBar, "topleft", 2, -2, 1, 1)
 
 			--target overlay - it's parented in the healthbar so other widgets won't get the overlay
 			f.targetOverlay = overlayFrame:CreateTexture (nil, "artwork")
@@ -9375,7 +9286,7 @@ DF.TimeLineBlockFunctions = {
 
 			local block = self:GetBlock (i)
 			block:Show()
-			block:SetPoint ("left", self, "left", xOffset + headerWidth, 0)
+			PixelUtil.SetPoint (block, "left", self, "left", xOffset + headerWidth, 0)
 
 			block.info.spellId = spellId
 			block.info.time = time
@@ -9393,7 +9304,7 @@ DF.TimeLineBlockFunctions = {
 					block.icon:SetDesaturated (false)
 				end
 
-				block:SetSize (self:GetHeight(), self:GetHeight())
+				PixelUtil.SetSize (block, self:GetHeight(), self:GetHeight())
 
 				if (isAura) then
 					block.auraLength:Show()
@@ -9406,7 +9317,7 @@ DF.TimeLineBlockFunctions = {
 				block.background:SetVertexColor (0, 0, 0, 0)
 			else
 				block.background:SetVertexColor (unpack (color))
-				block:SetSize (max (width, 16), self:GetHeight())
+				PixelUtil.SetSize (block, max (width, 16), self:GetHeight())
 				block.auraLength:Hide()
 			end
 		end

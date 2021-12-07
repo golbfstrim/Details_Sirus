@@ -5,6 +5,7 @@
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --> local pointers
+
 	local _math_floor = math.floor --lua local
 	local _type = type --lua local
 	local _math_abs = math.abs --lua local
@@ -258,8 +259,8 @@ local _utf8sub = string.utf8sub
 	function _detalhes:AtualizaPontos()
 		local _x, _y = self:GetPositionOnScreen()
 		if (not _x) then
-			return
-		end
+ 			return
+ 		end
 
 		local _w, _h = self:GetRealSize()
 
@@ -405,8 +406,8 @@ local _utf8sub = string.utf8sub
 		--> calc position
 		local _x, _y = self:GetPositionOnScreen()
 		if (not _x) then
-			return _detalhes:ScheduleTimer ("SaveMainWindowSize", 1, self)
-		end
+ 			return _detalhes:ScheduleTimer ("SaveMainWindowSize", 1, self)
+ 		end
 
 		--> save the position
 		local _w = baseframe_width
@@ -465,9 +466,9 @@ local _utf8sub = string.utf8sub
 
 		--> calc position
 		local _x, _y = self:GetPositionOnScreen()
-			if (not _x) then
-			return _detalhes:ScheduleTimer ("SaveMainWindowPosition", 1, self)
-		end
+		if (not _x) then
+ 			return _detalhes:ScheduleTimer ("SaveMainWindowPosition", 1, self)
+ 		end
 
 		if (self.mostrando ~= "solo") then
 			self:SaveLibWindow()
@@ -1957,7 +1958,7 @@ local _utf8sub = string.utf8sub
 
 				local sortTable = {}
 				for playerName, t in pairs (playerScore) do
-					local className = _detalhes.classid_to_classstring[t.class or 0]
+					local className = select (2, GetClassInfo (t.class or 0))
 					local classColor = "FFFFFFFF"
 					if (className) then
 						classColor = RAID_CLASS_COLORS [className] and RAID_CLASS_COLORS [className].colorStr
@@ -2051,7 +2052,7 @@ local _utf8sub = string.utf8sub
 						tinsert (playerTable, "")
 					end
 
-					local className = _detalhes.classid_to_classstring[player_class[playerTable[1]] or 0]
+					local className = select (2, GetClassInfo (player_class [playerTable [1]] or 0))
 					if (className) then
 						local playerNameFormated = _detalhes:GetOnlyName (playerTable[1])
 						local classColor = RAID_CLASS_COLORS [className] and RAID_CLASS_COLORS [className].colorStr
@@ -3656,6 +3657,7 @@ local _utf8sub = string.utf8sub
 				{"Ragnaros", "MAGE", 63},
 				{"The Lich King", "DEATHKNIGHT", },
 				{"Your Neighbor", "SHAMAN", },
+				{"Your Raid Leader", "MONK", },
 				{"Huffer", "HUNTER", },
 				{"Your Internet Girlfriend", "SHAMAN", },
 				{"Mr. President", "WARRIOR", },
@@ -3663,6 +3665,8 @@ local _utf8sub = string.utf8sub
 				{"Your Math Teacher", "SHAMAN", },
 				{"King Djoffrey", "PALADIN", },
 				{UnitName ("player") .. " Snow", pclass, },
+				{"A Drunk Dawrf", "MONK", },
+				{"Low Dps Guy", "MONK", },
 				{"Helvis Phresley", "DEATHKNIGHT", },
 				{"Stormwind Guard", "WARRIOR", },
 				{"A PvP Player", "ROGUE", 260},
@@ -3705,6 +3709,7 @@ local _utf8sub = string.utf8sub
 			{"Экспортировать", "MAGE", 63},
 			{"Готово", "DEATHKNIGHT", },
 			{"Создать", "SHAMAN", },
+			{"Текущий", "MONK", },
 			{"список команд", "HUNTER", },
 			{"центр", "SHAMAN", },
 			{"Разное", "WARRIOR", },
@@ -3717,6 +3722,7 @@ local _utf8sub = string.utf8sub
 			{"格檔", "PRIEST", },
 			{"中央", "MAGE", },
 			{"傷害", "SHAMAN", },
+			{"建立", "MONK", },
 			{"編輯", "WARRIOR", },
 			{"儲存變更", "ROGUE", },
 			{"刪除", "DEATHKNIGHT", },
@@ -3724,6 +3730,7 @@ local _utf8sub = string.utf8sub
 			{"吸收", "PRIEST", },
 			{"加到書籤", "MAGE", },
 			{"最大化", "SHAMAN", },
+			{"未命中", "MONK", },
 			{"�進階", "WARRIOR", },
 		}
 
@@ -3749,6 +3756,7 @@ local _utf8sub = string.utf8sub
 			{"시전", "PRIEST", },
 			{"현재", "MAGE", },
 			{"취소", "SHAMAN", },
+			{"내보내기", "MONK", },
 			{"(사용자 설정)", "WARRIOR", },
 			{"방어", "ROGUE", },
 			{"예제", "DEATHKNIGHT", },
@@ -3756,6 +3764,7 @@ local _utf8sub = string.utf8sub
 			{"최소", "PRIEST", },
 			{"미러 이미지", "MAGE", },
 			{"가장자리", "SHAMAN", },
+			{"외형", "MONK", },
 			{"아바타 선택", "WARRIOR", },
 		}
 
@@ -3803,6 +3812,9 @@ local _utf8sub = string.utf8sub
 				robot.spec = specs [math.random (1, #specs)]
 			elseif (robot.classe == "MAGE") then
 				local specs = {62, 63, 64}
+				robot.spec = specs [math.random (1, #specs)]
+			elseif (robot.classe == "MONK") then
+				local specs = {268, 269, 270}
 				robot.spec = specs [math.random (1, #specs)]
 			elseif (robot.classe == "PALADIN") then
 				local specs = {65, 66, 70}
@@ -3862,6 +3874,9 @@ local _utf8sub = string.utf8sub
 				robot.spec = specs [math.random (1, #specs)]
 			elseif (robot.classe == "MAGE") then
 				local specs = {62, 63, 64}
+				robot.spec = specs [math.random (1, #specs)]
+			elseif (robot.classe == "MONK") then
+				local specs = {268, 269, 270}
 				robot.spec = specs [math.random (1, #specs)]
 			elseif (robot.classe == "PALADIN") then
 				local specs = {65, 66, 70}
@@ -5673,6 +5688,7 @@ local CreateEventTrackerFrame = function (parent, name)
 		local scroll_createline = function (self, index)
 
 			local line = CreateFrame ("Frame", "$parentLine" .. index, self)
+			line:EnableMouse (false)
 			line.Index = index --> hack to not trigger error on UpdateWorldTrackerLines since Index is set after this function is ran
 
 			--> set its backdrop
@@ -5945,6 +5961,8 @@ local CreateEventTrackerFrame = function (parent, name)
 		--> scrollframe
 		local scrollframe = DF:CreateScrollBox (f, "$parentScrollFrame", scroll_refresh, CurrentShowing, scroll_width, 400, scroll_line_amount, _detalhes.event_tracker.line_height, scroll_createline, true, true)
 		scrollframe:SetPoint ("TOPLEFT", f, "TOPLEFT", 0, -header_size)
+		scrollframe:SetPoint ("TOPRIGHT", f, "TOPRIGHT", 0, -header_size)
+		scrollframe:SetPoint ("BOTTOMLEFT", f, "BOTTOMLEFT", 0, 0)
 		scrollframe:SetPoint ("BOTTOMRIGHT", f, "BOTTOMRIGHT", 0, 0)
 
 		--> update line - used by 'UpdateWorldTrackerLines' function
@@ -6000,7 +6018,7 @@ local CreateEventTrackerFrame = function (parent, name)
 				for index, line in ipairs (scrollframe:GetFrames()) do
 					update_line (line)
 				end
-				scrollframe:SetFramesHeight (_detalhes.event_tracker.line_height+1)
+				scrollframe:SetFramesHeight (_detalhes.event_tracker.line_height)
 				scrollframe:Refresh()
 			end
 		end
@@ -6030,10 +6048,12 @@ local CreateEventTrackerFrame = function (parent, name)
 				TitleString:Show()
 				TitleBackground:Show()
 				scrollframe:SetPoint ("TOPLEFT", f, "TOPLEFT", 0, -header_size)
+				scrollframe:SetPoint ("TOPRIGHT", f, "TOPRIGHT", 0, -header_size)
 			else
 				TitleString:Hide()
 				TitleBackground:Hide()
 				scrollframe:SetPoint ("TOPLEFT", f, "TOPLEFT", 0, 0)
+				scrollframe:SetPoint ("TOPRIGHT", f, "TOPRIGHT", 0, 0)
 			end
 
 			f:SetBackdropColor (unpack (_detalhes.event_tracker.frame.backdrop_color))

@@ -146,7 +146,7 @@ function SlashCmdList.DETAILS (msg, editbox)
 			local lower_instance = _detalhes:GetLowerInstanceNumber()
 			if (not lower_instance) then
 				local instance = _detalhes:GetInstance (1)
-				_detalhes.CriarInstancia (nil, nil, 1)
+				_detalhes.CriarInstancia (_, _, 1)
 				_detalhes:OpenOptionsWindow (instance)
 			else
 				_detalhes:OpenOptionsWindow (_detalhes:GetInstance (lower_instance))
@@ -165,7 +165,7 @@ function SlashCmdList.DETAILS (msg, editbox)
 		_detalhes:OpenNewsWindow()
 
 	elseif (command == "discord") then
-		_detalhes:CopyPaste ("https://discord.gg/UXSc7nt")
+		_detalhes:CopyPaste ("https://discord.gg/Cbc6KUP")
 
 
 	elseif (command == "debugwindow") then
@@ -199,7 +199,7 @@ function SlashCmdList.DETAILS (msg, editbox)
 
 	elseif (command == "spells") then
 		Details.OpenForge()
-		DetailsForgePanel.SelectModule (nil, nil, 1)
+		DetailsForgePanel.SelectModule (_, _, 2)
 
 	elseif (command == "feedback") then
 		_detalhes.OpenFeedbackWindow()
@@ -483,7 +483,7 @@ function SlashCmdList.DETAILS (msg, editbox)
 		local guid = _detalhes:FindGUIDFromName ("Ditador")
 		print (guid)
 
-		for i = 1, GetNumGroupMembers(), 1 do
+		for i = 1, GetNumGroupMembers()-1, 1 do
 			local name, realm = UnitName ("party"..i)
 			print (name, " -- ", realm)
 		end

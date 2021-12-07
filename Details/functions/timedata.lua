@@ -485,6 +485,7 @@
 					return 0
 				end
 			end
+			return 0
 		else
 			return 0
 		end
@@ -508,6 +509,7 @@
 					return 0
 				end
 			end
+			return 0
 		else
 			return 0
 		end

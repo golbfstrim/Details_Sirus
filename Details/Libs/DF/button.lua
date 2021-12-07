@@ -1205,14 +1205,14 @@ function DF:NewColorPickButton (parent, name, member, callback, alpha, button_te
 	background:SetPoint ("topleft", button.widget, "topleft", 1, -2)
 	background:SetPoint ("bottomright", button.widget, "bottomright", -1, 1)
 	background:SetTexCoord (0.337890625, 0.390625, 0.625, 0.658203125)
-	background:SetDrawLayer ("BORDER")
+	background:SetDrawLayer ("background", 1)
 
 	--textura da cor
 	local img = DF:NewImage (button, nil, color_button_width, color_button_height, nil, nil, "color_texture", "$parentTex")
 	img:SetTexture (1, 1, 1)
 	img:SetPoint ("topleft", button.widget, "topleft", 1, -2)
 	img:SetPoint ("bottomright", button.widget, "bottomright", -1, 1)
-	img:SetDrawLayer ("ARTWORK")
+	img:SetDrawLayer ("background", 2)
 
 	return button
 

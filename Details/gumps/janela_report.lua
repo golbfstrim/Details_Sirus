@@ -350,7 +350,7 @@ local function cria_drop_down (este_gump)
 
 			local channels = {_GetChannelList()} --> coloca o resultado em uma tabela .. {id1, canal1, id2, canal2}
 			for i = 1, #channels, 2 do --> total de canais
-				output_array [#output_array + 1] = {iconsize = iconsize, value = "CHANNEL|"..channels [i], label = channels [i]..". "..channels [i+1], onclick = on_click, icon = [[Interface\FriendsFrame\UI-Toast-ToastIcons]], texcoord = {0.3046875, 0.4453125, 0.109375, 0.390625}, iconcolor = {149/255, 112/255, 112/255}}
+				output_array [#output_array + 1] = {iconsize = iconsize, value = "CHANNEL|"..channels [i+1], label = channels [i]..". "..channels [i+1], onclick = on_click, icon = [[Interface\FriendsFrame\UI-Toast-ToastIcons]], texcoord = {0.3046875, 0.4453125, 0.109375, 0.390625}, iconcolor = {149/255, 112/255, 112/255}}
 			end
 
 			local bnet_friends = {}
@@ -581,7 +581,7 @@ local function cria_drop_down (este_gump)
 
 --> both check buttons
 
-	local function cria_check_buttons (este_gump)
+	function cria_check_buttons (este_gump)
 		local checkbox = _CreateFrame ("CheckButton", "Details_Report_CB_1", este_gump, "ChatConfigCheckButtonTemplate")
 		checkbox:SetPoint ("TOPLEFT", este_gump.wisp_who, "BOTTOMLEFT", -25, -4)
 		_G [checkbox:GetName().."Text"]:SetText (Loc ["STRING_REPORTFRAME_CURRENT"])

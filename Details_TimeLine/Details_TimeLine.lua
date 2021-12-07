@@ -24,6 +24,7 @@ local red = {1, 0, 0, .25}
 local green = {0, 1, 0, .25}
 
 local _combat_object
+local parser_cache = {}
 local _GetSpellInfo = _detalhes.getspellinfo
 
 --> shortcut for current combat
@@ -272,6 +273,8 @@ local function CreatePluginFrames()
 
 			TimeLine:RefreshScale()
 		elseif event == "COMBAT_PLAYER_ENTER" then --> combat started
+			parser_cache = TimeLine:GetParserPlayerCache()
+
 			_combat_object = ...
 
 			if not _combat_object and Details then
@@ -1191,7 +1194,14 @@ local function CreatePluginFrames()
 				local spellid = spell_table[3]
 
 				local spellInfo = DetailsFrameWork.CooldownsInfo[spellid]
-				local effectTime = spellInfo and spellInfo.duration or 8
+				local cooldown, effectTime
+				if(spellInfo) then
+					cooldown, effectTime = spellInfo.cooldown, spellInfo.duration
+				else
+					cooldown, effectTime = 8, 8
+				end
+
+				effectTime = effectTime or 6
 
 				local block = row.blocks[spell_index]
 				if(not block) then
@@ -1479,7 +1489,7 @@ function TimeLine:EnemySpellCast(time, token, sourceGUID, sourceName, sourceFlag
 					tinsert(enemyTable, data)
 
 					--individual spells cast
-					data = {_combat_object:GetCombatTime(), sourceName, spellID, token, targetName}
+					local data = {_combat_object:GetCombatTime(), sourceName, spellID, token, targetName}
 					local spellsTable = TimeLine.current_spells_individual[spellID]
 					if not spellsTable then
 						spellsTable = {}

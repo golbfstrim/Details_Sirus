@@ -12,8 +12,6 @@ end
 DetailsFrameworkCanLoad = true
 local SharedMedia = LibStub:GetLibrary ("LibSharedMedia-3.0")
 
-local LibGroupTalents = LibStub ("LibGroupTalents-1.0")
-
 local _
 local _type = type
 local _unpack = unpack
@@ -33,7 +31,7 @@ ALPHA_BLEND_AMOUNT = 0.8400251
 
 DF.AuthorInfo = {
 	Name = "Terciob",
-	Discord = "https://discord.gg/UXSc7nt",
+	Discord = "https://discord.gg/Cbc6KUP",
 }
 
 function DF.IsClassicWow()
@@ -45,25 +43,12 @@ function DF.IsClassicWow()
 end
 
 function DF.UnitGroupRolesAssigned (unitId)
-	-- this always seems to return [false, false, false] regardless of content. 
-	--if (UnitGroupRolesAssigned) then
-	--	return UnitGroupRolesAssigned (unitId)
-	--else
-	
-	-- use LibGroupTalents to find the role 
-	local role = LibGroupTalents:GetUnitRole(unitId) 
-	if role then 
-		if role == "melee" or role == "caster" then 
-			role = "DAMAGER"
-		elseif role == "tank" then 
-			role = "TANK"
-		elseif role == "healer" then 
-			role = "HEALER"
-		else
-			role = "NONE"
-		end
-		return role
+	if (UnitGroupRolesAssigned) then
+		return UnitGroupRolesAssigned (unitId)
 	else
+		--attempt to guess the role by the player spec
+
+		--at the moment just return none
 		return "NONE"
 	end
 end
@@ -78,52 +63,24 @@ local specIDs = {
 	["WARRIOR"] = {71, 72, 73},
 	["PALADIN"] = {65, 66, 70},
 	["DEATHKNIGHT"] = {250, 251, 252},
-	["DRUID"] = {102, 103, 104, 105},
+	["DRUID"] = {102, 103, 103, 105},
 	["HUNTER"] = {253, 254, 255},
 	["SHAMAN"] = {262, 263, 264},
 }
 
-local function GetFeralSubSpec(unit)
-	--57881 = Natural Reactions - Increase bear dodge and regen rage on dodge.
-	--other options:
-	--57877 = Protector of the Pack - Increase attack power by 6% and reduced damage taken by 12% in bear form.
-	--16858 = Feral Aggression (0 points in bear) - Increased attack power reduction of demo roar and increase ferocious bite damage.
-	--16931 = Thick Hide - Increase armor from cloth and leather items. 
-	local points = LibGroupTalents:UnitHasTalent(unit, GetSpellInfo(57881), LibGroupTalents:GetActiveTalentGroup(unit))
-	if points and points > 0 then 
-		return 3 -- we are a guardian druid
-	else
-		return 2
-	end
-end
-
-function DF.GetSpecialization(unit)
-	if not unit then unit = "player" end
-	local talantGroup = LibGroupTalents:GetActiveTalentGroup(unit)
+function DF.GetSpecialization()
+	local talantGroup = GetActiveTalentGroup()
 	local maxPoints, specIdx = 0, 0
 
 	for i = 1, MAX_TALENT_TABS do
-		local name, icon, pointsSpent = LibGroupTalents:GetTalentTabInfo(unit, i, talantGroup)
-		if pointsSpent ~= nil then
-			if maxPoints < pointsSpent then
-				maxPoints = pointsSpent
-				if select(2, UnitClass(unit)) == "DRUID" and i >= 2 then
-					if i == 3 then 
-						specIdx = 4
-					elseif i == 2 then 
-						specIdx = GetFeralSubSpec(unit)
-					end
-				else
-					specIdx = i
-				end
-			end
+		local name, icon, pointsSpent = GetTalentTabInfo(i, nil, nil, talantGroup)
+		if maxPoints < pointsSpent then
+			maxPoints = pointsSpent
+			specIdx = i
 		end
 	end
-	return specIdx
-end
 
-function DF.GetSpecializationID(class, index)
-	return specIDs[class] and specIDs[class][index]
+	return specIdx
 end
 
 function DF.GetSpecializationInfoByID (...)
@@ -145,14 +102,6 @@ function DF.GetSpecializationRole (...)
 	end
 
 	return nil
-end
-
-function DF.GetGUIDTalentString(guid)
-	local _, tree1, tree2, tree3 = LibGroupTalents:GetGUIDTalentSpec(guid)
-	if tree1 and tree2 and tree3 then 
-		return tree1 .. "/" .. tree2 .. "/" .. tree3
-	end
-	return ""
 end
 
 --build dummy encounter journal functions if they doesn't exists
@@ -538,7 +487,7 @@ function DF:GroupIterator (func, ...)
 		end
 
 	elseif (IsInGroup()) then
-		for i = 1, GetNumGroupMembers() do
+		for i = 1, GetNumGroupMembers() - 1 do
 			DF:QuickDispatch (func, "party" .. i, ...)
 		end
 
@@ -2105,22 +2054,11 @@ DF.font_templates ["OPTIONS_FONT_TEMPLATE"] = {color = "yellow", size = 12, font
 
 DF.dropdown_templates = DF.dropdown_templates or {}
 DF.dropdown_templates ["OPTIONS_DROPDOWN_TEMPLATE"] = {
-	backdrop = {
-		edgeFile = [[Interface\Buttons\WHITE8X8]],
-		edgeSize = 1,
-		bgFile = [[Interface\Tooltips\UI-Tooltip-Background]],
-		tileSize = 64,
-		tile = true
-	},
-
-	backdropcolor = {1, 1, 1, .7},
+	backdrop = {edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1, bgFile = [[Interface\Tooltips\UI-Tooltip-Background]], tileSize = 64, tile = true},
+	backdropcolor = {1, 1, 1, .5},
 	backdropbordercolor = {0, 0, 0, 1},
-	onentercolor = {1, 1, 1, .9},
+	onentercolor = {1, 1, 1, .5},
 	onenterbordercolor = {1, 1, 1, 1},
-
-	dropicon = "Interface\\BUTTONS\\arrow-Down-Down",
-	dropiconsize = {16, 16},
-	dropiconpoints = {-2, -3},
 }
 
 -- switches
@@ -3293,6 +3231,7 @@ function DF:GetCurrentSpec()
 end
 
 local specs_per_class = {
+	["DEMONHUNTER"] = {577, 581},
 	["DEATHKNIGHT"] = {250, 251, 252},
 	["WARRIOR"] = {71, 72, 73},
 	["MAGE"] = {62, 63, 64},
@@ -3303,6 +3242,7 @@ local specs_per_class = {
 	["PRIEST"] = {256, 257, 258},
 	["WARLOCK"] = {265, 266, 267},
 	["PALADIN"] = {65, 66, 70},
+	["MONK"] = {268, 269, 270},
 }
 
 function DF:GetClassSpecIDs (class)
@@ -3388,8 +3328,10 @@ DF.ClassFileNameToIndex = {
 	["PRIEST"] = 5,
 	["HUNTER"] = 3,
 	["WARLOCK"] = 9,
+	["DEMONHUNTER"] = 12,
 	["SHAMAN"] = 7,
-	["DRUID"] = 10,
+	["DRUID"] = 11,
+	["MONK"] = 10,
 	["PALADIN"] = 2,
 }
 DF.ClassCache = {}
@@ -3401,14 +3343,15 @@ function DF:GetClassList()
 	end
 
 	for className, classIndex in pairs (DF.ClassFileNameToIndex) do
+		local classTable = C_CreatureInfo.GetClassInfo (classIndex)
 		local t = {
 			ID = classIndex,
-			Name = className,
+			Name = classTable.className,
 			Texture = [[Interface\GLUES\CHARACTERCREATE\UI-CharacterCreate-Classes]],
 			TexCoord = CLASS_ICON_TCOORDS [className],
 			FileString = className,
 		}
-		tinsert (DF.ClassCache, classIndex, t)
+		tinsert (DF.ClassCache, t)
 	end
 
 	return DF.ClassCache
@@ -3573,6 +3516,10 @@ function DF:GetCLEncounterIDs()
 end
 
 DF.ClassSpecs = {
+	["DEMONHUNTER"] = {
+		[577] = true,
+		[581] = true,
+	},
 	["DEATHKNIGHT"] = {
 		[250] = true,
 		[251] = true,
@@ -3624,9 +3571,18 @@ DF.ClassSpecs = {
 		[66] = true,
 		[70] = true,
 	},
+	["MONK"] = {
+		[268] = true,
+		[269] = true,
+		[270] = true,
+	},
 }
 
 DF.SpecListByClass = {
+	["DEMONHUNTER"] = {
+		577,
+		581,
+	},
 	["DEATHKNIGHT"] = {
 		250,
 		251,
@@ -3677,6 +3633,11 @@ DF.SpecListByClass = {
 		65,
 		66,
 		70,
+	},
+	["MONK"] = {
+		268,
+		269,
+		270,
 	},
 }
 

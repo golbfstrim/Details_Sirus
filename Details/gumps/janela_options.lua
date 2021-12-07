@@ -2480,16 +2480,14 @@ function window:CreateFrame17()
 
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
-		local texCoords = {.9, 0.1, 0.1, .9}
 		local typeCombatAlpha = {
-			{value = 1, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_1"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_03", texcoord = texCoords, color = "gray"},
-			{value = 2, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_2"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords},
-			{value = 3, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_3"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords},
-			{value = 4, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_4"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords},
-			{value = 5, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_5"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords},
-			{value = 6, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_6"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords},
-			{value = 7, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_7"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords, desc = Loc ["STRING_OPTIONS_COMBAT_ALPHA_6"] .. " + " .. Loc ["STRING_OPTIONS_COMBAT_ALPHA_3"]},
-			{value = 8, label = "In Battlegound", onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = texCoords},
+			{value = 1, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_1"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_03", texcoord = {1, 0, 0, 1}, color = "gray"},
+			{value = 2, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_2"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = {1, 0, 0, 1}},
+			{value = 3, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_3"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = {1, 0, 0, 1}},
+			{value = 4, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_4"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = {1, 0, 0, 1}},
+			{value = 5, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_5"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = {1, 0, 0, 1}},
+			{value = 6, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_6"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = {1, 0, 0, 1}},
+			{value = 7, label = Loc ["STRING_OPTIONS_COMBAT_ALPHA_7"], onclick = onSelectCombatAlpha, icon = "Interface\\Icons\\INV_Misc_Spyglass_02", texcoord = {1, 0, 0, 1}, desc = Loc ["STRING_OPTIONS_COMBAT_ALPHA_6"] .. " + " .. Loc ["STRING_OPTIONS_COMBAT_ALPHA_3"]},
 		}
 		local buildTypeCombatAlpha = function()
 			return typeCombatAlpha
@@ -9242,6 +9240,12 @@ function window:CreateFrame9()
 					{value = [[Interface\TALENTFRAME\bg-mage-frost]], label = "Frost", onclick = onSelectSecTexture, icon = [[Interface\ICONS\spell_frost_frostbolt02]], texcoord = nil}
 				},
 
+				["MONK"] = {
+					{value = [[Interface\TALENTFRAME\bg-monk-brewmaster]], label = "Brewmaster", onclick = onSelectSecTexture, icon = [[Interface\ICONS\monk_stance_drunkenox]], texcoord = nil},
+					{value = [[Interface\TALENTFRAME\bg-monk-mistweaver]], label = "Mistweaver", onclick = onSelectSecTexture, icon = [[Interface\ICONS\monk_stance_wiseserpent]], texcoord = nil},
+					{value = [[Interface\TALENTFRAME\bg-monk-battledancer]], label = "Windwalker", onclick = onSelectSecTexture, icon = [[Interface\ICONS\monk_stance_whitetiger]], texcoord = nil}
+				},
+
 				["PALADIN"] = {
 					{value = [[Interface\TALENTFRAME\bg-paladin-holy]], label = "Holy", onclick = onSelectSecTexture, icon = [[Interface\ICONS\spell_holy_holybolt]], texcoord = nil},
 					{value = [[Interface\TALENTFRAME\bg-paladin-protection]], label = "Protection", onclick = onSelectSecTexture, icon = [[Interface\ICONS\ability_paladin_shieldofthetemplar]], texcoord = nil},
@@ -9300,6 +9304,7 @@ function window:CreateFrame9()
 				{value = "DRUID", label = "Druid", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["DRUID"]},
 				{value = "HUNTER", label = "Hunter", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["HUNTER"]},
 				{value = "MAGE", label = "Mage", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["MAGE"]},
+				{value = "MONK", label = "Monk", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["MONK"]},
 				{value = "PALADIN", label = "Paladin", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["PALADIN"]},
 				{value = "PRIEST", label = "Priest", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["PRIEST"]},
 				{value = "ROGUE", label = "Rogue", onclick = onSelectMainTexture, icon = _detalhes.class_icons_small, texcoord = _detalhes.class_coords ["ROGUE"]},
