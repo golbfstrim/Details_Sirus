@@ -127,6 +127,8 @@
 				["multi"] = {
 				},
 			},
+			["encounterid"] = "1721",
+			["use_encounterid"] = true,
 			["difficulty"] = {
 				["multi"] = {
 				},
@@ -237,6 +239,7 @@
 				["multi"] = {
 				},
 			},
+			["use_encounterid"] = true,
 			["difficulty"] = {
 				["multi"] = {
 				},
@@ -1269,9 +1272,9 @@
 		},
 	}
 
-	function _detalhes:CreateWeakAura (aura_type, spellid, use_spellid, spellname, name, icon_texture, target, stacksize, sound, chat, icon_text, icon_glow, group, icon_size, other_values, in_combat, cooldown_animation)
+	function _detalhes:CreateWeakAura (aura_type, spellid, use_spellid, spellname, name, icon_texture, target, stacksize, sound, chat, icon_text, icon_glow, encounter_id, group, icon_size, other_values, in_combat, cooldown_animation)
 
-		--print (aura_type, spellid, use_spellid, spellname, name, icon_texture, target, stacksize, sound, chat, icon_text, icon_glow, group, icon_size, other_values)
+		--print (aura_type, spellid, use_spellid, spellname, name, icon_texture, target, stacksize, sound, chat, icon_text, icon_glow, encounter_id, group, icon_size, other_values)
 
 		--> check if wa is installed
 		if (not WeakAuras or not WeakAurasSaved) then
@@ -1619,6 +1622,12 @@
 		new_aura.id = name
 		new_aura.displayIcon = icon_texture
 
+		--> load by encounter id
+		if (encounter_id) then
+			new_aura.load.use_encounterid = true
+			new_aura.load.encounterid = tostring (encounter_id)
+		end
+
 		--> using sound
 		if (sound and type (sound) == "table") then
 			local add = _detalhes.table.copy ({}, sound_prototype_custom)
@@ -1735,12 +1744,12 @@
 		DetailsPluginContainerWindow.EmbedPlugin (DetailsAuraPanel, DetailsAuraPanel, true)
 
 		function DetailsAuraPanel.RefreshWindow()
-			_detalhes:OpenAuraPanel() --spellid, spellname, spellicon, triggertype, auratype, other_values
+			_detalhes:OpenAuraPanel() --spellid, spellname, spellicon, encounterid, triggertype, auratype, other_values
 		end
 	end
 
 	local empty_other_values = {}
-	function _detalhes:OpenAuraPanel (spellid, spellname, spellicon, triggertype, auratype, other_values)
+	function _detalhes:OpenAuraPanel (spellid, spellname, spellicon, encounterid, triggertype, auratype, other_values)
 
 		if (not spellname and spellid) then
 			spellname = GetSpellInfo(spellid)
@@ -2227,6 +2236,13 @@
 --			useglow.glow_test:SetPoint ("BOTTOMRIGHT", useglow.widget, "BOTTOMRIGHT", 20, -2)
 --			useglow.glow_test:Hide()
 
+			--encounter id
+			local encounterid_label = fw:CreateLabel (f, "Encounter ID: ", nil, nil, "GameFontNormal")
+			local encounterid = fw:CreateTextEntry (f, _detalhes.empty_function, 150, 20, "EncounterIdText", "$parentEncounterIdText")
+			encounterid:SetTemplate (slider_template)
+			encounterid:SetPoint ("LEFT", encounterid_label, "RIGHT", 2, 0)
+			encounterid.tooltip = "Only load this aura for this raid encounter."
+
 			--size
 			local icon_size_slider = fw:NewSlider (f, f, "$parentIconSizeSlider", "IconSizeSlider", 150, 20, 8, 256, 1, 64)
 			local icon_size_label = fw:CreateLabel (f, "Size: ", nil, nil, "GameFontNormal")
@@ -2352,8 +2368,13 @@
 				local icon_text = f.AuraText.text
 				local icon_glow = f.UseGlow.value
 
+				local eid = DetailsAuraPanel.EncounterIdText.text
+				if (eid == "") then
+					eid = nil
+				end
+
 				if (addon == "WA") then
-					_detalhes:CreateWeakAura (aura_type_value, spellid, use_spellId, spellname, name, icon, target, stacksize, sound, chat, icon_text, icon_glow, folder, iconsize, f.other_values, incombat, iscooldown)
+					_detalhes:CreateWeakAura (aura_type_value, spellid, use_spellId, spellname, name, icon, target, stacksize, sound, chat, icon_text, icon_glow, eid, folder, iconsize, f.other_values, incombat, iscooldown)
 				else
 					_detalhes:Msg ("No Aura Addon selected. Addons currently supported: WeakAuras 2.")
 				end
@@ -2385,6 +2406,7 @@
 			--triggers
 			aura_on_label:SetPoint ("TOPLEFT", f, "TOPLEFT", x_start, ((y_start*4) + (65)) * -1)
 			stack_label:SetPoint ("TOPLEFT", f, "TOPLEFT", x_start, ((y_start*17) + (65)) * -1)
+			encounterid_label:SetPoint ("TOPLEFT", f, "TOPLEFT", x_start, ((y_start*18) + (65)) * -1)
 
 			--about the spell
 			spellname_label:SetPoint ("TOPLEFT", f, "TOPLEFT", x_start, ((y_start*20) + (45)) * -1)
@@ -2498,17 +2520,22 @@
 		end
 
 		DetailsAuraPanel.spellid = spellid
+		DetailsAuraPanel.encounterid = encounterid
+		DetailsAuraPanel.EncounterIdText.text = encounterid or ""
 
 		DetailsAuraPanel.other_values = other_values
 
 		DetailsAuraPanel.WeakaurasFolderDropdown:Refresh()
-
-		DetailsAuraPanel.IconSizeSlider:SetValue (64)
+		if (encounterid) then
+			DetailsAuraPanel.WeakaurasFolderDropdown:Select ("Details! Aura Group")
+			DetailsAuraPanel.IconSizeSlider:SetValue (128)
+		else
+			DetailsAuraPanel.WeakaurasFolderDropdown:Select (1, true)
+			DetailsAuraPanel.IconSizeSlider:SetValue (64)
+		end
 
 		if (DetailsAuraPanel.other_values.dbm_timer_id or DetailsAuraPanel.other_values.bw_timer_id) then
 			DetailsAuraPanel.WeakaurasFolderDropdown:Select ("Details! Boss Mods Group")
-		else
-			DetailsAuraPanel.WeakaurasFolderDropdown:Select (1, true)
 		end
 
 		if (DetailsAuraPanel.other_values.text_size) then
@@ -2600,11 +2627,13 @@
 				local mod = _detalhes.encounter_table.DBM_Mod
 
 				if (not mod) then
-					for index, tmod in ipairs (DBM.Mods) do
-						if (tmod.inCombat) then
-							_detalhes.encounter_table.DBM_Mod = tmod
-							mod = tmod
-							break
+					local id = _detalhes:GetEncounterIdFromBossIndex (_detalhes.encounter_table.mapid, _detalhes.encounter_table.id)
+					if (id) then
+						for index, tmod in ipairs (DBM.Mods) do
+							if (tmod.id == id) then
+								_detalhes.encounter_table.DBM_Mod = tmod
+								mod = tmod
+							end
 						end
 					end
 				end
@@ -2632,6 +2661,20 @@
 				_detalhes.encounter_table.DBM_ModTime = time()
 			end
 
+			local dbm_callback_start = function(event, encounterID, encounterName)
+				local _, _, _, _, maxPlayers = GetInstanceInfo()
+				local difficulty = GetInstanceDifficulty()
+				_detalhes.parser_functions:ENCOUNTER_START(encounterID, LBB[encounterName], difficulty, maxPlayers)
+			end
+
+			local dbm_callback_end = function(event, encounterID, encounterName, endStatus)
+				local _, _, difficultyID, _, maxPlayers = GetInstanceInfo()
+				local difficulty = GetInstanceDifficulty()
+				_detalhes.parser_functions:ENCOUNTER_END(encounterID, LBB[encounterName], difficulty, maxPlayers, endStatus)
+			end
+
+			DBM:RegisterCallback("DBM_EncounterStart", dbm_callback_start)
+			DBM:RegisterCallback("DBM_EncounterEnd", dbm_callback_end)
 			DBM:RegisterCallback("DBM_Announce", dbm_callback_phase)
 			DBM:RegisterCallback("pull", dbm_callback_pull)
 		end
@@ -2968,6 +3011,25 @@
 			f:SetMovable (true)
 			f.Title:SetTextColor (1, .8, .2)
 
+			local have_plugins_enabled
+
+			for id, instanceTable in pairs (_detalhes.EncounterInformation) do
+				if (_detalhes.InstancesToStoreData [id]) then
+					have_plugins_enabled = true
+					break
+				end
+			end
+
+			if (not have_plugins_enabled and false) then
+				local nopluginLabel = f:CreateFontString (nil, "overlay", "GameFontNormal")
+				local nopluginIcon = f:CreateTexture (nil, "overlay")
+				nopluginIcon:SetPoint ("BOTTOMLEFT", f, "BOTTOMLEFT", 10, 10)
+				nopluginIcon:SetSize (16, 16)
+				nopluginIcon:SetTexture ([[Interface\AddOns\Details\textures\DialogFrame\UI-Dialog-Icon-AlertNew]])
+				nopluginLabel:SetPoint ("LEFT", nopluginIcon, "RIGHT", 5, 0)
+				nopluginLabel:SetText (L["STRING_FORGE_ENABLEPLUGINS"])
+			end
+
 			if (not _detalhes:GetTutorialCVar ("FORGE_TUTORIAL")) then
 				local tutorialFrame = CreateFrame ("Frame", "$parentTutorialFrame", f)
 				tutorialFrame:SetPoint ("CENTER", f, "CENTER")
@@ -3268,33 +3330,24 @@
 			}
 
 			-----------------------------------------------
-			local spell_ignore_spell_func = function(row)
-				local data = all_modules [1].data [row]
-				local spellid = data[1]
-
-				if (not _detalhes.spellid_ignored[spellid]) then
-					_detalhes.spellid_ignored[spellid] = true
-				else
-					_detalhes.spellid_ignored[spellid] = nil
-				end
-			end
 
 			local spell_open_aura_creator = function (row)
-				local data = all_modules [1].data [row]
+				local data = all_modules [2].data [row]
 				local spellid = data[1]
 				local spellname, _, spellicon = GetSpellInfo (spellid)
-				_detalhes:OpenAuraPanel (spellid, spellname, spellicon)
+				_detalhes:OpenAuraPanel (spellid, spellname, spellicon, data[3])
 			end
 
 			local spell_encounter_open_aura_creator = function (row)
-				local data = all_modules [2].data [row]
+				local data = all_modules [1].data [row]
 				local spellID = data[1]
+				local encounterID  = data [2]
 				local enemyName = data [3]
 				local encounterName = data [4]
 
 				local spellname, _, spellicon = GetSpellInfo (spellID)
 
-				_detalhes:OpenAuraPanel (spellID, spellname, spellicon)
+				_detalhes:OpenAuraPanel (spellID, spellname, spellicon, encounterID)
 			end
 
 			local EncounterSpellEvents = EncounterDetailsDB and EncounterDetailsDB.encounter_spells
@@ -3387,9 +3440,8 @@
 					{name = L["STRING_FORGE_HEADER_NAME"], width = 150, type = "entry", func = no_func, onenter = function(self) GameTooltip:SetOwner (self.widget, "ANCHOR_TOPLEFT"); _detalhes:GameTooltipSetSpellByID (self.id); GameTooltip:Show() end, onleave = function(self) GameTooltip:Hide() end},
 					{name = L["STRING_FORGE_HEADER_SPELLID"], width = 60, type = "entry", func = no_func},
 					{name = L["STRING_FORGE_HEADER_SCHOOL"], width = 60, type = "entry", func = no_func},
-					{name = L["STRING_FORGE_HEADER_CASTER"], width = 100, type = "entry", func = no_func},
-					{name = L["STRING_FORGE_HEADER_EVENT"], width = 140, type = "entry", func = no_func},
-					{name = "Ignore", width = 50, type = "checkbox", func = spell_ignore_spell_func, icon = [[Interface\Glues\LOGIN\Glues-CheckBox-Check]], notext = true, iconalign = "center"},
+					{name = L["STRING_FORGE_HEADER_CASTER"], width = 120, type = "entry", func = no_func},
+					{name = L["STRING_FORGE_HEADER_EVENT"], width = 180, type = "entry", func = no_func},
 					{name = L["STRING_FORGE_HEADER_CREATEAURA"], width = 86, type = "button", func = spell_open_aura_creator, icon = [[Interface\AddOns\WeakAuras\Media\Textures\icon]], notext = true, iconalign = "center"},
 				},
 				fill_panel = false,
@@ -3409,13 +3461,12 @@
 						local classColor = RAID_CLASS_COLORS [data[2]] and RAID_CLASS_COLORS [data[2]].colorStr or "FFFFFFFF"
 						return {
 							index,
-							{texture = spellIcon, texcoord = {.1, .9, .1, .9}},
+							spellIcon,
 							{text = spellName or "", id = data[1] or 1},
 							data[1] or "",
 							_detalhes:GetSpellSchoolFormatedName (_detalhes.spell_school_cache [spellName]) or "",
 							"|c" .. classColor .. data[2] .. "|r",
-							events,
-							_detalhes.spellid_ignored[data[1]]
+							events
 						}
 					else
 						return nothing_to_show
@@ -3673,7 +3724,7 @@
 					end
 				end
 
-				_detalhes:OpenAuraPanel (data[2], spellname, spellicon, DETAILS_WA_TRIGGER_DBM_TIMER, DETAILS_WA_AURATYPE_TEXT, {dbm_timer_id = data[2], spellid = data[7], text = "Next " .. spellname .. " In", text_size = 72, icon = spellicon})
+				_detalhes:OpenAuraPanel (data[2], spellname, spellicon, data.id, DETAILS_WA_TRIGGER_DBM_TIMER, DETAILS_WA_AURATYPE_TEXT, {dbm_timer_id = data[2], spellid = data[7], text = "Next " .. spellname .. " In", text_size = 72, icon = spellicon})
 			end
 
 			local dbm_timers_module = {
@@ -3799,11 +3850,11 @@
 					else
 						spellname, _, spellicon = GetSpellInfo (spellid)
 					end
-					_detalhes:OpenAuraPanel (data [2], spellname, spellicon, DETAILS_WA_TRIGGER_BW_TIMER, DETAILS_WA_AURATYPE_TEXT, {bw_timer_id = data [2], text = "Next " .. spellname .. " In", text_size = 72, icon = spellicon})
+					_detalhes:OpenAuraPanel (data [2], spellname, spellicon, data.id, DETAILS_WA_TRIGGER_BW_TIMER, DETAILS_WA_AURATYPE_TEXT, {bw_timer_id = data [2], text = "Next " .. spellname .. " In", text_size = 72, icon = spellicon})
 
 				elseif (type (data [2]) == "string") then
 					--> "Xhul'horac" Imps
-					_detalhes:OpenAuraPanel (data [2], data[3], data[5], DETAILS_WA_TRIGGER_BW_TIMER, DETAILS_WA_AURATYPE_TEXT, {bw_timer_id = data [2], text = "Next " .. (data[3] or "") .. " In", text_size = 72, icon = data[5]})
+					_detalhes:OpenAuraPanel (data [2], data[3], data[5], data.id, DETAILS_WA_TRIGGER_BW_TIMER, DETAILS_WA_AURATYPE_TEXT, {bw_timer_id = data [2], text = "Next " .. (data[3] or "") .. " In", text_size = 72, icon = data[5]})
 				end
 			end
 
@@ -3976,8 +4027,8 @@
 			f.SelectModule = select_module
 			f.AllModules = all_modules
 
-			f:InstallModule (all_spells_module)
 			f:InstallModule (encounter_spells_module)
+			f:InstallModule (all_spells_module)
 
 			f:InstallModule (npc_ids_module)
 
@@ -4672,6 +4723,165 @@ if DeathRecapMixin then
 		_detalhes.OpenDetailsDeathRecap(deathRecapID)
 	end)
 end
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--> plater integration
+
+local plater_integration_frame = CreateFrame ("Frame", "DetailsPlaterFrame", UIParent)
+plater_integration_frame.DamageTaken = {}
+
+--> aprox. 6 updates per second
+local CONST_REALTIME_UPDATE_TIME = 0.166
+--> how many samples to store, 30 x .166 aprox 5 seconds buffer
+local CONST_BUFFER_SIZE = 30
+--> Dps division factor
+PLATER_DPS_SAMPLE_SIZE = CONST_BUFFER_SIZE * CONST_REALTIME_UPDATE_TIME
+
+--> separate CLEU events from the Tick event for performance
+plater_integration_frame.OnTickFrame = CreateFrame ("Frame", "DetailsPlaterFrameOnTicker", UIParent)
+
+--> on tick function
+plater_integration_frame.OnTickFrameFunc = function (self, deltaTime)
+	if (self.NextUpdate < 0) then
+		for targetGUID, damageTable in pairs (plater_integration_frame.DamageTaken) do
+
+			--> total damage
+			local totalDamage = damageTable.TotalDamageTaken
+			local totalDamageFromPlayer = damageTable.TotalDamageTakenFromPlayer
+
+			--> damage on this update
+			local damageOnThisUpdate = totalDamage - damageTable.LastTotalDamageTaken
+			local damageOnThisUpdateFromPlayer = totalDamageFromPlayer - damageTable.LastTotalDamageTakenFromPlayer
+
+			--> update the last damage taken
+			damageTable.LastTotalDamageTaken = totalDamage
+			damageTable.LastTotalDamageTakenFromPlayer = totalDamageFromPlayer
+
+			--> sum the current damage
+			damageTable.CurrentDamage = damageTable.CurrentDamage + damageOnThisUpdate
+			damageTable.CurrentDamageFromPlayer = damageTable.CurrentDamageFromPlayer + damageOnThisUpdateFromPlayer
+
+			--> add to the buffer the damage added
+			tinsert (damageTable.RealTimeBuffer, 1, damageOnThisUpdate)
+			tinsert (damageTable.RealTimeBufferFromPlayer, 1, damageOnThisUpdateFromPlayer)
+
+			--> remove the damage from the buffer
+			local damageRemoved = tremove (damageTable.RealTimeBuffer, CONST_BUFFER_SIZE + 1)
+			if (damageRemoved) then
+				damageTable.CurrentDamage = max (damageTable.CurrentDamage - damageRemoved, 0)
+			end
+
+			local damageRemovedFromPlayer = tremove (damageTable.RealTimeBufferFromPlayer, CONST_BUFFER_SIZE + 1)
+			if (damageRemovedFromPlayer) then
+				damageTable.CurrentDamageFromPlayer = max (damageTable.CurrentDamageFromPlayer - damageRemovedFromPlayer, 0)
+			end
+		end
+
+		--update time
+		self.NextUpdate = CONST_REALTIME_UPDATE_TIME
+	else
+		self.NextUpdate = self.NextUpdate - deltaTime
+	end
+end
+
+
+--> parse the damage taken by unit
+function plater_integration_frame.AddDamageToGUID (sourceGUID, targetGUID, time, amount)
+	local damageTable = plater_integration_frame.DamageTaken [targetGUID]
+
+	if (not damageTable) then
+		plater_integration_frame.DamageTaken [targetGUID] = {
+			LastEvent = time,
+
+			TotalDamageTaken = amount,
+			TotalDamageTakenFromPlayer = 0,
+
+			--for real time
+				RealTimeBuffer = {},
+				RealTimeBufferFromPlayer = {},
+				LastTotalDamageTaken = 0,
+				LastTotalDamageTakenFromPlayer = 0,
+				CurrentDamage = 0,
+				CurrentDamageFromPlayer = 0,
+		}
+
+		--> is the damage from the player it self?
+		if (sourceGUID == plater_integration_frame.PlayerGUID) then
+			plater_integration_frame.DamageTaken [targetGUID].TotalDamageTakenFromPlayer = amount
+		end
+	else
+		damageTable.LastEvent = time
+		damageTable.TotalDamageTaken = damageTable.TotalDamageTaken + amount
+
+		if (sourceGUID == plater_integration_frame.PlayerGUID) then
+			damageTable.TotalDamageTakenFromPlayer = damageTable.TotalDamageTakenFromPlayer + amount
+		end
+	end
+end
+
+plater_integration_frame:SetScript ("OnEvent", function (self, _, time, token, sourceGUID, sourceName, sourceFlag, targetGUID, targetName, targetFlag, spellID, spellName, spellType, amount, overKill, school, resisted, blocked, absorbed, isCritical)
+	--> tamage taken by the GUID unit
+	if (token == "SPELL_DAMAGE" or token == "SPELL_PERIODIC_DAMAGE" or token == "RANGE_DAMAGE" or token == "DAMAGE_SHIELD") then
+		plater_integration_frame.AddDamageToGUID (sourceGUID, targetGUID, time, amount)
+
+	elseif (token == "SWING_DAMAGE") then
+		--the damage is passed in the spellID argument position
+		plater_integration_frame.AddDamageToGUID (sourceGUID, targetGUID, time, spellID)
+	end
+end)
+
+function Details:RefreshPlaterIntegration()
+
+	if (Plater and Details.plater.realtime_dps_enabled or Details.plater.realtime_dps_player_enabled or Details.plater.damage_taken_enabled) then
+
+		--> wipe the cache
+		wipe (plater_integration_frame.DamageTaken)
+
+		--> read cleu events
+		plater_integration_frame:RegisterEvent ("COMBAT_LOG_EVENT_UNFILTERED")
+
+		--> start the real time dps updater
+		plater_integration_frame.OnTickFrame.NextUpdate = CONST_REALTIME_UPDATE_TIME
+		plater_integration_frame.OnTickFrame:SetScript ("OnUpdate", plater_integration_frame.OnTickFrameFunc)
+
+		--> cache the player serial
+		plater_integration_frame.PlayerGUID = UnitGUID ("player")
+
+		--> cancel the timer if already have one
+		if (plater_integration_frame.CleanUpTimer and not plater_integration_frame.CleanUpTimer._cancelled) then
+			plater_integration_frame.CleanUpTimer:Cancel()
+		end
+
+		--> cleanup the old tables
+		plater_integration_frame.CleanUpTimer = C_Timer:NewTicker (10, function()
+			local now = time()
+			for GUID, damageTable in pairs (plater_integration_frame.DamageTaken) do
+				if (damageTable.LastEvent + 9.9 < now) then
+					plater_integration_frame.DamageTaken [GUID] = nil
+				end
+			end
+		end)
+
+	else
+		--> unregister the cleu
+		plater_integration_frame:UnregisterEvent ("COMBAT_LOG_EVENT_UNFILTERED")
+
+		--> stop the real time updater
+		plater_integration_frame.OnTickFrame:SetScript ("OnUpdate", nil)
+
+		--> stop the cleanup process
+		if (plater_integration_frame.CleanUpTimer and not plater_integration_frame.CleanUpTimer._cancelled) then
+			plater_integration_frame.CleanUpTimer:Cancel()
+		end
+	end
+
+
+
+end
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --> general macros

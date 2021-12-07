@@ -117,7 +117,8 @@ local common_events = {
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --> register a event
 
-	function _detalhes:RegisterEvent (object, event, func)		
+	function _detalhes:RegisterEvent (object, event, func)
+
 		if (not _detalhes.RegistredEvents [event]) then
 			if (object.Msg) then
 				object:DelayMsg ("[debug] unknown event:", event, object.__name)
