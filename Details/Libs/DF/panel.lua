@@ -6805,7 +6805,7 @@ function DF:BuildStatusbarAuthorInfo (f, addonBy, authorsNameString)
 
 	local options_dropdown_template = DF:GetTemplate ("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 	local discordTextEntry = DF:CreateTextEntry (f, function()end, 200, 18, "DiscordTextBox", _, _, options_dropdown_template)
-	discordTextEntry:SetText ("https://discord.gg/Cbc6KUP")
+	discordTextEntry:SetText ("https://discord.gg/7cjU9xvcQY")
 	discordTextEntry:SetFrameLevel (5000)
 
 	authorName:SetPoint ("left", f, "left", 2, 0)
