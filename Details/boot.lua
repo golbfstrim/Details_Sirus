@@ -177,10 +177,6 @@ do
 				[28860] = 1, -- Sartharion
 			-- The Eye of Eternity
 				[28859] = 1, -- Malygos
-			-- The Bronze Sanctuary
-				[50608] = 1, -- Imporus
-				[50609] = 2, -- Elonus
-				[50612] = 3, -- Murozond
 			-- Ulduar
 				[33113] = 1, -- Flame Leviathan
 				[33118] = 2, -- Ignis the Furnace Master
@@ -196,6 +192,10 @@ do
 				[33271] = 12, -- General Vezax
 				[33288] = 13, -- Yogg-Saron
 				[32871] = 14, -- Algalon the Observer
+				-- The Bronze Sanctuary
+				[50608] = 1, -- Imporus
+				[50609] = 2, -- Elonus
+				[50612] = 3, -- Murozond
 			}
 
 		--> armazena os escudos - Shields information for absorbs

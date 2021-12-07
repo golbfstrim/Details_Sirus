@@ -929,7 +929,7 @@ end
 
 function _detalhes.storage:DBGuildSync()
 
-	_detalhes:SendGuildData ("GS", "R")
+	_detalhes:SendGuildData("GS", "R")
 
 end
 
