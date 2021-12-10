@@ -1005,6 +1005,9 @@ local BossIDs = {
 	[50608] = true, -- Imporus
 	[50609] = true, -- Elonus
 	[50612] = true, -- Murozond
+
+	--tolgorod
+	[70010] = true, -- Norigorn
 }
 
 lib.BossIDs = BossIDs

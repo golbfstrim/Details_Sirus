@@ -1924,6 +1924,9 @@ elseif GAME_LOCALE == "ruRU" then
 	["The Prison of Yogg-Saron"] = "Темница Йогг-Сарона",
 	["Theramore Isle"] = "Остров Терамор",
 	["The Ring of Valor"] = "Круг Доблести",
+	--bs
+	["The Bronze Sanctum"] = "Бронзовое святилище",
+	--bs
 	["The Ruby Sanctum"] = "Рубиновое святилище",
 	["The Scarlet Enclave"] = "Анклав Алого ордена",
 	["The Shattered Halls"] = "Разрушенные залы",
