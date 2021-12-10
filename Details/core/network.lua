@@ -664,7 +664,7 @@ end
 
 function _detalhes:SendGuildData (type, ...)
 	if not IsInGuild() then return end --> fix from Tim@WoWInterface
-	print(type, _UnitName ("player"), _GetRealmName(), _detalhes.realversion, ...)
+	-- print(type, _UnitName ("player"), _GetRealmName(), _detalhes.realversion, ...)
 	_detalhes:SendCommMessage (CONST_DETAILS_PREFIX, _detalhes:Serialize (type, _UnitName ("player"), _GetRealmName(), _detalhes.realversion, ...), "GUILD")
 end
 
@@ -720,7 +720,7 @@ function _detalhes:CheckVersion (send_to_guild)
 	end
 
 	if (send_to_guild) then
-		print(_detalhes.network.ids.VERSION_CHECK, _detalhes.build_counter)
+		-- print(_detalhes.network.ids.VERSION_CHECK, _detalhes.build_counter)
 		_detalhes:SendGuildData (_detalhes.network.ids.VERSION_CHECK, _detalhes.build_counter)
 	end
 end
