@@ -72,8 +72,6 @@ do
 				[865] = true, -- Gruul's Lair
 				[868] = true, -- Karazhan
 				[862] = true, -- The Eye
-				[530] = true, -- Ulduar
-
 				[14] = true, -- Onyxia's Lair
 				[610] = true, -- The Ruby Sanctum
 				[605] = true, -- Icecrown Citadel
@@ -81,7 +79,7 @@ do
 				[536] = true, -- Naxxramas
 				[533] = true, -- Vault of Archavon
 				[532] = true, -- The Obsidian Sanctum
-
+				[530] = true, -- Ulduar
 --				[] = true, -- The Eye of Eternity
 				[925] = true, -- The Bronze Sanctuary
 			}
