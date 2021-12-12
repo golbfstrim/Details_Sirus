@@ -1998,8 +1998,7 @@ function DF:CreateCoolTip()
 		end
 
 	end
-	
-	 
+
 	function CoolTip:CheckOverlap()
 		if (frame2:IsShown()) then
 
@@ -2084,11 +2083,11 @@ function DF:CreateCoolTip()
 			return CoolTip.Host
 		end
 
-		function CoolTip:SetOwner(frame, myPoint, hisPoint, x, y)
-			return CoolTip:SetHost(frame, myPoint, hisPoint, x, y)
+		function CoolTip:SetOwner (frame, myPoint, hisPoint, x, y)
+			return CoolTip:SetHost (frame, myPoint, hisPoint, x, y)
 		end
 
-		function CoolTip:SetHost(frame, myPoint, hisPoint, x, y)
+		function CoolTip:SetHost (frame, myPoint, hisPoint, x, y)
 			--> check data integrity
 			if (type (frame) ~= "table" or not frame.GetObjectType) then
 				print ("host needs to be a frame")
@@ -3152,7 +3151,7 @@ function DF:CreateCoolTip()
 				if (frame.dframework) then
 					frame = frame.widget
 				end
-				CoolTip:SetHost(frame)
+				CoolTip:SetHost (frame)
 			end
 			if (menuType) then
 				CoolTip:SetType (menuType)
@@ -3219,9 +3218,7 @@ function DF:CreateCoolTip()
 			print ("Cooltip Injected Fucntion Error:", errortext)
 		end
 
-		CoolTip:SetOwner(frame)
-		-- GameCooltipFrame1:ClearAllPoints()
-		-- GameCooltipFrame1:SetPoint("LEFT", DetailsBarra_2_2, "RIGHT", 0, 10.000000136774)
+		CoolTip:SetOwner (host, host.CoolTip.MyAnchor, host.CoolTip.HisAnchor, host.CoolTip.X, host.CoolTip.Y)
 
 		local options = host.CoolTip.Options
 		if (type (options) == "function") then

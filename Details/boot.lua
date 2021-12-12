@@ -48,7 +48,6 @@ do
 			_detalhes.parser = {}
 			_detalhes.parser_functions = {}
 			_detalhes.parser_frame = CreateFrame ("Frame")
-			_detalhes.pvp_parser_frame = CreateFrame ("Frame")
 			_detalhes.parser_frame:Hide()
 
 			_detalhes.MacroList = {
@@ -72,16 +71,16 @@ do
 				[865] = true, -- Gruul's Lair
 				[868] = true, -- Karazhan
 				[862] = true, -- The Eye
+				[925] = true, -- The Bronze Sanctuary
 				[14] = true, -- Onyxia's Lair
-				[610] = true, -- The Ruby Sanctum
+				[610] = true, -- The Ruby Sanctum				
 				[605] = true, -- Icecrown Citadel
 				[544] = true, -- Trial of the Crusader
 				[536] = true, -- Naxxramas
 				[533] = true, -- Vault of Archavon
 				[532] = true, -- The Obsidian Sanctum
+				[528] = true, -- The Eye of Eternity
 				[530] = true, -- Ulduar
---				[] = true, -- The Eye of Eternity
-				[925] = true, -- The Bronze Sanctuary
 			}
 
 			--must fail in map and encounter id to not store data
@@ -101,7 +100,6 @@ do
 				[21213] = 5, -- Morogrim Tidewalker
 				[21212] = 6, -- Lady Vashj
 				[55681] = 7, -- Gore'lats
-
 			-- Magtheridon's Lair
 				[17257] = 1, -- Magtheridon
 			-- Gruul's Lair
@@ -111,7 +109,7 @@ do
 				[34972] = 1, -- Attumen the Huntsman
 				[15687] = 2, -- Moroes
 				[16457] = 3, -- Maiden of Virtue
-				[1234567890] = 4, --wtf
+				[1234567890] = 4,
 				[34437] = 5, -- The Curator
 				[15688] = 6, -- Terestian Illhoof
 				[16524] = 7, -- Shade of Aran
@@ -128,6 +126,10 @@ do
 				[10184] = 1, -- Onyxia
 			-- The Ruby Sanctum
 				[39863] = 1, -- Halion
+			-- The Bronze Sanctuary
+				[50608] = 1, -- Imporus		
+				[50609] = 2, -- Elonus	
+				[50612] = 3, -- Murozond					
 			-- Icecrown Citadel
 				[36612] = 1, -- Lord Marrowgar
 				[36855] = 2, -- Lady Deathwhisper
@@ -190,10 +192,6 @@ do
 				[33271] = 12, -- General Vezax
 				[33288] = 13, -- Yogg-Saron
 				[32871] = 14, -- Algalon the Observer
-				-- The Bronze Sanctuary
-				[50608] = 1, -- Imporus
-				[50609] = 2, -- Elonus
-				[50612] = 3, -- Murozond
 			}
 
 		--> armazena os escudos - Shields information for absorbs
@@ -225,6 +223,8 @@ do
 			_detalhes.ReportOptions = {}
 		--> armazena os buffs registrados - store buffs ids and functions
 			_detalhes.Buffs = {} --> initialize buff table
+		-->  cache dead npc
+			_detalhes.cache_dead_npc = {}
 		-->  cache de grupo
 			_detalhes.cache_damage_group = {}
 			_detalhes.cache_healing_group = {}
@@ -315,23 +315,22 @@ do
 				["ENVIRONMENTAL_DAMAGE"] = 15,
 				["SPELL_HEAL"] = 16,
 				["SPELL_PERIODIC_HEAL"] = 17,
-				["SPELL_HEAL_ABSORBED"] = 18,
-				["SPELL_ABSORBED"] = 19, -- TEMP
-				["SPELL_AURA_APPLIED"] = 20,
-				["SPELL_AURA_REMOVED"] = 21,
-				["SPELL_AURA_REFRESH"] = 22,
-				["SPELL_AURA_APPLIED_DOSE"] = 23,
-				["SPELL_ENERGIZE"] = 24,
-				["SPELL_PERIODIC_ENERGIZE"] = 25,
-				["SPELL_CAST_SUCCESS"] = 26,
-				["SPELL_DISPEL"] = 27,
-				["SPELL_STOLEN"] = 28,
+				["SPELL_AURA_APPLIED"] = 18,
+				["SPELL_AURA_REMOVED"] = 19,
+				["SPELL_AURA_REFRESH"] = 20,
+				["SPELL_AURA_APPLIED_DOSE"] = 21,
+				["SPELL_ENERGIZE"] = 22,
+				["SPELL_PERIODIC_ENERGIZE"] = 23,
+				["SPELL_CAST_START"] = 24,
+				["SPELL_CAST_SUCCESS"] = 25,
+				["SPELL_DISPEL"] = 26,
+				["SPELL_STOLEN"] = 27,
 				["SPELL_AURA_BROKEN"] = 29,
-				["SPELL_AURA_BROKEN_SPELL"] = 30,
-				["SPELL_RESURRECT"] = 31,
-				["SPELL_INTERRUPT"] = 32,
-				["UNIT_DIED"] = 33,
-				["UNIT_DESTROYED"] = 34,
+				["SPELL_AURA_BROKEN_SPELL"] = 29,
+				["SPELL_RESURRECT"] = 30,
+				["SPELL_INTERRUPT"] = 31,
+				["UNIT_DIED"] = 32,
+				["UNIT_DESTROYED"] = 33,
 			}
 
 		--> armazena instancias inativas

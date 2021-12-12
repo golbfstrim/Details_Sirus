@@ -352,7 +352,7 @@ function _detalhes.network.Cloud_SharedData (player, realm, core_version, data)
 
 	if (core_version ~= _detalhes.realversion) then
 		if (core_version > _detalhes.realversion) then
-			-- _detalhes:Msg ("your Details! is out dated and cannot perform the action, please update it.")
+			--_detalhes:Msg ("your Details! is out dated and cannot perform the action, please update it.")
 		end
 		return false
 	end
@@ -372,7 +372,7 @@ function _detalhes.network.GuildSync (player, realm, core_version, type, data)
 
 	if (core_version ~= _detalhes.realversion) then
 		if (core_version > _detalhes.realversion) then
-			-- _detalhes:Msg ("your Details! is out dated and cannot perform the action, please update it.")
+			--_detalhes:Msg ("your Details! is out dated and cannot perform the action, please update it.")
 		end
 		return false
 	end
@@ -382,7 +382,7 @@ function _detalhes.network.GuildSync (player, realm, core_version, type, data)
 
 		--build our table and send to the player
 		if (_detalhes.LastGuildSyncDataTime1 > GetTime()) then
-			-- return false
+			--return false
 		end
 
 		local IDs = _detalhes.storage:GetIDsToGuildSync()
@@ -497,7 +497,7 @@ _detalhes.network.functions = {
 function _detalhes:CommReceived (_, data, _, source)
 
 	local prefix, player, realm, dversion, arg6, arg7, arg8, arg9 =  _select (2, _detalhes:Deserialize (data))
-	-- print(prefix, player, realm, dversion, arg6, arg7, arg8, arg9)
+
 	if (_detalhes.debug) then
 		_detalhes:Msg ("(debug) network received:", prefix, "length:", string.len (data))
 	end
@@ -505,7 +505,7 @@ function _detalhes:CommReceived (_, data, _, source)
 	--event
 	_detalhes:SendEvent ("COMM_EVENT_RECEIVED", nil, string.len (data), prefix, player, realm, dversion, arg6, arg7, arg8, arg9)
 
-	-- print ("comm received", prefix, _detalhes.network.functions [prefix])
+	--print ("comm received", prefix, _detalhes.network.functions [prefix])
 
 	local func = _detalhes.network.functions [prefix]
 	if (func) then
@@ -513,7 +513,7 @@ function _detalhes:CommReceived (_, data, _, source)
 		func (player, realm, dversion, arg6, arg7, arg8, arg9)
 	else
 		func = plugins_registred [prefix]
-		-- print ("plugin comm?", func, player, realm, dversion, arg6, arg7, arg8, arg9)
+		--print ("plugin comm?", func, player, realm, dversion, arg6, arg7, arg8, arg9)
 		if (func) then
 			--todo: this call should be safe
 			func (player, realm, dversion, arg6, arg7, arg8, arg9)
@@ -664,7 +664,6 @@ end
 
 function _detalhes:SendGuildData (type, ...)
 	if not IsInGuild() then return end --> fix from Tim@WoWInterface
-	-- print(type, _UnitName ("player"), _GetRealmName(), _detalhes.realversion, ...)
 	_detalhes:SendCommMessage (CONST_DETAILS_PREFIX, _detalhes:Serialize (type, _UnitName ("player"), _GetRealmName(), _detalhes.realversion, ...), "GUILD")
 end
 
@@ -720,7 +719,6 @@ function _detalhes:CheckVersion (send_to_guild)
 	end
 
 	if (send_to_guild) then
-		-- print(_detalhes.network.ids.VERSION_CHECK, _detalhes.build_counter)
 		_detalhes:SendGuildData (_detalhes.network.ids.VERSION_CHECK, _detalhes.build_counter)
 	end
 end

@@ -338,9 +338,9 @@ function _detalhes:ToolTipDead (instancia, morte, esta_barra, keydown)
 	local y_Offset = _detalhes.tooltip.anchor_offset[2]
 
 	if (_detalhes.tooltip.anchored_to == 1) then
-		GameCooltip:SetHost(esta_barra, myPoint, anchorPoint, x_Offset, y_Offset)
+		GameCooltip:SetHost (esta_barra, myPoint, anchorPoint, x_Offset, y_Offset)
 	else
-		GameCooltip:SetHost(DetailsTooltipAnchor, myPoint, anchorPoint, x_Offset, y_Offset)
+		GameCooltip:SetHost (DetailsTooltipAnchor, myPoint, anchorPoint, x_Offset, y_Offset)
 	end
 
 	GameCooltip:ShowCooltip()
