@@ -1272,7 +1272,7 @@ do --> data for Ulduar
 			[33515] = 7, --Auriaya
 			[32845] = 8, --Hodir
 			[32865] = 9, --Thorim
-			[32882] = 9, --Jormungar Behemoth
+			-- [32882] = 9, --Jormungar Behemoth
 			[32906] = 10, --Freya
 			[33350] = 11, --Mimiron
 			[33271] = 12, --General Vezax
