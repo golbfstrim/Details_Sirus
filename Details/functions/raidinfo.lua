@@ -118,7 +118,7 @@ do --> data for Serpentshrine Cavern
 	}
 
 	local ENCOUNTER_ID_EJ = {
-		1567, 1568, 1569, 1570, 1571, 1572, 1582,
+		1567, 1568, 1569, 1570, 1571, 1572, 1582,55681,
 		[1567] = 1, --Hydross the Unstable
 		[1568] = 2, --The Lurker Below
 		[1569] = 3, --Leotheras the Blind
