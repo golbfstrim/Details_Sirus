@@ -103,7 +103,7 @@ do --> data for Serpentshrine Cavern
 		"ui-ej-boss-fathom lord karathress",
 		"ui-ej-boss-morogrim tidewalker",
 		"ui-ej-boss-lady vashj",
-		"ui-ej-boss-gore'lats",
+		"ui-ej-boss-gore'lats",		
 	}
 
 	local ENCOUNTER_ID_CL = {
@@ -114,18 +114,18 @@ do --> data for Serpentshrine Cavern
 		[21214] = 4, --Fathom-Lord Karathress
 		[21213] = 5, --Morogrim Tidewalker
 		[21212] = 6, --Lady Vashj
-		[55681] = 7, --Gore'lats
+		[55681] = 7, --Gore'lats		
 	}
 
 	local ENCOUNTER_ID_EJ = {
-		1567, 1568, 1569, 1570, 1571, 1572, 1582,55681,
+		1567, 1568, 1569, 1570, 1571, 1572, 1582,
 		[1567] = 1, --Hydross the Unstable
 		[1568] = 2, --The Lurker Below
 		[1569] = 3, --Leotheras the Blind
 		[1570] = 4, --Fathom-Lord Karathress
 		[1571] = 5, --Morogrim Tidewalker
 		[1572] = 6, --Lady Vashj
-		[55681] = 7, --Gore'lats
+		[55681] = 7, --Gore'lats		
 	}
 
 	--> install the raid
@@ -136,7 +136,7 @@ do --> data for Serpentshrine Cavern
 		LBB["Fathom-Lord Karathress"],
 		LBB["Morogrim Tidewalker"],
 		LBB["Lady Vashj"],
-		LBB["Gore'lats"],
+		LBB["Gore'lats"],		
 	}
 
 	local ENCOUNTERS = {}
@@ -171,7 +171,7 @@ do --> data for Serpentshrine Cavern
 			[21214] = 4, --Fathom-Lord Karathress
 			[21213] = 5, --Morogrim Tidewalker
 			[21212] = 6, --Lady Vashj
-		    [55681] = 7, --Gore'lats
+		    [55681] = 7, --Gore'lats			
 		},
 	})
 end
@@ -1282,9 +1282,6 @@ do --> data for Ulduar
 		},
 	})
 end
-
-
-
 
 do --> data for The bronze Sanctum
 	local INSTANCE_MAPID = 925
