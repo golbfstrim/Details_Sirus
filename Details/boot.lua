@@ -109,7 +109,7 @@ do
 				[34972] = 1, -- Attumen the Huntsman
 				[15687] = 2, -- Moroes
 				[16457] = 3, -- Maiden of Virtue
-				[1234567890] = 4,
+				[1234567890] = 4, -- opera
 				[34437] = 5, -- The Curator
 				[15688] = 6, -- Terestian Illhoof
 				[16524] = 7, -- Shade of Aran
