@@ -11,7 +11,7 @@ function GetInstanceDifficulty()
 end
 
 function IsInGroup()
-	return (GetNumRaidMembers() == 0 and GetNumPartyMembers() > 0)
+	return GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0
 end
 
 function IsInRaid()
@@ -23,7 +23,7 @@ function GetNumSubgroupMembers()
 end
 
 function GetNumGroupMembers()
-	return GetNumRaidMembers()
+	return IsInRaid() and GetNumRaidMembers() or GetNumPartyMembers()
 end
 
 --[[

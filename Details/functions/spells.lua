@@ -75,7 +75,9 @@ do
 		[49050] = 254, -- Aimed Shot, Rank 9
 
 		-- Survival Hunter:
---		[] = 255, -- ???
+		[63672] = 255, -- Black Arrow Rank 6
+		[60053] = 255, -- Explosive Shot Rank 4
+		[34503] = 255, -- Expose Weakness Rank 3
 
 		-- Arcane Mage:
 		[12042] = 62, -- Arcane Power
@@ -118,7 +120,8 @@ do
 
 		-- Holy Priest:
 		[48089] = 257, -- Circle of Healing, Rank 7
-		[48072] = 257, -- Prayer of Healing, Rank 7
+		-- prayer is used by disc as well for aoe healing
+		--[48072] = 257, -- Prayer of Healing, Rank 7
 		[47788] = 257, -- Guardian Spirit
 
 		-- Shadow Priest:
@@ -133,15 +136,22 @@ do
 		[1329] = 259, -- Mutilate
 		[5374] = 259, -- Mutilate
 		[27576] = 259, -- Mutilate Off-Hand
-		[51723] = 259, -- Fan of Knives
-		[703] = 259, -- Garrote
-		[1943] = 259, -- Rupture
+		[14177] = 259, -- Cold Blood
+		[51662] = 259, -- Hunger for Blood
 
-		-- Outlaw Rogue:
-		[48668] = 260, -- Run Through, Rank 12
+		-- Combat Rogue:
+		[51690] = 260, -- Killing Spree
+		[13750] = 260, -- Adrenaline Rush
+		[13877] = 260, -- Blade Flurry
+		[14251] = 260, -- Riposte
+
 
 		-- Subtlety Rogue:
-		[48657] = 261, -- Backstab, Rank 12
+		[48660] = 261, -- Hemorrhage rank 5
+		[14183] = 261, -- Premeditation
+		[14185] = 261, -- Preparation
+		[51713] = 261, -- Shadow Dance
+		[14278] = 261, -- Ghostly Strike
 
 		-- Elemental Shaman:
 		[61882] = 262, -- Earthquake
@@ -873,6 +883,58 @@ do
 		[7922]	= true, -- Warbringer
 	}
 
+	_detalhes.MageFireWardSpells = {
+		[543] = 30 , -- Fire Ward (Mage) Rank 1
+		[8457] = 30,
+		[8458] = 30,
+		[10223] = 30,
+		[10225] = 30,
+		[27128] = 30,
+		[43010] = 30, -- Rank 7
+	}
+
+	_detalhes.MageFrostWardSpells = {
+		[6143] = 30, -- Frost Ward (Mage) Rank 1
+		[8461] = 30,
+		[8462] = 30,
+		[10177] = 30,
+		[28609] = 30,
+		[32796] = 30,
+		[43012] = 30, -- Rank 7
+	}
+
+	_detalhes.WarlockShadowWardSpells = {
+		[6229] = 30, -- Shadow Ward (warlock) Rank 1
+		[11739] = 30,
+		[11740] = 30,
+		[28610] = 30,
+		[47890] = 30,
+		[47891] = 30, -- Rank 6
+	}
+
+	_detalhes.MageIceBarrierSpells = {
+		[11426] = 60, -- Ice Barrier (Mage) Rank 1
+		[13031] = 60,
+		[13032] = 60,
+		[13033] = 60,
+		[27134] = 60,
+		[33405] = 60,
+		[43038] = 60,
+		[43039] = 60, -- Rank 8
+	}
+
+	_detalhes.WarlockSacrificeSpells = {
+		[7812] = 30, -- Sacrifice (warlock) Rank 1
+		[19438] = 30,
+		[19440] = 30,
+		[19441] = 30,
+		[19442] = 30,
+		[19443] = 30,
+		[27273] = 30,
+		[47985] = 30,
+		[47986] = 30, -- rank 9
+	}
+
 	_detalhes.AbsorbSpells = {
 		-- Death Knight
 		[48707] = 5, -- Anti-Magic Shell (DK) Rank 1 -- Does not currently seem to show tracable combat log events. It shows energizes which do not reveal the amount of damage absorbed
@@ -966,7 +1028,7 @@ do
 		[7239] = 120, -- Frost
 		[7242] = 120, -- Shadow Protection Potion
 		[7245] = 120, -- Holy
-		[6052] = 120, -- Nature Protection Potion
+		[7254] = 120, -- Nature Protection Potion
 		[53915] = 120, -- Mighty Shadow Protection Potion
 		[53914] = 120, -- Mighty Nature Protection Potion
 		[53913] = 120, -- Mighty Frost Protection Potion
@@ -1014,7 +1076,6 @@ do
 		[28810] = 30, -- Faith Set Proc Armor of Faith
 		[54808] = 12, -- Noise Machine proc Sonic Shield
 		[55019] = 12, -- Sonic Shield (one of these too ought to be wrong)
-		[64411] = 15, -- Blessing of the Ancient (Val'anyr Hammer of Ancient Kings equip effect)
 		[64413] = 8, -- Val'anyr, Hammer of Ancient Kings proc Protection of Ancient Kings
 		-- Misc
 		[40322] = 30, -- Teron's Vengeful Spirit Ghost - Spirit Shield
@@ -1030,11 +1091,13 @@ do
 
 		-- Custom
 		[304736] = 10, -- Priest, Divine Charm (T4), T4
-		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
+		[305082] = 30, -- Priest, Power Word: Shield (T4), T4
 		[308143] = 30, -- Priest, Power Word: Shield, Rank 15, T5
 		[307921] = 30, -- Paladin, Holy Barrier, T5
 		[308125] = 10, -- Death Knight, Ice Armor, T5
 		[308159] = 10, -- Live Barrier, Trinket
+		[65686] = 86400, -- Twin Val'kyr Light Essence
+		[65684] = 86400, -- Twin Val'kyr Dark Essence
 	}
 
 	-- ~cooldown 1 self
