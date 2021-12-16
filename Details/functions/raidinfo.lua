@@ -323,20 +323,11 @@ do --> data for Karazhan
 
 	-- TODO: Opera
 	local ENCOUNTER_ID_CL = {
-		15550, 15687, 16457, 1234567890, 34437, 15688, 16524, 15689, 17225, 15690,
-		[15550] = 1, --Attumen the Huntsman
+		16152, 15687, 16457, 17535, 34437, 15688, 16524, 15689, 17225, 15690,
+		[16152] = 1, --Attumen the Huntsman
 		[15687] = 2, --Moroes
 		[16457] = 3, --Maiden of Virtue
-		[17535] = 4, --Dorothee
-		[17546] = 4, --Roar
-		[17543] = 4, --Strawman
-		[17547] = 4, --Tinhead
-		[17548] = 4, --Tito
-		[18168] = 4, --The Crone
-		[17521] = 4, --The Big Bad Wolf
-		[17533] = 4, --Romulo
-		[17534] = 4, --Julianne
-		[34437] = 5, --The Curator
+		[17535] = 4, --Opera Event
 		[15688] = 6, --Terestian Illhoof
 		[16524] = 7, --Shade of Aran
 		[15689] = 8, --Netherspite
@@ -398,7 +389,8 @@ do --> data for Karazhan
 		encounters = ENCOUNTERS,
 
 		boss_ids = {
-			[15550] = 1, --Attumen the Huntsman
+			[16152] = 1, --Attumen the Huntsman
+			[16151] = 1, --Midnight
 			[15687] = 2, --Moroes
 			[16457] = 3, --Maiden of Virtue
 			[17535] = 4, --Dorothee
@@ -817,7 +809,10 @@ do --> data for Trial of the Crusader
 		encounters = ENCOUNTERS,
 
 		boss_ids = {
-			[34797] = 1, --The Beasts of Northrend
+			[34796] = 1, --Gormok the Impaler
+			[34799] = 1, --Dreadscale
+			[34797] = 1, --Icehowl
+			[35144] = 1, --Acidmaw
 			[34780] = 2, --Lord Jaraxxus
 			[34461] = 3, --Tyrius Duskblade <Death Knight>
 			[34460] = 3, --Kavina Grovesong <Druid>
@@ -847,7 +842,8 @@ do --> data for Trial of the Crusader
 			[34455] = 3, --Broln Stouthorn <Shaman>
 			[34450] = 3, --Harkzog <Warlock>
 			[34453] = 3, --Narrhok Steelbreaker <Warrior>
-			[34497] = 4, --The Twin Val'kyr
+			[34497] = 4, --Fjola Lightbane
+			[34496] = 4, --Eydis Darkbane
 			[34564] = 5, --Anub'arak
 		},
 	})
@@ -971,7 +967,11 @@ do --> data for Naxxramas
 			[16011] = 6, --Loatheb
 			[16061] = 7, --Instructor Razuvious
 			[16060] = 8, --Gothik the Harvester
-			[30549] = 9, --The Four Horsemen
+			[30549] = 9, --Baron Rivendare
+			[16065] = 9, --Lady Blaumeux
+			[16064] = 9, --Thane Korth'azz
+			[16062] = 9, --Highlord Mograine
+			[16063] = 9, --Sir Zeliek
 			[16028] = 10, --Patchwerk
 			[15931] = 11, --Grobbulus
 			[15932] = 12, --Gluth
@@ -1200,7 +1200,7 @@ do --> data for Ulduar
 	}
 
 	local ENCOUNTER_ID_CL = {
-		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33288, 32871,
+		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
 		[33113] = 1, --Flame Leviathan
 		[33118] = 2, --Ignis the Furnace Master
 		[33186] = 3, --Razorscale
@@ -1213,7 +1213,7 @@ do --> data for Ulduar
 		[32906] = 10, --Freya
 		[33350] = 11, --Mimiron
 		[33271] = 12, --General Vezax
-		[33288] = 13, --Yogg-Saron
+		[33136] = 13, --Yogg-Saron
 		[32871] = 14, --Algalon the Observer
 	}
 
