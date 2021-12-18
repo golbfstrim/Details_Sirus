@@ -68,7 +68,7 @@ do
 			--encounter journal id
 			local ids_ej = instanceTable.encounter_ids
 			if ids then
-				if ids_ej[encounterid] then
+				if ids[encounterid] then
 					return id
 				end
 			end
