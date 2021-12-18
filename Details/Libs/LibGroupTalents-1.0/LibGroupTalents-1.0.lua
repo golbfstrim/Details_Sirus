@@ -90,7 +90,7 @@ local function RosterInfoFullName(info)
 end
 
 local specChangers = {}
-TALENT_ACTIVATION_SPELLS[2] = 63644
+
 for index,spellid in ipairs(_G.TALENT_ACTIVATION_SPELLS) do
 	specChangers[GetSpellInfo(spellid)] = index
 end
