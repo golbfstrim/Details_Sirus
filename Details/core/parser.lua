@@ -222,6 +222,7 @@ local ignored_npc_ids = {
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 function parser:swing(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
+	-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
 	return parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, 1, "Corpo-a-Corpo", 00000001, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing) --> localize-me
 end
 
@@ -530,6 +531,8 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 --> group checks and avoidance
 
 	if absorbed then
+		-- print(absorbed)
+		-- print(amount or 0)
 		amount = absorbed +(amount or 0)
 	end
 
@@ -963,52 +966,52 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			parser:heal_absorb(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, amountMissed)
 		end
 
---[[
-		if(tanks_members_cache[alvo_serial]) then --> only track tanks
 
-			local TargetActor = damage_cache[alvo_serial]
-			if(TargetActor) then
+		-- if(tanks_members_cache[alvo_serial]) then --> only track tanks
 
-				local avoidance = TargetActor.avoidance
+		-- 	local TargetActor = damage_cache[alvo_serial]
+		-- 	if(TargetActor) then
 
-				if(not avoidance) then
-					TargetActor.avoidance = _detalhes:CreateActorAvoidanceTable()
-					avoidance = TargetActor.avoidance
-				end
+		-- 		local avoidance = TargetActor.avoidance
 
-				local missTable = avoidance.overall[missType]
+		-- 		if(not avoidance) then
+		-- 			TargetActor.avoidance = _detalhes:CreateActorAvoidanceTable()
+		-- 			avoidance = TargetActor.avoidance
+		-- 		end
 
-				if(missTable) then
-					--> overall
-					local overall = avoidance.overall
-					overall[missType] = missTable + 1 --> adicionado a quantidade do miss
+		-- 		local missTable = avoidance.overall[missType]
 
-					--> from this mob
-					local mob = avoidance[who_name]
-					if(not mob) then --> if isn't in the table, build on the fly
-						mob = _detalhes:CreateActorAvoidanceTable(true)
-						avoidance[who_name] = mob
-					end
+		-- 		if(missTable) then
+		-- 			--> overall
+		-- 			local overall = avoidance.overall
+		-- 			overall[missType] = missTable + 1 --> adicionado a quantidade do miss
 
-					mob[missType] = mob[missType] + 1
+		-- 			--> from this mob
+		-- 			local mob = avoidance[who_name]
+		-- 			if(not mob) then --> if isn't in the table, build on the fly
+		-- 				mob = _detalhes:CreateActorAvoidanceTable(true)
+		-- 				avoidance[who_name] = mob
+		-- 			end
 
-					if(missType == "ABSORB") then --full absorb
-						overall["ALL"] = overall["ALL"] + 1 --> qualtipo de hit ou absorb
-						overall["FULL_ABSORBED"] = overall["FULL_ABSORBED"] + 1 --amount
-						overall["ABSORB_AMT"] = overall["ABSORB_AMT"] +(amountMissed or 0)
-						overall["FULL_ABSORB_AMT"] = overall["FULL_ABSORB_AMT"] +(amountMissed or 0)
+		-- 			mob[missType] = mob[missType] + 1
 
-						mob["ALL"] = mob["ALL"] + 1  --> qualtipo de hit ou absorb
-						mob["FULL_ABSORBED"] = mob["FULL_ABSORBED"] + 1 --amount
-						mob["ABSORB_AMT"] = mob["ABSORB_AMT"] +(amountMissed or 0)
-						mob["FULL_ABSORB_AMT"] = mob["FULL_ABSORB_AMT"] +(amountMissed or 0)
-					end
+		-- 			if(missType == "ABSORB") then --full absorb
+		-- 				overall["ALL"] = overall["ALL"] + 1 --> qualtipo de hit ou absorb
+		-- 				overall["FULL_ABSORBED"] = overall["FULL_ABSORBED"] + 1 --amount
+		-- 				overall["ABSORB_AMT"] = overall["ABSORB_AMT"] +(amountMissed or 0)
+		-- 				overall["FULL_ABSORB_AMT"] = overall["FULL_ABSORB_AMT"] +(amountMissed or 0)
 
-				end
+		-- 				mob["ALL"] = mob["ALL"] + 1  --> qualtipo de hit ou absorb
+		-- 				mob["FULL_ABSORBED"] = mob["FULL_ABSORBED"] + 1 --amount
+		-- 				mob["ABSORB_AMT"] = mob["ABSORB_AMT"] +(amountMissed or 0)
+		-- 				mob["FULL_ABSORB_AMT"] = mob["FULL_ABSORB_AMT"] +(amountMissed or 0)
+		-- 			end
 
-			end
-		end
-]]
+		-- 		end
+
+		-- 	end
+		-- end
+
 
 	------------------------------------------------------------------------------------------------
 	--> amount add
@@ -1017,6 +1020,9 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 
 			if(token == "SWING_MISSED") then
 				este_jogador.totalabsorbed = este_jogador.totalabsorbed + amountMissed
+				-- print(amountMissed.."----- first")
+				-- print(este_jogador.totalabsorbed.."----- sec")
+				-- print("SWING_DAMAGE", time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, amountMissed, -1, 1, nil, nil, nil, false, false, false, false)
 				return parser:swing("SWING_DAMAGE", time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, amountMissed, -1, 1, nil, nil, nil, false, false, false, false)
 
 			elseif(token == "RANGE_MISSED") then

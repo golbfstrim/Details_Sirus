@@ -280,6 +280,16 @@ do
 	}
 
 	_detalhes.ClassSpellList = {
+		--t5 absorb
+		-- t5 pal
+		[307921] = "PALADIN", --pal absorb t5
+		-- t5 dk
+		[308136] = "DEATHKNIGHT", -- bdk
+		[308125] = "DEATHKNIGHT", -- Death Knight, Ice Armor, T5
+		--t5 war
+		[310210] = "WARRIOR", -- t5 war absorb
+
+
 	--death knight
 		[3714]	= "DEATHKNIGHT", -- Path of Frost
 		[42650]	= "DEATHKNIGHT", -- Army of the Dead
@@ -337,6 +347,8 @@ do
 		[77606]	= "DEATHKNIGHT", -- Dark Simulacrum
 		[85948]	= "DEATHKNIGHT", -- Festering Strike
 		[96268]	= "DEATHKNIGHT", -- Death's Advance
+
+
 
 	--druid
 		[768]	= "DRUID", -- Cat Form
@@ -874,6 +886,24 @@ do
 	}
 
 	_detalhes.AbsorbSpells = {
+		--t5 absorb
+
+		[308125] = 10, -- Death Knight, Ice Armor, T5
+		[308136] = 20, -- bdk absorb
+
+		[307921] = 10, -- pal absorb
+
+		[310210] = 2, -- t5 war absorb
+
+		-- Custom
+		[304736] = 10, -- Priest, Divine Charm (T4), T4
+		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
+		[308143] = 30, -- Priest, Power Word: Shield, Rank 15, T5
+
+
+		[308159] = 10, -- Live Barrier, Trinket
+
+
 		-- Death Knight
 		[48707] = 5, -- Anti-Magic Shell (DK) Rank 1 -- Does not currently seem to show tracable combat log events. It shows energizes which do not reveal the amount of damage absorbed
 		[51052] = 10, -- Anti-Magic Zone (DK)( Rank 1 (Correct spellID?)
@@ -1028,13 +1058,7 @@ do
 		[67259] = 15, -- 700000
 		[67261] = 15, -- 1200000
 
-		-- Custom
-		[304736] = 10, -- Priest, Divine Charm (T4), T4
-		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
-		[308143] = 30, -- Priest, Power Word: Shield, Rank 15, T5
-		[307921] = 30, -- Paladin, Holy Barrier, T5
-		[308125] = 10, -- Death Knight, Ice Armor, T5
-		[308159] = 10, -- Live Barrier, Trinket
+
 	}
 
 	-- ~cooldown 1 self
@@ -1741,6 +1765,16 @@ do
 	}
 
 	_detalhes.HelpfulSpells = {
+		--t5 absorb
+		--t5 dk absorb
+		[308136] = true, -- bdk absorb
+		[308125] = true, -- Death Knight, Ice Armor, T5
+		-- t5 pal absorb
+		[307921] = true, --pal
+		-- t5 war absorb
+		[310210] = true, -- t5 war absorb
+
+
 		--death knight
 		[45470] = true, -- Death Strike(heal)
 		[77535] = true, -- Blood Shield(heal)
