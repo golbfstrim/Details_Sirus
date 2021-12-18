@@ -1007,9 +1007,9 @@ local BossIDs = {
 	[18402] = true, -- Warmaul Champion
 
 		--tolgorod
-		[70010] = true, -- Norigorn
+	[70010] = true, -- Norigorn
 
-	}
 }
+
 
 lib.BossIDs = BossIDs
