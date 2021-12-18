@@ -1,6 +1,7 @@
 ## Interface: 30300
 ## Title: Details!: Storage
 ## Notes: Stores information for Details! Damage Meter
+## Notes-ruRU: Хранит информацию для Details.
 ## DefaultState: Enabled
 ## LoadOnDemand: 1
 ## Dependencies: Details

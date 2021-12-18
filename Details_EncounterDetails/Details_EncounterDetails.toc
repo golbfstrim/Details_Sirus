@@ -1,6 +1,7 @@
 ## Interface: 30300
 ## Title: Details!: Encounter Breakdown (plugin)
 ## Notes: Show detailed information about a boss encounter. Also provide damage per phase, graphic charts, easy weakauras creation.
+## Notes-ruRU: Показывает подробную информацию о битве с боссом. Урон от способностей босса, смерти, рассеивания. Предоставляет графические диаграммы. 
 ## RequiredDeps: Details
 ## OptionalDeps: Ace3
 ## SavedVariablesPerCharacter: EncounterDetailsDB

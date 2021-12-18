@@ -1,6 +1,7 @@
 ## Interface: 30300
 ## Title: Details!: SunderCount (plugin)
 ## Notes: Shows who uses Sunder Armor.
+## Notes-ruRU: Показывает кто использует Раскол брони, ослабление доспеха.
 ## DefaultState: Disabled
 ## RequiredDeps: Details
 
