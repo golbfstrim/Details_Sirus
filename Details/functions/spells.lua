@@ -73,7 +73,7 @@ do
 		[310833]= 253, --t5 bm
 
 		-- Marksmanship Hunter:
-		[3045] = 254, -- Rapid Fire
+		--[3045] = 254, -- Rapid Fire
 		[53209] = 254, -- himera
 
 		-- Survival Hunter:
