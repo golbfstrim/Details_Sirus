@@ -37,6 +37,7 @@ do
 
 		-- Blood Death Knight:
 		[49222] = 250, -- Bone Shield
+		[49941] = 250, -- vskipanie
 		[55233] = 250, -- Vampiric Blood
 		[49028] = 250, -- Dancing Rune Weapon
 		[48982] = 250, -- Rune Tap
@@ -69,13 +70,14 @@ do
 		-- Beast Mastery Hunter:
 		[19574] = 253, -- Bestial Wrath
 		[53257] = 253, -- Cobra Strikes
+		[310833]= 253, --t5 bm
 
 		-- Marksmanship Hunter:
 		[3045] = 254, -- Rapid Fire
-		[49050] = 254, -- Aimed Shot, Rank 9
+		[53209] = 254, -- himera
 
 		-- Survival Hunter:
---		[] = 255, -- ???
+		[60053] = 255, -- razrivnaya
 
 		-- Arcane Mage:
 		[12042] = 62, -- Arcane Power
@@ -191,6 +193,7 @@ do
 
 		-- Demonology Warlock:
 		[30146] = 266, -- Summon Felguard
+		[59762] = 266, -- meta
 		--[1949] = 266, -- Hellfire --removed from the game
 		--[6353] = 266, -- Soul Fire --destruction talent
 
