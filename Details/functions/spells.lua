@@ -136,7 +136,7 @@ do
 		[1329] = 259, -- Mutilate
 		[5374] = 259, -- Mutilate
 		[27576] = 259, -- Mutilate Off-Hand
-		[51723] = 259, -- Fan of Knives
+		-- [51723] = 259, -- Fan of Knives
 		[703] = 259, -- Garrote
 		[1943] = 259, -- Rupture
 
