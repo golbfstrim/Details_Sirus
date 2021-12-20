@@ -73,14 +73,14 @@ do
 		[310833]= 253, --t5 bm
 
 		-- Marksmanship Hunter:
-		--[3045] = 254, -- Rapid Fire
+		-- [3045] = 254, -- Rapid Fire
 		[53209] = 254, -- himera
 
 		-- Survival Hunter:
 		[60053] = 255, -- razrivnaya
 
 		-- Arcane Mage:
-		[12042] = 62, -- Arcane Power
+		-- [12042] = 62, -- Arcane Power
 		[31589] = 62, -- Slow
 		[42846] = 62, -- Arcane Missiles, Rank 13
 		[42921] = 62, -- Arcane Explosion, Rank 10
@@ -98,6 +98,7 @@ do
 		-- Frost Mage:
 		[42914] = 64, -- Ice Lance, Rank 3
 		[42842] = 64, -- Frostbolt, Rank 16
+		[47610]	= 64, -- Frostfire Bolt, Rank 2
 
 		-- Holy Paladin:
 		[31821] = 65, -- Devotion Aura
