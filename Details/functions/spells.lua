@@ -21,11 +21,11 @@ do
 		[55265] = 252, -- Scourge Strike, Rank 2
 		[55270] = 252, -- Scourge Strike, Rank 3
 		[55271] = 252, -- Scourge Strike, Rank 4
-		[46584] = 252, -- Raise Dead
+		-- [46584] = 252, -- Raise Dead
 		[51099] = 252, -- Ebon Plaguebringer, Rank 1
 		[51160] = 252, -- Ebon Plaguebringer, Rank 2
 		[51161] = 252, -- Ebon Plaguebringer, Rank 3
-		[49895] = 252, -- Death Coil
+		-- [49895] = 252, -- Death Coil
 
 		-- Frost Death Knight:
 		[51271] = 251, -- Pillar of Frost
@@ -36,17 +36,20 @@ do
 		[51411] = 251, -- Howling Blast, Rank 4
 
 		-- Blood Death Knight:
-		[49222] = 250, -- Bone Shield
-		[49941] = 250, -- vskipanie
+		-- [49222] = 250, -- Bone Shield
+		[49941] = 250, -- vskip
 		[55233] = 250, -- Vampiric Blood
 		[49028] = 250, -- Dancing Rune Weapon
 		[48982] = 250, -- Rune Tap
 		[56222] = 250, -- Dark Command
 		[51429] = 250, -- Blood Boil, Rank 5
+		[308113] = 250, -- Blood Boil, Rank 5
 
 		-- Balance Druid:
 		[53201] = 102, -- Starfall, Rank 4
 		[48465] = 102, -- Starfire, Rank 10
+		[24858] = 102, -- so va
+		[50516] = 102,  -- TaiFuN
 
 		-- Feral Druid:
 		[49802] = 103, -- Maim, Rank 2
@@ -73,7 +76,7 @@ do
 		[310833]= 253, --t5 bm
 
 		-- Marksmanship Hunter:
-		-- [3045] = 254, -- Rapid Fire
+		[3045] = 254, -- Rapid Fire
 		[53209] = 254, -- himera
 
 		-- Survival Hunter:
@@ -107,25 +110,33 @@ do
 		[48825] = 65, -- Holy Shock, Rank 7
 
 		-- Protection Paladin:
+		[48952] = 66, -- Shield of heaven
 		[61411] = 66, -- Shield of the Righteous, Rank 2
 		[48827] = 66, -- Avenger's Shield, Rank 5
+		[53595] = 66, -- molot pravedn
+		[20911] = 66, -- buff proto
 
 		-- Retribution Paladin:
-		[48801] = 70, -- Exorcism, Rank 9
+		[35395] = 70, -- udar
 		[53385] = 70, -- Divine Storm
+		[20066] = 70, -- pokauanie
 
 		-- Discipline Priest:
 		[10060] = 256, -- Power Infusion
 		[33206] = 256, -- Pain Suppression
 		[52985] = 256, -- Penance, Rank 4
+		[53007] = 256, -- ispoved
 
 		-- Holy Priest:
 		[48089] = 257, -- Circle of Healing, Rank 7
+		[724] = 257, -- Circle of Healing, Rank 7
 		[48072] = 257, -- Prayer of Healing, Rank 7
 		[47788] = 257, -- Guardian Spirit
 
 		-- Shadow Priest:
 		[15286] = 258, -- Vampiric Embrace
+		[47585] = 258, -- tuchka
+		[15473] = 258, -- forma
 		[48158] = 258, -- Shadow Word: Death, Rank 4
 		[48160] = 258, -- Vampiric Touch, Rank 5
 		[48127] = 258, -- Mind Blast, Rank 13
@@ -136,15 +147,17 @@ do
 		[1329] = 259, -- Mutilate
 		[5374] = 259, -- Mutilate
 		[27576] = 259, -- Mutilate Off-Hand
-		-- [51723] = 259, -- Fan of Knives
-		[703] = 259, -- Garrote
-		[1943] = 259, -- Rupture
+		[51662] = 259, -- jajda kill
+
 
 		-- Outlaw Rogue:
-		[48668] = 260, -- Run Through, Rank 12
+		[51690] = 260, -- chereda
+		[13750] = 260, -- vibros
+		[13877] = 260, -- shkval
 
 		-- Subtlety Rogue:
-		[48657] = 261, -- Backstab, Rank 12
+		[51713] = 261, -- shadowdance
+		[36554] = 261, -- iшаг сквозь тень
 
 		-- Elemental Shaman:
 		[61882] = 262, -- Earthquake
@@ -155,12 +168,14 @@ do
 		[59156] = 262, -- Thunderstorm, Rank 2
 		[59158] = 262, -- Thunderstorm, Rank 3
 		[59159] = 262, -- Thunderstorm, Rank 4
-		[8042] = 262, -- Earth Shock
+		[16166] = 262, -- pokorenye
+		[30706] = 262, -- totem
+		-- [8042] = 262, -- Earth Shock
 
 		-- Enhancement Shaman:
 		[77223] = 263, -- Mastery: Enhanced Elements
 		[51533] = 263, -- Feral Spirit
-		[58875] = 263, -- Spirit Walk
+		-- [58875] = 263, -- Spirit Walk
 		--[51530] = 263, -- Maelstrom Weapon --removed from the game
 		--[1535] = 263, -- Fire Nova --removed from the game
 		--[8190] = 263, -- Magma Totem --removed from the game
@@ -182,21 +197,30 @@ do
 		[55459] = 264, -- Chain Heal, Rank 7
 		[16196] = 264, -- Resurgence
 		--[974] = 264, -- Earth Shield --can be used by all specs as a talent
-		[52127] = 264, -- Water Shield
+		-- [52127] = 264, -- Water Shield
 --		[57960] = 264, -- Restorative Waves, Rank 9
 		[61301] = 264, -- Riptide, Rank 4
+		[49284] = 264, -- schit zemli
+
 
 		-- Affliction :
 		[48181] = 265, -- Haunt
 		[980] = 265, -- Agony
 		[27243] = 265, -- Seed of Corruption
 		[30108] = 265, -- Unstable Affliction
+		[308044] = 265,			-- Саван смерти - 308044
 
 		-- Demonology Warlock:
-		[30146] = 266, -- Summon Felguard
+		-- [30146] = 266, -- Summon Felguard
 		[59762] = 266, -- meta
 		--[1949] = 266, -- Hellfire --removed from the game
 		--[6353] = 266, -- Soul Fire --destruction talent
+		[308051] = 266,	-- Копьё тёмного пламени - 308051
+		[308055] = 266,	-- Пожирающее пламя - 308055
+		[308056] = 266,	-- Проклятие хаоса - 308056
+		[308054] = 266,	-- Разложение  - 308054
+		[308053] = 266,	-- Сожжение души - 308053
+		[308059] = 266,	-- Яросный инфернал - 308059
 
 		-- Destruction Warlock:
 		[17877] = 267, -- Shadowburn
@@ -205,6 +229,7 @@ do
 		[348] = 267, -- Immolate
 		[17962] = 267, -- Conflagrate
 		[29722] = 267, -- Incinerate
+		[309235] = 267, -- t5
 
 		-- Arms Warrior:
 		[12328] = 71, -- Sweeping Strikes
@@ -226,14 +251,18 @@ do
 		-- Protection Warrior:
 		[165393] = 73, -- Shield Mastery
 		[76857] = 73, -- Mastery: Critical Block
-		[1160] = 73, -- Demoralizing Shout
 		[871] = 73, -- Shield Wall
 		[12975] = 73, -- Last Stand
-		[6572] = 73, -- Revenge
 		[20243] = 73, -- Devastate
 		[2565] = 73, -- Shield Block
 		[23922] = 73, -- Shield Slam
 		[46953] = 73, -- Sword and Board
+
+		[46968] = 73, -- slam!
+		[50720] = 73, -- bdilka
+		[47498] = 73, -- sokrush
+		[12809] = 73, -- stun
+
 		--[29144] = 73, -- Unwavering Sentinel --removed from the game
 		[6343] = 73, -- Thunder Clap
 		--[71] = 73, -- Defensive Stance --removed from the game
