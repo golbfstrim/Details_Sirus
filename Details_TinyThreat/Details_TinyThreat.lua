@@ -260,6 +260,7 @@ local function CreatePluginFrames ()
 						threat_table [2] = threatpct
 						threat_table [3] = isTanking
 						threat_table [6] = threatvalue
+						-- print(threatvalue.."         -----262")
 					else
 						threat_table [2] = 0
 						threat_table [3] = false
@@ -285,6 +286,7 @@ local function CreatePluginFrames ()
 						threat_table [2] = threatpct
 						threat_table [3] = isTanking
 						threat_table [6] = threatvalue
+						-- print(threatvalue.."         -----287")
 					else
 						threat_table [2] = 0
 						threat_table [3] = false
@@ -301,6 +303,7 @@ local function CreatePluginFrames ()
 					threat_table [2] = threatpct
 					threat_table [3] = isTanking
 					threat_table [6] = threatvalue
+					-- print(threatvalue.."         -----304")
 				else
 					threat_table [2] = 0
 					threat_table [3] = false
@@ -319,6 +322,8 @@ local function CreatePluginFrames ()
 					threat_table [2] = threatpct
 					threat_table [3] = isTanking
 					threat_table [6] = threatvalue
+					-- print(threatvalue.."         -----323")
+					-- threat_table [6] = 5555
 				else
 					threat_table [2] = 0
 					threat_table [3] = false
@@ -337,6 +342,7 @@ local function CreatePluginFrames ()
 							threat_table [2] = threatpct
 							threat_table [3] = isTanking
 							threat_table [6] = threatvalue
+							-- print(threatvalue.."         -----345")
 						else
 							threat_table [2] = 0
 							threat_table [3] = false
