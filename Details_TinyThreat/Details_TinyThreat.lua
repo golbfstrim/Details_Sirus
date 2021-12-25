@@ -453,7 +453,12 @@ local function CreatePluginFrames ()
 						thisRow:SetValue (threat_actor [2])
 
 						if (options.useplayercolor) then
-							thisRow:SetColor (_unpack (options.playercolor))
+							if options.playercolor ~= nil then
+								thisRow:SetColor (_unpack (options.playercolor))
+							else
+								local r, g = ThreatMeter:percent_color (threat_actor [2], true)
+								thisRow:SetColor (r, g, 0, .3)
+							end
 						else
 							local r, g = ThreatMeter:percent_color (threat_actor [2], true)
 							thisRow:SetColor (r, g, 0, .3)
