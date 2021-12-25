@@ -2090,23 +2090,38 @@ local icon_frame_on_enter = function(self)
 			_detalhes:AddTooltipHeaderStatusbar()
 
 			local talent_string = ""
---[[ -- TEMP
-			if(talents) then
-				for i = 1, #talents do
-					local talentID, name, texture, selected, available = GetTalentInfoByID(talents[i])
-					talent_string = talent_string ..  " |T" .. texture .. ":" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t"
-				end
-			end
-]]
+ -- TEMP
+			-- if (talents) then
+			-- 	for i = 1, #talents do
+			-- 		local talentID, name, texture, selected, available = GetTalentInfoByID(talents[i])
+			-- 		talent_string = talent_string ..  " |T" .. texture .. ":" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t"
+			-- 	end
+			-- end
+
+
+--[[
+            function TT:GetItemLvL(unit, giud)
+                local ilvl = ItemLevelMixIn:GetItemLevel(giud or UnitGUID(unit))
+                if ilvl and ilvl ~= -1 then
+                    local color = ItemLevelMixIn:GetColor(ilvl)
+                    if color then
+                        return format("%s%s|r", E:RGBToHex(color.r, color.g, color.b), ilvl)
+                    end
+                else
+                    return TOOLTIP_UNIT_LEVEL_ILEVEL_LOADING_LABEL
+                end
+            end]]
 			-- TEMP
 			local got_info
 			if(ilvl) then
-				GameCooltip:AddLine("STAT_AVERAGE_ITEM_LEVEL" .. ":" , ilvl and "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t" .. _math_floor(ilvl.ilvl) or "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t ??") --> Loc from GlobalStrings.lua
+				local ilvla = ItemLevelMixIn:GetItemLevel(giud or UnitGUID(name))
+				GameCooltip:AddLine("ILVL" .. ":" , ilvla and "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t" .. _math_floor(ilvl.ilvl) or "|T:" .. 24 .. ":" .. 24 ..":0:0:64:64:4:60:4:60|t ??") --> Loc from GlobalStrings.lua
 				GameCooltip:AddIcon([[]], 1, 1, 1, 20)
 				_detalhes:AddTooltipBackgroundStatusbar()
 				got_info = true
 			else
-				GameCooltip:AddLine("STAT_AVERAGE_ITEM_LEVEL" .. ":" , 0)
+				local ilvla = ItemLevelMixIn:GetItemLevel(giud or UnitGUID(name))
+				GameCooltip:AddLine("ILVL" .. ":" , ilvla)
 				GameCooltip:AddIcon([[]], 1, 1, 1, 20)
 				_detalhes:AddTooltipBackgroundStatusbar()
 				got_info = true

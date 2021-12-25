@@ -1037,7 +1037,7 @@ do --> data for Ulduar
 		[33118] = 2, --Ignis the Furnace Master
 		[33186] = 3, --Razorscale
 		[33293] = 4, --XT-002 Deconstructor
-		[32867] = 5, --Assembly of Iron
+		[32857] = 5, --Assembly of Iron
 		[32930] = 6, --Kologarn
 		[33515] = 7, --Auriaya
 		[32845] = 8, --Hodir
