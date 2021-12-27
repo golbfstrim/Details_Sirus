@@ -28,14 +28,11 @@ ThreatMeter:SetPluginDescription ("Small tool for track the threat you and other
 
 local _
 
-local function CreatePluginFrames (data)
+local function CreatePluginFrames ()
 
 	--> catch Details! main object
 	local _detalhes = _G._detalhes
 	local DetailsFrameWork = _detalhes.gump
-
-	--> data
-	ThreatMeter.data = data or {}
 
 	--> defaults
 	ThreatMeter.RowWidth = 294
@@ -151,7 +148,6 @@ local function CreatePluginFrames (data)
 		end
 	end
 
-	local target = nil
 	local timer = 0
 	local interval = 1.0
 
@@ -264,6 +260,7 @@ local function CreatePluginFrames (data)
 						threat_table [2] = threatpct
 						threat_table [3] = isTanking
 						threat_table [6] = threatvalue
+						-- print(threatvalue.."         -----262")
 					else
 						threat_table [2] = 0
 						threat_table [3] = false
@@ -273,7 +270,7 @@ local function CreatePluginFrames (data)
 				end
 
 			elseif (_IsInGroup()) then
-				for i = 1, _GetNumGroupMembers() - 1, 1 do
+				for i = 1, _GetNumGroupMembers(), 1 do
 					local thisplayer_name = GetUnitName ("party"..i)
 					local threat_table_index = ThreatMeter.player_list_hash [thisplayer_name]
 					local threat_table = ThreatMeter.player_list_indexes [threat_table_index]
@@ -289,6 +286,7 @@ local function CreatePluginFrames (data)
 						threat_table [2] = threatpct
 						threat_table [3] = isTanking
 						threat_table [6] = threatvalue
+						-- print(threatvalue.."         -----287")
 					else
 						threat_table [2] = 0
 						threat_table [3] = false
@@ -305,6 +303,7 @@ local function CreatePluginFrames (data)
 					threat_table [2] = threatpct
 					threat_table [3] = isTanking
 					threat_table [6] = threatvalue
+					-- print(threatvalue.."         -----304")
 				else
 					threat_table [2] = 0
 					threat_table [3] = false
@@ -323,6 +322,8 @@ local function CreatePluginFrames (data)
 					threat_table [2] = threatpct
 					threat_table [3] = isTanking
 					threat_table [6] = threatvalue
+					-- print(threatvalue.."         -----323")
+					-- threat_table [6] = 5555
 				else
 					threat_table [2] = 0
 					threat_table [3] = false
@@ -341,6 +342,7 @@ local function CreatePluginFrames (data)
 							threat_table [2] = threatpct
 							threat_table [3] = isTanking
 							threat_table [6] = threatvalue
+							-- print(threatvalue.."         -----345")
 						else
 							threat_table [2] = 0
 							threat_table [3] = false
@@ -451,13 +453,18 @@ local function CreatePluginFrames (data)
 						local thisRow = ThreatMeter.ShownRows [#ThreatMeter.ShownRows]
 						thisRow:SetLeftText (player)
 						--thisRow.textleft:SetTextColor (unpack (RAID_CLASS_COLORS [threat_actor [5]]))
-						local role = threat_actor [4]
-						thisRow._icon:SetTexCoord (_unpack (RoleIconCoord [role]))
-						thisRow:SetRightText (ThreatMeter:ToK2 (threat_actor [6]) .. " (" .. _cstr ("%.1f", threat_actor [2]) .. "%)")
-						thisRow:SetValue (threat_actor [2])
+						local role = threat_actor[4] or "NONE"
+						thisRow._icon:SetTexCoord(_unpack(RoleIconCoord[role]))
+						thisRow:SetRightText(ThreatMeter:ToK2 (threat_actor[6]) .. " (" .. _cstr ("%.1f", threat_actor[2]) .. "%)")
+						thisRow:SetValue(threat_actor[2])
 
 						if (options.useplayercolor) then
-							thisRow:SetColor (_unpack (options.playercolor))
+							if options.playercolor ~= nil then
+								thisRow:SetColor (_unpack (options.playercolor))
+							else
+								local r, g = ThreatMeter:percent_color (threat_actor [2], true)
+								thisRow:SetColor (r, g, 0, .3)
+							end
 						else
 							local r, g = ThreatMeter:percent_color (threat_actor [2], true)
 							thisRow:SetColor (r, g, 0, .3)
@@ -476,9 +483,7 @@ local function CreatePluginFrames (data)
 		if (not ThreatMeter.Actived) then
 			return
 		end
-		local NewTarget = _UnitName ("target")
-		if (NewTarget and not _UnitIsFriend ("player", "target")) then
-			target = NewTarget
+		if (_UnitName ("target") and not _UnitIsFriend ("player", "target")) then
 			Threater()
 		else
 			ThreatMeter:HideBars()
@@ -512,7 +517,7 @@ local function CreatePluginFrames (data)
 				end
 
 			elseif (_IsInGroup()) then
-				for i = 1, _GetNumGroupMembers()-1, 1 do
+				for i = 1, _GetNumGroupMembers(), 1 do
 					local thisplayer_name = GetUnitName ("party"..i, true)
 					local role = _UnitGroupRolesAssigned (thisplayer_name)
 					local _, class = UnitClass (thisplayer_name)
@@ -647,7 +652,7 @@ function ThreatMeter:OnEvent (_, event, ...)
 				end
 
 				--> create widgets
-				CreatePluginFrames (data)
+				CreatePluginFrames ()
 
 				local MINIMAL_DETAILS_VERSION_REQUIRED = 1
 
