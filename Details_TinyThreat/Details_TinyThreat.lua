@@ -403,9 +403,9 @@ local function CreatePluginFrames ()
 				local threat_actor = ThreatMeter.player_list_indexes [index-1]
 
 				if (threat_actor) then
-					local role = threat_actor [4]
+					local role = threat_actor[4] or "None"
 					if role then
-						thisRow._icon:SetTexCoord(_unpack(RoleIconCoord[role] or RoleIconCoord["None"]))
+						thisRow._icon:SetTexCoord(_unpack(RoleIconCoord[role]))
 					end
 
 					thisRow:SetLeftText (ThreatMeter:GetOnlyName (threat_actor [1]))
