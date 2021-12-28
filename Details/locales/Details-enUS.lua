@@ -1691,3 +1691,5 @@ L["STRING_WIPE_ERROR2"] = "we aren't in a raid encounter."
 L["STRING_WIPE_ERROR3"] = "couldn't end the encounter."
 L["STRING_YES"] = "Yes"
 
+
+L["In Combat Only"] = "In Combat Only"

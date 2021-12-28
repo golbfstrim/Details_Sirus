@@ -4265,7 +4265,7 @@ function window:CreateFrame1()
 		--click through ~clickthrough
 
 			--in combat only
-			g:NewLabel (frame1, _, "$parentclickThroughInCombatLabel", "clickThroughInCombatLabel", "In Combat Only", "GameFontHighlightLeft")
+			g:NewLabel (frame1, _, "$parentclickThroughInCombatLabel", "clickThroughInCombatLabel", Loc ["In Combat Only"], "GameFontHighlightLeft")
 
 			g:NewSwitch (frame1, _, "$parentclickThroughInCombatSlider", "clickThroughInCombatSlider", 60, 20, _, _, _G.DetailsOptionsWindow.instance.clickthrough_incombatonly, nil, nil, nil, nil, options_switch_template)
 			frame1.clickThroughInCombatSlider:SetAsCheckBox()
@@ -11064,7 +11064,7 @@ function window:CreateFrame12()
 		end
 
 		if (pluginObject.OpenOptionsPanel) then
-			g:NewButton (bframe, nil, "$parentOptionsButton"..i, "OptionsButton"..i, 86, 18, pluginObject.OpenOptionsPanel, nil, nil, nil, Loc ["STRING_OPTIONS_PLUGINS_OPTIONS"], nil, options_button_template)
+			g:NewButton (bframe, nil, "$parentOptionsButton"..i, "OptionsButton"..i, 120, 20, pluginObject.OpenOptionsPanel, nil, nil, nil, Loc ["STRING_OPTIONS_PLUGINS_OPTIONS"], nil, options_button_template)
 			bframe ["OptionsButton"..i]:SetPoint ("topleft", frame4, "topleft", 510, y-0)
 			--bframe ["OptionsButton"..i]:InstallCustomTexture()
 
