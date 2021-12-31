@@ -403,9 +403,13 @@ local function CreatePluginFrames ()
 				local threat_actor = ThreatMeter.player_list_indexes [index-1]
 
 				if (threat_actor) then
-					local role = threat_actor[4] or "None"
+					local role = threat_actor [4]
 					if role then
-						thisRow._icon:SetTexCoord(_unpack(RoleIconCoord[role]))
+						if RoleIconCoord[role] == nil then
+						thisRow._icon:SetTexCoord(_unpack(RoleIconCoord["None"]))
+						else
+							thisRow._icon:SetTexCoord(_unpack(RoleIconCoord[role]))
+						end
 					end
 
 					thisRow:SetLeftText (ThreatMeter:GetOnlyName (threat_actor [1]))
@@ -449,7 +453,7 @@ local function CreatePluginFrames ()
 				--> show my self into last bar
 				local threat_actor = ThreatMeter.player_list_indexes[ThreatMeter.player_list_hash[player]]
 				if (threat_actor) then
-					if (threat_actor[2] and threat_actor[2] > 0.1) then
+					if (threat_actor [2] and threat_actor[2] > 0.1) then
 						local thisRow = ThreatMeter.ShownRows [#ThreatMeter.ShownRows]
 						thisRow:SetLeftText (player)
 						--thisRow.textleft:SetTextColor (unpack (RAID_CLASS_COLORS [threat_actor [5]]))
@@ -466,7 +470,7 @@ local function CreatePluginFrames ()
 								thisRow:SetColor(r, g, 0, .3)
 							end
 						else
-							local r, g = ThreatMeter:percent_color(threat_actor[2], true)
+							local r, g = ThreatMeter:percent_color(threat_actor [2], true)
 							thisRow:SetColor(r, g, 0, .3)
 						end
 					end
