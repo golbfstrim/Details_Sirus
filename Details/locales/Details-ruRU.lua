@@ -1680,3 +1680,5 @@ L["STRING_WIPE_ERROR2"] = "вы не находитесь в рейдовом с
 L["STRING_WIPE_ERROR3"] = "не удалось закончить сражение."
 L["STRING_YES"] = "Да"
 
+
+L["In Combat Only"] = "Только в бою"

@@ -11,6 +11,7 @@ embeds.xml
 #@end-no-lib-strip@
 
 enUS.lua
+ptBR.lua
 ruRU.lua
 
 Details_TinyThreat.lua

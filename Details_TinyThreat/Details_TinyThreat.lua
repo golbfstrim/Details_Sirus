@@ -24,7 +24,7 @@ local ThreatMeter = _detalhes:NewPluginObject ("Details_TinyThreat")
 --> Main Frame
 local ThreatMeterFrame = ThreatMeter.Frame
 
-ThreatMeter:SetPluginDescription ("Small tool for track the threat you and other raid members have in your current target.")
+ThreatMeter:SetPluginDescription (Loc ["Small tool for track the threat you and other raid members have in your current target."])
 
 local _
 
@@ -377,7 +377,7 @@ local function CreatePluginFrames ()
 				local topThreat = ThreatMeter.player_list_indexes [1]
 				local aggro = topThreat [6] * (CheckInteractDistance ("target", 3) and 1.1 or 1.3)
 
-				pullRow:SetLeftText ("Pull Aggro At")
+				pullRow:SetLeftText (Loc ["Pull Aggro At"])
 				local realPercent = _math_floor (aggro / max (topThreat [6], 0.01) * 100)
 				pullRow:SetRightText ("+" .. ThreatMeter:ToK2 (aggro - myThreat) .. " (" .. _math_floor (_math_abs ((myThreat / aggro * 100) - realPercent)) .. "%)") --
 				pullRow:SetValue (100)
@@ -579,7 +579,7 @@ end
 
 local build_options_panel = function()
 
-	local options_frame = ThreatMeter:CreatePluginOptionsFrame ("ThreatMeterOptionsWindow", "Tiny Threat Options", 1)
+	local options_frame = ThreatMeter:CreatePluginOptionsFrame ("ThreatMeterOptionsWindow",Loc ["Tiny Threat Options"], 1)
 
 	local menu = {
 		{
@@ -589,16 +589,16 @@ local build_options_panel = function()
 			min = 0.2,
 			max = 3,
 			step = 0.2,
-			desc = "How fast the window get updates.",
-			name = "Update Speed",
+			desc = (Loc ["How fast the window get updates."]),
+			name = (Loc ["Update Speed"]),
 			usedecimals = true,
 		},
 		{
 			type = "toggle",
 			get = function() return ThreatMeter.saveddata.useplayercolor end,
 			set = function (self, fixedparam, value) ThreatMeter.saveddata.useplayercolor = value end,
-			desc = "When enabled, your bar get the following color.",
-			name = "Player Color Enabled"
+			desc = (Loc ["When enabled, your bar get the following color."]),
+			name = (Loc ["Player Color Enabled"])
 		},
 		{
 			type = "color",
@@ -607,15 +607,15 @@ local build_options_panel = function()
 				local current = ThreatMeter.saveddata.playercolor
 				current[1], current[2], current[3], current[4] = r, g, b, a
 			end,
-			desc = "If Player Color is enabled, your bar have this color.",
-			name = "Color"
+			desc = (Loc ["If Player Color is enabled, your bar have this color."]),
+			name = (Loc ["Color"])
 		},
 		{
 			type = "toggle",
 			get = function() return ThreatMeter.saveddata.useclasscolors end,
 			set = function (self, fixedparam, value) ThreatMeter.saveddata.useclasscolors = value end,
-			desc = "When enabled, threat bars uses the class color of the character.",
-			name = "Use Class Colors"
+			desc = (Loc ["When enabled, threat bars uses the class color of the character."]),
+			name = (Loc ["Use Class Colors"])
 		},
 	}
 
