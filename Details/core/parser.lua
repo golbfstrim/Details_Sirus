@@ -1878,7 +1878,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 	end
 
 	function parser:unbuff(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount)
-
+-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount)
 	------------------------------------------------------------------------------------------------
 	--> handle shields
 
@@ -1900,7 +1900,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			--> healing done(shields)
 				if absorb_spell_list[spellid] then
 					if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][alvo_name] then
-						escudo[alvo_name][spellid][alvo_name].timestamp = time + 0.1
+						escudo[alvo_name][spellid][alvo_name].timestamp = time
 					end
 				--end
 

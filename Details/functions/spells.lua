@@ -600,6 +600,7 @@ do
 		[10060]	= "PRIEST", -- Power Infusion
 		[48162]	= "PRIEST", -- Power Word: Fortitude, Rank 4
 		[48066]	= "PRIEST", -- Power Word: Shield, Rank 14
+		[308143] = "PRIEST", -- Power Word: Shield, Rank 15
 		[48072]	= "PRIEST", -- Prayer of Healing, Rank 7
 		[33110]	= "PRIEST", -- Prayer of Mending
 		[48113]	= "PRIEST", -- Prayer of Mending, Rank 3
@@ -931,10 +932,10 @@ do
 		-- Custom
 		[304736] = 10, -- Priest, Divine Charm (T4), T4
 		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
-		[308143] = 30, -- Priest, Power Word: Shield, Rank 15, T5
+		-- [308143] = 30, -- Priest, Power Word: Shield, Rank 15, T5
 
 
-		[308159] = 10, -- Live Barrier, Trinket
+		-- [308159] = 10, -- Live Barrier, Trinket
 
 
 		-- Death Knight
@@ -993,11 +994,12 @@ do
 		[25218] = 30,
 		[48065] = 30,
 		[48066] = 30, -- Rank 14
-		[47509] = 12, -- Divine Aegis (Priest) Rank 1
-		[47511] = 12,
-		[47515] = 12, -- Divine Aegis (Priest) Rank 3 (Some of these are not actual buff spellIDs)
-		[47753] = 12, -- Divine Aegis (Priest) Rank 1
-		[54704] = 12, -- Divine Aegis (Priest) Rank 1
+		[308143] = 30, -- Rank 15 shild word t5
+		-- [47509] = 12, -- Divine Aegis (Priest) Rank 1
+		-- [47511] = 12,
+		-- [47515] = 12, -- Divine Aegis (Priest) Rank 3 (Some of these are not actual buff spellIDs)
+		[47753] = 12, -- Divine Aegis (Priest) Rank 3
+		-- [54704] = 12, -- Divine Aegis (Priest) Rank 1
 		[47788] = 10, -- Guardian Spirit  (Priest) (50 nominal absorb, this may not show in the CL)
 		-- Warlock
 		[7812] = 30, -- Sacrifice (warlock) Rank 1
@@ -1888,6 +1890,7 @@ do
 		[48063]	= true, -- greater heal, Rank 9
 		[48071]	= true, -- flash heal, Rank 11
 		[48066]	= true, -- power word: shield, Rank 14
+		[308143] = true, -- power word: shield, Rank 15
 		[64904] = true, -- hymn of hope
 		[48113] = true, -- Prayer of Mending
 		[2053]	= true, -- Heal, Rank 3

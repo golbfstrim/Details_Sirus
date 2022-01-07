@@ -111,7 +111,7 @@ do --> data for Serpentshrine Cavern
 		LBB["Fathom-Lord Karathress"],
 		LBB["Morogrim Tidewalker"],
 		LBB["Lady Vashj"],
-		LBB["Gore'lats"],	
+		LBB["Gore'lats"],
 	}
 
 	local ENCOUNTERS = {}
