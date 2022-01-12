@@ -719,6 +719,7 @@ do
 		[57960]	= "SHAMAN", -- Water Shield, Rank 9
 		[57994]	= "SHAMAN", -- Wind Shear
 		[25504]	= "SHAMAN", -- Windfury Attack
+		[58582]	= "SHAMAN", -- shield totem
 
 	-- Warlock
 		[59172]	= "WARLOCK", -- Chaos Bolt, Rank 4
@@ -937,7 +938,9 @@ do
 
 
 		-- [308159] = 10, -- Live Barrier, Trinket
+		[313530] = 12, -- stn hrth trnkt
 
+		[55277] = 12, -- shmn ttm
 
 		-- Death Knight
 		[48707] = 5, -- Anti-Magic Shell (DK) Rank 1 -- Does not currently seem to show tracable combat log events. It shows energizes which do not reveal the amount of damage absorbed
