@@ -524,6 +524,7 @@ do
 		[31687]	= "MAGE", -- Summon Water Elemental
 
 	-- Paladin
+		-- [58597] = "PALADIN", -- holy shield
 		[66235]	= "PALADIN", -- Ardent Defender
 		[31852]	= "PALADIN", -- Ardent Defender, Rank 3
 		[48827]	= "PALADIN", -- Avenger's Shield, Rank 5
@@ -998,7 +999,7 @@ do
 		-- [47509] = 12, -- Divine Aegis (Priest) Rank 1
 		-- [47511] = 12,
 		-- [47515] = 12, -- Divine Aegis (Priest) Rank 3 (Some of these are not actual buff spellIDs)
-		[47753] = 12, -- Divine Aegis (Priest) Rank 3
+		[47753] = 12, -- Divine Aegis (Priest) Rank 3 ------ true
 		-- [54704] = 12, -- Divine Aegis (Priest) Rank 1
 		[47788] = 10, -- Guardian Spirit  (Priest) (50 nominal absorb, this may not show in the CL)
 		-- Warlock
@@ -1803,6 +1804,8 @@ do
 		--t5 absorb
 		--t5 dk absorb
 		[308136] = true, -- bdk absorb
+		[308133] = true, -- bdk heal
+
 		[308125] = true, -- Death Knight, Ice Armor, T5
 		-- t5 pal absorb
 		[307921] = true, --pal
@@ -1889,6 +1892,7 @@ do
 		[48068]	= true, -- renew, Rank 14
 		[48063]	= true, -- greater heal, Rank 9
 		[48071]	= true, -- flash heal, Rank 11
+		-- [47753]	= true, -- power word: shield, Rank 14
 		[48066]	= true, -- power word: shield, Rank 14
 		[308143] = true, -- power word: shield, Rank 15
 		[64904] = true, -- hymn of hope

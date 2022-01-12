@@ -430,7 +430,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			or (not _detalhes.in_group and who_flags and _bit_band(who_flags, AFFILIATION_GROUP) ~= 0)) then
 
 			_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-			
+
 			--> n�o entra em combate se for DOT
 			if _detalhes.encounter_table.id and _detalhes.encounter_table["start"] and _detalhes.announce_firsthit.enabled then
 				local link
@@ -1234,11 +1234,15 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		local owner_serial, owner_name, owner_flags, shieldid
 		if escudo[alvo_name] then
 			for shield_id, spells in _pairs(escudo[alvo_name]) do
+				-- print(shield_id, spells)
 				for shield_src, data in _pairs(spells) do
+					-- print(shield_src, data.timestamp, 1238)
 					if data.timestamp - time > 0 and (mintime == nil or data.timestamp - time < mintime) then
 						owner_name = shield_src
 						shieldid = shield_id
 						owner_serial, owner_flags = data.serial, data.flags
+						-- print(owner_name,shieldid,owner_serial, owner_flags,absorbed,1242)
+						break
 					end
 				end
 			end
@@ -1247,7 +1251,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		if not owner_name then
 			return
 		end
-
+		-- print(owner_name,shieldid,owner_serial, owner_flags,absorbed,1251)
 		--> chamar a fun��o de cura pra contar a cura
 		return parser:heal(token, time, owner_serial, owner_name, owner_flags, alvo_serial, alvo_name, alvo_flags, shieldid, nil, nil, absorbed, 0, 0, nil, true)
 	end
@@ -1574,12 +1578,17 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			------------------------------------------------------------------------------------------------
 			--> healing done absorbs
 			if(absorb_spell_list[spellid]) then
+				-- print(spellid)
 				escudo[alvo_name] = escudo[alvo_name] or {}
 				escudo[alvo_name][spellid] = escudo[alvo_name][spellid] or {}
 				escudo[alvo_name][spellid][who_name] = escudo[alvo_name][spellid][who_name] or {}
 				escudo[alvo_name][spellid][who_name].timestamp = time + absorb_spell_list[spellid]
+
 				escudo[alvo_name][spellid][who_name].serial = who_serial
 				escudo[alvo_name][spellid][who_name].flags = who_flags
+				-- print(escudo[alvo_name][spellid][who_name].timestamp,escudo[alvo_name][spellid][who_name].serial, 1581)
+				-- print( who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount)
+
 			end
 
 	------------------------------------------------------------------------------------------------
@@ -1792,6 +1801,8 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 					escudo[alvo_name][spellid][who_name].timestamp = time + absorb_spell_list[spellid]
 					escudo[alvo_name][spellid][who_name].serial = who_serial
 					escudo[alvo_name][spellid][who_name].flags = who_flags
+					-- print(escudo[alvo_name][spellid][who_name].timestamp,escudo[alvo_name][spellid][who_name].serial , 1797)
+					-- print( who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount)
 			------------------------------------------------------------------------------------------------
 			--> recording buffs
 
@@ -1898,11 +1909,29 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 
 			------------------------------------------------------------------------------------------------
 			--> healing done(shields)
-				if absorb_spell_list[spellid] then
+			
+				if (absorb_spell_list[spellid]) then
+					-- print(spellid)
 					if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][alvo_name] then
-						escudo[alvo_name][spellid][alvo_name].timestamp = time
+						escudo[alvo_name][spellid][who_name].timestamp = time + 0.1
+						-- if spellid == 48066 then
+							-- 	-- print("tralala")
+							-- print(escudo[alvo_name][spellid][alvo_name].timestamp)
+						-- end
+						-- print(escudo[alvo_name][spellid].alvo_name, "imya ", 1914)
+						-- print(escudo[alvo_name][spellid][alvo_name].timestamp, "ubralsya", 1915)
 					end
 				--end
+				-- elseif (absorb_spell_list[spellid]) and spellid == 48066 then
+				-- 	if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][who_name] then
+				-- 		escudo[alvo_name][spellid][who_name].timestamp = time + 0.1
+				-- 		-- if spellid == 48066 then
+				-- 			-- 	-- print("tralala")
+				-- 			-- print(escudo[alvo_name][spellid][alvo_name].timestamp)
+				-- 		-- end
+				-- 		-- print(escudo[alvo_name][spellid].alvo_name, "imya ", 1914)
+				-- 		-- print(escudo[alvo_name][spellid][alvo_name].timestamp, "ubralsya", 1915)
+				-- 	end
 
 			------------------------------------------------------------------------------------------------
 			--> recording buffs
