@@ -77,37 +77,7 @@ local sunderCount = {
 	percent_script = [[
 
 	]],
-	tooltip =[[	
-		--init:
-		local player, combat, instance = ...
-
-		--get the debuff container for potion of focus
-		local debuff_uptime_container = player.debuff_uptime and player.debuff_uptime_spells and player.debuff_uptime_spells._ActorTable
-		if(debuff_uptime_container) then
-			local focus_potion = debuff_uptime_container[DETAILS_FOCUS_POTION_ID]
-			if(focus_potion) then
-			local name, _, icon = GetSpellInfo(DETAILS_FOCUS_POTION_ID)
-			GameCooltip:AddLine(name, 1) --> can use only 1 focus potion(can't be pre-potion)
-			_detalhes:AddTooltipBackgroundStatusbar()
-			GameCooltip:AddIcon(icon, 1, 1, _detalhes.tooltip.line_height, _detalhes.tooltip.line_height)
-			end
-		end
-
-		--get the misc actor container
-		local buff_uptime_container = player.buff_uptime and player.buff_uptime_spells and player.buff_uptime_spells._ActorTable
-		if(buff_uptime_container) then
-			for spellId, _ in pairs(DetailsFramework.PotionIDs) do
-				local potionUsed = buff_uptime_container[spellId]
-
-				if(potionUsed) then
-					local name, _, icon = GetSpellInfo(spellId)
-					GameCooltip:AddLine(name, potionUsed.activedamt)
-					_detalhes:AddTooltipBackgroundStatusbar()
-					GameCooltip:AddIcon(icon, 1, 1, _detalhes.tooltip.line_height, _detalhes.tooltip.line_height)
-				end
-			end
-		end
-
+	tooltip =[[			
 		]],
 }
 
