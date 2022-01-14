@@ -2,7 +2,7 @@
 ## Title: Details!: SunderCount (plugin)
 ## Notes: Shows who uses Sunder Armor.
 ## Notes-ruRU: Показывает кто использует Раскол брони, ослабление доспеха.
-## DefaultState: Disabled
+## DefaultState: Enabled
 ## RequiredDeps: Details
 
 Details_SunderCount.lua

@@ -340,6 +340,7 @@ end
 
 function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
 ------------------------------------------------------------------------------------------------
+-- print(alvo_flags)
 --> early checks and fixes
 	if who_serial == "" then
 		if who_flags and _bit_band(who_flags, OBJECT_TYPE_PETS) ~= 0 then --> � um pet
@@ -714,7 +715,44 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			meu_dono.targets[alvo_name] =(meu_dono.targets[alvo_name] or 0) + amount
 
 			meu_dono.last_event = _tempo
+			-- print(alvo_flags)
+			-- if (RAID_TARGET_FLAGS [alvo_flags]) then
+			-- 	--> add the amount done for the owner
+			-- 	meu_dono.raid_targets [alvo_flags] = (meu_dono.raid_targets [alvo_flags] or 0) + amount
+			-- end
 		end
+		-- print(alvo_flags, 724)
+		--> raid targets
+		este_jogador.raid_targets = este_jogador.raid_targets or {}
+		if alvo_flags == 134285864 then
+			este_jogador.raid_targets ["skull"] = (este_jogador.raid_targets ["skull"] or 0) + amount
+			-- print(este_jogador.raid_targets ["skull"])
+		elseif alvo_flags == 67177000 then
+			este_jogador.raid_targets ["cross"] = (este_jogador.raid_targets ["cross"] or 0) + amount
+			-- print(este_jogador.raid_targets ["cross"])
+		elseif alvo_flags == 33622568 then
+			este_jogador.raid_targets ["square"] = (este_jogador.raid_targets ["square"] or 0) + amount
+			-- print(este_jogador.raid_targets ["square"])
+		elseif alvo_flags == 16845352 then
+			este_jogador.raid_targets ["moon"] = (este_jogador.raid_targets ["moon"] or 0) + amount
+			-- print(este_jogador.raid_targets ["moon"])
+		elseif alvo_flags == 8456744 then
+			este_jogador.raid_targets ["triangle"] = (este_jogador.raid_targets ["triangle"] or 0) + amount
+			-- print(este_jogador.raid_targets ["triangle"])
+		elseif alvo_flags == 4262440 then
+			este_jogador.raid_targets ["diamond"] = (este_jogador.raid_targets ["diamond"] or 0) + amount
+			-- print(este_jogador.raid_targets ["diamond"])
+		elseif alvo_flags == 2165288 then
+			este_jogador.raid_targets ["circle"] = (este_jogador.raid_targets ["circle"] or 0) + amount
+			-- print(este_jogador.raid_targets ["circle"])
+		elseif alvo_flags == 1116712 then
+			este_jogador.raid_targets ["star"] = (este_jogador.raid_targets ["star"] or 0) + amount
+			-- print(este_jogador.raid_targets ["star"])
+		end
+		-- if (RAID_TARGET_FLAGS [alvo_flags]) then
+
+
+		-- end
 
 		--> actor
 		este_jogador.total = este_jogador.total + amount
@@ -1909,7 +1947,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 
 			------------------------------------------------------------------------------------------------
 			--> healing done(shields)
-			
+
 				if (absorb_spell_list[spellid]) then
 					-- print(spellid)
 					if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][alvo_name] then

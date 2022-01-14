@@ -5,14 +5,14 @@ local sunderCount = {
 	attribute = false,
 	spellid = false,
 	target = false,
-	author = "Matz",
+	author = "fxpw",
 	desc = "Shows who uses Sunder Armor.",
 	script_version = 2,
 	script = [[
 		local combat, container, instance = ...
 		local total, top, amount = 0, 0, 0
 
-		local sunderName = GetSpellInfo(11597)
+		local sunderName = 7386
 		local actors = combat:GetActorList(DETAILS_ATTRIBUTE_MISC)
 		for i, actor in ipairs(actors) do
 			if actor:IsPlayer() and actor.spell_cast then

@@ -2082,9 +2082,9 @@ function _detalhes:AddDefaultCustomDisplays()
 			--do the loop
 			for _, actor in ipairs(Combat:GetActorList(DETAILS_ATTRIBUTE_DAMAGE)) do
 				if(actor:IsPlayer()) then
-				if(actor.raid_targets[128]) then
-					CustomContainer:AddValue(actor, actor.raid_targets[128])
-				end
+					if(actor.raid_targets[128]) then
+						CustomContainer:AddValue(actor, actor.raid_targets[128])
+					end
 				end
 			end
 

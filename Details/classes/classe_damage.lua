@@ -5204,6 +5204,7 @@ end
 
 			--> copiar o container de raid targets
 				for flag, amount in _pairs (actor.raid_targets) do
+					
 					shadow.raid_targets = shadow.raid_targets or {} --deu invalido noutro dia
 					shadow.raid_targets [flag] = (shadow.raid_targets [flag] or 0) + amount
 				end
@@ -5259,7 +5260,98 @@ end
 function atributo_damage:ColetarLixo (lastevent)
 	return _detalhes:ColetarLixo (class_type, lastevent)
 end
+-------------------------------------------add function to show that f skull
+--actor 1 is who will receive the sum from actor2
+function Details.SumDamageActors(actor1, actor2, actorContainer)
+	print(actor1, actor2, actorContainer)
+	--general
+	actor1.total = actor1.total + actor2.total
+	actor1.damage_taken = actor1.damage_taken + actor2.damage_taken
+	actor1.totalabsorbed = actor1.totalabsorbed + actor2.totalabsorbed
+	actor1.total_without_pet = actor1.total_without_pet + actor2.total_without_pet
+	actor1.friendlyfire_total = actor1.friendlyfire_total + actor2.friendlyfire_total
 
+	--damage taken from
+	for actorName in pairs(actor2.damage_from) do
+		actor1.damage_from[actorName] = true
+
+		--add the damage done to actor2 into the damage done to target1
+		if (actorContainer) then
+			--get the actor that caused the damage on actor2
+			local actorObject = actorContainer:GetActor(actorName)
+			if (actorObject) then
+				local damageToActor2 = (actorObject.targets[actor2.nome]) or 0
+				actorObject.targets[actor1.nome] = (actorObject.targets[actor1.nome] or 0) + damageToActor2
+			end
+		end
+	end
+
+	--targets
+	for actorName, damageDone in pairs(actor2.targets) do
+		actor1.targets[actorName] = (actor1.targets[actorName] or 0) + damageDone
+	end
+
+	--pets
+	for i = 1, #actor2.pets do
+		DetailsFramework.table.addunique(actor1.pets, actor2.pets[i])
+	end
+
+	--raid targets
+	for raidTargetFlag, damageDone in pairs(actor2.raid_targets) do
+		actor1.raid_targets[raidTargetFlag] = (actor1.raid_targets[raidTargetFlag] or 0) + damageDone
+	end
+
+	--friendly fire
+	for actorName, ffTable in pairs(actor2.friendlyfire) do
+		actor1.friendlyfire[actorName] = actor1.friendlyfire[actorName] or actor1:CreateFFTable(actorName)
+		actor1.friendlyfire[actorName].total = actor1.friendlyfire[actorName].total + ffTable.total
+
+		for spellId, damageDone in pairs(ffTable.spells) do
+			actor1.friendlyfire[actorName].spells[spellId] = (actor1.friendlyfire[actorName].spells[spellId] or 0) + damageDone
+		end
+	end
+
+	--spells
+	local ignoredKeys = {
+		id = true,
+		spellschool =  true,
+	}
+
+	local actor1Spells = actor1.spells
+	for spellId, spellTable in pairs(actor2.spells._ActorTable) do
+
+		local actor1Spell = actor1Spells:GetOrCreateSpell(spellId, true, "DAMAGE_DONE")
+
+		--genetal spell attributes
+		for key, value in pairs(spellTable) do
+			if (type(value) == "number") then
+				if (not ignoredKeys[key]) then
+					if (key == "n_min" or key == "c_min") then
+						if (actor1Spell[key] > value) then
+							actor1Spell[key] = value
+						end
+					elseif (key == "n_max" or key == "c_max") then
+						if (actor1Spell[key] < value) then
+							actor1Spell[key] = value
+						end
+					else
+						actor1Spell[key] = actor1Spell[key] + value
+					end
+				end
+			end
+		end
+
+		--spell targets
+		for targetName, damageDone in pairs(spellTable) do
+			actor1Spell.targets[targetName] = (actor1Spell.targets[targetName] or 0) + damageDone
+		end
+	end
+end
+
+
+
+
+-------------------------------------------add function to show than f skull
 atributo_damage.__add = function (tabela1, tabela2)
 
 	--> tempo decorrido
@@ -5303,6 +5395,7 @@ atributo_damage.__add = function (tabela1, tabela2)
 
 	--> soma o container de raid targets
 		for flag, amount in _pairs (tabela2.raid_targets) do
+			-- print(flag,amount)
 			tabela1.raid_targets [flag] = (tabela1.raid_targets [flag] or 0) + amount
 		end
 
@@ -5382,6 +5475,7 @@ atributo_damage.__sub = function (tabela1, tabela2)
 
 	--> reduz o container de raid targets
 		for flag, amount in _pairs (tabela2.raid_targets) do
+			-- print(flag, amount)
 			if (tabela1.raid_targets [flag]) then
 				tabela1.raid_targets [flag] = _math_max (tabela1.raid_targets [flag] - amount, 0)
 			end

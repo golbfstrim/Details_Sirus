@@ -232,14 +232,19 @@ do
 		[309235] = 267, -- t5
 
 		-- Arms Warrior:
-		[12328] = 71, -- Sweeping Strikes
-		[1464] = 71, -- Slam
-		[56636] = 71, -- Taste for Blood, Rank 1
-		[56637] = 71, -- Taste for Blood, Rank 2
-		[56638] = 71, -- Taste for Blood, Rank 3
-		[12294] = 71, -- Mortal Strike
-		--[12712] = 71, -- Seasoned Soldier --removed from the game
-		[772] = 71, -- Rend
+		-- [12328] = 71, -- Sweeping Strikes
+		-- [1464] = 71, -- Slam
+		-- [56636] = 71, -- Taste for Blood, Rank 1
+		-- [56637] = 71, -- Taste for Blood, Rank 2
+		-- [56638] = 71, -- Taste for Blood, Rank 3
+		-- [12294] = 71, -- Mortal Strike
+		-- --[12712] = 71, -- Seasoned Soldier --removed from the game
+		-- [772] = 71, -- Rend
+		[47486] = 71, -- mortal
+		[46924] = 71, -- vihr
+		[7384] = 71, -- over
+		[47465] = 71, -- rend
+		[12328] = 71, -- razm ud
 
 		-- Fury Warrior:
 		[12950] = 72, -- Meat Cleaver
@@ -262,6 +267,7 @@ do
 		[50720] = 73, -- bdilka
 		[47498] = 73, -- sokrush
 		[12809] = 73, -- stun
+		-- [7386]	=73, -- sunder
 
 		--[29144] = 73, -- Unwavering Sentinel --removed from the game
 		[6343] = 73, -- Thunder Clap
@@ -803,6 +809,8 @@ do
 		[47475]	= "WARRIOR", -- Slam, Rank 8
 		[23920]	= "WARRIOR", -- Spell Reflection
 		[47467]	= "WARRIOR", -- Sunder Armor, Rank 7
+		-- [7386]	= "WARRIOR", -- Sunder
+		[58567]	= "WARRIOR", -- Sunder Armor, Rank 7
 		[12328]	= "WARRIOR", -- Sweeping Strikes
 		[12723]	= "WARRIOR", -- Sweeping Strikes
 		[355]	= "WARRIOR", -- Taunt
@@ -1510,7 +1518,7 @@ do
 		--[122475] 	= 	true, -- Throw
 		--[845] 	= 	true, -- Cleave
 		[5246] 	= 	true, -- Intimidating Shout
-		--[7386] 	= 	true, -- Sunder Armor
+		[7386] 	= 	true, -- Sunder Armor
 		[107566] 	= 	true, -- Staggering Shout
 	}
 
@@ -1720,6 +1728,7 @@ do
 		[2457] 	= 	true, -- Battle Stance
 		[12328] 	= 	true, -- Sweeping Strikes
 		[114192] 	= 	true, -- Mocking Banner
+		-- [7386] 	= 	true, -- sunder
 
 	}
 
@@ -1801,6 +1810,7 @@ do
 		--[114207]	=	true, -- Skull Banner
 		[107574]	=	true, -- Avatar
 		[12292]	=	true, -- Bloodbath
+		-- [7386]	=	true, -- sunder
 	}
 
 	_detalhes.HelpfulSpells = {
@@ -1961,6 +1971,7 @@ do
 		[23920]	=	true, -- Spell Reflection
 		[12975]	=	true, -- Last Stand
 		[2565] 	= 	true, -- Shield Block
+		-- [7386]	=	true, -- sunder
 	}
 
 

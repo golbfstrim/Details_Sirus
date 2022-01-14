@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: Details!: Pre Potions (plugin)
+## Notes: Shows who uses potions
+## Notes-ruRU: Показывает кто использует препоты
+## DefaultState: Enabled
+## RequiredDeps: Details
+
+Details_CustomPrePotions.lua

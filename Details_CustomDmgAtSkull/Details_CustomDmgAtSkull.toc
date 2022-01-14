@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: Details!: CustomDmgAtSkull (plugin)
+## Notes: Shown dmg at skull
+## Notes-ruRU: Показывает статистику урона по черепу
+## DefaultState: Enabled
+## RequiredDeps: Details
+
+Details_CustomDmgAtSkull.lua
