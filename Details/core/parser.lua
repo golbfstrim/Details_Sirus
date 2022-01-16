@@ -724,28 +724,28 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		-- print(alvo_flags, 724)
 		--> raid targets
 		este_jogador.raid_targets = este_jogador.raid_targets or {}
-		if alvo_flags == 134285864 then
+		if alvo_flags > 130000000  then
 			este_jogador.raid_targets ["skull"] = (este_jogador.raid_targets ["skull"] or 0) + amount
 			-- print(este_jogador.raid_targets ["skull"])
-		elseif alvo_flags == 67177000 then
+		elseif alvo_flags > 60000000 then
 			este_jogador.raid_targets ["cross"] = (este_jogador.raid_targets ["cross"] or 0) + amount
 			-- print(este_jogador.raid_targets ["cross"])
-		elseif alvo_flags == 33622568 then
+		elseif alvo_flags > 33000000 then
 			este_jogador.raid_targets ["square"] = (este_jogador.raid_targets ["square"] or 0) + amount
 			-- print(este_jogador.raid_targets ["square"])
-		elseif alvo_flags == 16845352 then
+		elseif alvo_flags > 16000000 then
 			este_jogador.raid_targets ["moon"] = (este_jogador.raid_targets ["moon"] or 0) + amount
 			-- print(este_jogador.raid_targets ["moon"])
-		elseif alvo_flags == 8456744 then
+		elseif alvo_flags > 8000000 then
 			este_jogador.raid_targets ["triangle"] = (este_jogador.raid_targets ["triangle"] or 0) + amount
 			-- print(este_jogador.raid_targets ["triangle"])
-		elseif alvo_flags == 4262440 then
+		elseif alvo_flags > 4200000 then
 			este_jogador.raid_targets ["diamond"] = (este_jogador.raid_targets ["diamond"] or 0) + amount
 			-- print(este_jogador.raid_targets ["diamond"])
-		elseif alvo_flags == 2165288 then
+		elseif alvo_flags > 2000000 then
 			este_jogador.raid_targets ["circle"] = (este_jogador.raid_targets ["circle"] or 0) + amount
 			-- print(este_jogador.raid_targets ["circle"])
-		elseif alvo_flags == 1116712 then
+		elseif alvo_flags > 1100000 then
 			este_jogador.raid_targets ["star"] = (este_jogador.raid_targets ["star"] or 0) + amount
 			-- print(este_jogador.raid_targets ["star"])
 		end
