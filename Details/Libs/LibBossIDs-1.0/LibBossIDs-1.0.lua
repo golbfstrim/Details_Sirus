@@ -643,7 +643,7 @@ local BossIDs = {
 	[21213] = true, -- Morogrim Tidewalker
 	[21212] = true, -- Lady Vashj
 	[21875] = true, -- Shadow of Leotheras
-	[55681] = true, -- Gore'lats
+	[121217] = true, -- Gore'lats
 	
 	-- Tempest Keep: The Eye
 	[19514] = true, -- Al'ar

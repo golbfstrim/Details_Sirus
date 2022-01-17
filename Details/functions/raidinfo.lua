@@ -93,14 +93,14 @@ do --> data for Serpentshrine Cavern
 	}
 
 	local ENCOUNTER_ID_CL = {
-		21216, 21217, 21215, 21214, 21213, 21212, 55681,
+		21216, 21217, 21215, 21214, 21213, 21212, 121217,
 		[21216] = 1, --Hydross the Unstable
 		[21217] = 2, --The Lurker Below
 		[21215] = 3, --Leotheras the Blind
 		[21214] = 4, --Fathom-Lord Karathress
 		[21213] = 5, --Morogrim Tidewalker
 		[21212] = 6, --Lady Vashj
-		[55681] = 7, --Gore'lats
+		[121217] = 7, --Gore'lats
 	}
 
 	--> install the raid
@@ -144,7 +144,7 @@ do --> data for Serpentshrine Cavern
 			[21214] = 4, --Fathom-Lord Karathress
 			[21213] = 5, --Morogrim Tidewalker
 			[21212] = 6, --Lady Vashj
-			[55681] = 7, --Gore'lats
+			[121217] = 7, --Gore'lats
 		},
 	})
 end
