@@ -1952,6 +1952,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 					-- print(spellid)
 					if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][alvo_name] then
 						escudo[alvo_name][spellid][who_name].timestamp = time + 0.1
+						escudo[alvo_name][spellid][alvo_name].timestamp = time + 0.1
 						-- if spellid == 48066 then
 							-- 	-- print("tralala")
 							-- print(escudo[alvo_name][spellid][alvo_name].timestamp)
