@@ -208,7 +208,7 @@
 
 	--> read the actor flag
 	local read_actor_flag = function (novo_objeto, dono_do_pet, serial, flag, nome, container_type)
-
+		if nome == nil then return end
 		if (flag) then
 
 			--> � um player
@@ -219,6 +219,7 @@
 				end
 				if (not novo_objeto.displayName) then
 					if (_detalhes.remove_realm_from_name) then
+						
 						novo_objeto.displayName = nome:gsub (("%-.*"), "")
 					else
 						novo_objeto.displayName = nome
