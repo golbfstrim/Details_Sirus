@@ -1015,29 +1015,29 @@ do --> data for Ulduar
 	local EJ_LOREBG = "ui-ej-lorebg-ulduar"
 
 	local PORTRAIT_LIST = {
-		"ui-ej-boss-flame leviathan",
-		"ui-ej-boss-ignis the furnace master",
-		"ui-ej-boss-razorscale",
+		"UI-EJ-BOSS-Flame Leviathan",
+		"UI-EJ-BOSS-Ignis the Furnace Master",
+		"UI-EJ-BOSS-Razorscale",
 		"ui-ej-boss-xt 002 deconstructor",
-		"ui-ej-boss-assembly of iron",
-		"ui-ej-boss-kologarn",
-		"ui-ej-boss-auriaya",
-		"ui-ej-boss-hodir",
-		"ui-ej-boss-thorim",
-		"ui-ej-boss-freya",
-		"ui-ej-boss-mimiron",
-		"ui-ej-boss-general vezax",
-		"ui-ej-boss-yogg saron",
-		"ui-ej-boss-algalon the observer",
+		"UI-EJ-BOSS-Assembly Of Iron",
+		"UI-EJ-BOSS-Kologarn",
+		"UI-EJ-BOSS-Auriaya",
+		"UI-EJ-BOSS-Hodir",
+		"UI-EJ-BOSS-Thorim",
+		"UI-EJ-BOSS-Freya",
+		"UI-EJ-BOSS-Mimiron",
+		"UI-EJ-BOSS-General Vezax",
+		"UI-EJ-BOSS-Yogg Saron",
+		"UI-EJ-BOSS-Algalon the Observer",
 	}
 
 	local ENCOUNTER_ID_CL = {
-		33113, 33118, 33186, 33293, 32857, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
+		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
 		[33113] = 1, --Flame Leviathan
 		[33118] = 2, --Ignis the Furnace Master
 		[33186] = 3, --Razorscale
 		[33293] = 4, --XT-002 Deconstructor
-		[32857] = 5, --Assembly of Iron
+		[32867] = 5, --Assembly of Iron
 		[32930] = 6, --Kologarn
 		[33515] = 7, --Auriaya
 		[32845] = 8, --Hodir
@@ -1120,21 +1120,21 @@ do --> data for The bronze Sanctum
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TheBronzeSanctuary"
 	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenRubySanctum", {0, 1, 285/1024, 875/1024}
-	local EJ_DUNGEONBG = "ui-ej-dungeonbutton-rubysanctum"
-	local EJ_LOREBG = "ui-ej-lorebg-rubysanctum"
+	local EJ_DUNGEONBG = "UI-EJ-DUNGEONBUTTON-BronzeSanctum"
+	local EJ_LOREBG = "UI-EJ-LOREBG-BronzeSanctum"
 
 	local PORTRAIT_LIST = {
-		"ui-ej-boss-imporus",
-		"ui-ej-boss-elonus",
-		"ui-ej-boss-murozond",
+		"UI-EJ-BOSS-emporus",
+		"UI-EJ-BOSS-elonus",
+		"UI-EJ-BOSS-Murozond",
 	}
 
 
 
 	local ENCOUNTER_ID_CL = {
-		50608,50609,50612,
+		50608,50610,50612,
 	[50608] = 1, --Imporus
-	[50609] = 2, --Elonus
+	[50610] = 2, --Elonus
 	[50612] = 3, --Murozond
 	}
 
@@ -1171,7 +1171,7 @@ do --> data for The bronze Sanctum
 
 		boss_ids = {
 		[50608] = 1, --Imporus
-		[50609] = 2, --Elonus
+		[50610] = 2, --Elonus
 		[50612] = 3, --Murozond
 		},
 	})

@@ -939,14 +939,13 @@ do
 
 		[310210] = 2, -- t5 war absorb
 
+		[313530] = 12, -- stn hrth trnkt
+
 		-- Custom
 		[304736] = 10, -- Priest, Divine Charm (T4), T4
 		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
-		-- [308143] = 30, -- Priest, Power Word: Shield, Rank 15, T5
 
 
-		-- [308159] = 10, -- Live Barrier, Trinket
-		[313530] = 12, -- stn hrth trnkt
 
 		[55277] = 12, -- shmn ttm
 
