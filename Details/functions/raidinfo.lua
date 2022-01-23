@@ -89,7 +89,7 @@ do --> data for Serpentshrine Cavern
 		"ui-ej-boss-fathom lord karathress",
 		"ui-ej-boss-morogrim tidewalker",
 		"ui-ej-boss-lady vashj",
-		"ui-ej-boss-gore'lats",
+		"ui-ej-boss-Gorelac",
 	}
 
 	local ENCOUNTER_ID_CL = {
