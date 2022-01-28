@@ -3933,7 +3933,7 @@ local _utf8sub = string.utf8sub
 	function _detalhes:InitializeMacrosWindow()
 		local DetailsMacrosPanel = gump:CreateSimplePanel (UIParent, 700, 480, "Details! Useful Macros", "DetailsMacrosPanel")
 		DetailsMacrosPanel.Frame = DetailsMacrosPanel
-		DetailsMacrosPanel.__name = "Macros"
+		DetailsMacrosPanel.__name = Loc["Macros"]
 		DetailsMacrosPanel.real_name = "DETAILS_MACROSWINDOW"
 		DetailsMacrosPanel.__icon = [[Interface\MacroFrame\MacroFrame-Icon]]
 		DetailsMacrosPanel.__iconcoords = {0, 1, 0, 1}

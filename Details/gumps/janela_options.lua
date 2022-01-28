@@ -74,7 +74,7 @@ function _detalhes:InitializeOptionsWindow()
 	local f = DetailsOptionsWindow.frame
 
 	f.Frame = f
-	f.__name = "Options"
+	f.__name = Loc["Options"]
 	f.real_name = "DETAILS_OPTIONS"
 	f.__icon = [[Interface\Scenarios\ScenarioIcon-Interact]]
 
@@ -391,7 +391,7 @@ function _detalhes:OpenOptionsWindow (instance, no_reopen, section)
 		group_editing:ClearAllPoints()
 		DetailsOptionsWindowGroupEditingText:ClearAllPoints()
 		group_editing:SetPoint ("right", DetailsOptionsWindowGroupEditingText, "left", -1, 0)
-		DetailsOptionsWindowGroupEditingText:SetText ("Editing Group")
+		DetailsOptionsWindowGroupEditingText:SetText (Loc["Editing Group"])
 		DetailsOptionsWindowGroupEditingText:SetPoint ("right", instances_string.widget, "left", -20, 0)
 		DetailsOptionsWindowGroupEditingText:SetTextColor (1, 0.8, 0)
 		group_editing.tooltip = Loc ["STRING_MINITUTORIAL_OPTIONS_PANEL2"]
@@ -4286,7 +4286,7 @@ function window:CreateFrame1()
 			window:CreateLineBackground2 (frame1, "clickThroughInCombatSlider", "clickThroughInCombatLabel", "Only apply click through when in combat.")
 
 			--window
-			g:NewLabel (frame1, _, "$parentclickThroughWindowLabel", "clickThroughWindowLabel", "Affect Window", "GameFontHighlightLeft")
+			g:NewLabel (frame1, _, "$parentclickThroughWindowLabel", "clickThroughWindowLabel", Loc["Affect Window"], "GameFontHighlightLeft")
 
 			g:NewSwitch (frame1, _, "$parentclickThroughWindowSlider", "clickThroughWindowSlider", 60, 20, _, _, _G.DetailsOptionsWindow.instance.clickthrough_window, nil, nil, nil, nil, options_switch_template)
 			frame1.clickThroughWindowSlider:SetAsCheckBox()
@@ -4307,7 +4307,7 @@ function window:CreateFrame1()
 			window:CreateLineBackground2 (frame1, "clickThroughWindowSlider", "clickThroughWindowLabel", "The window will be click through.")
 
 			--bars
-			g:NewLabel (frame1, _, "$parentclickThroughBarsLabel", "clickThroughBarsLabel", "Affect Bars", "GameFontHighlightLeft")
+			g:NewLabel (frame1, _, "$parentclickThroughBarsLabel", "clickThroughBarsLabel", Loc["Affect Bars"], "GameFontHighlightLeft")
 
 			g:NewSwitch (frame1, _, "$parentclickThroughBarsSlider", "clickThroughBarsSlider", 60, 20, _, _, _G.DetailsOptionsWindow.instance.clickthrough_rows, nil, nil, nil, nil, options_switch_template)
 			frame1.clickThroughBarsSlider:SetAsCheckBox()
@@ -4367,7 +4367,7 @@ function window:CreateFrame1()
 		g:NewLabel (frame1, _, "$parentWindowControlsAnchor", "WindowControlsLabel", Loc ["STRING_OPTIONS_WC_ANCHOR"], "GameFontNormal")
 		g:NewLabel (frame1, _, "$parentToolsAnchor", "ToolsLabel", Loc ["STRING_OPTIONS_TOOLS_ANCHOR"], "GameFontNormal")
 
-		g:NewLabel (frame1, _, "$parentClickThroughAnchor", "clickThroughLabel", "Click Through", "GameFontNormal")
+		g:NewLabel (frame1, _, "$parentClickThroughAnchor", "clickThroughLabel", Loc["Click_Through"], "GameFontNormal")
 
 		local w_start = 10
 
@@ -10626,7 +10626,7 @@ function window:CreateFrame11()
 
 	--> death recap
 		--enabled?
-		g:NewLabel (frame11, _, "$parentEnableDeathRecapLabel", "EnableDeathRecapLabel", "Enabled", "GameFontHighlightLeft")
+		g:NewLabel (frame11, _, "$parentEnableDeathRecapLabel", "EnableDeathRecapLabel", Loc["Enabled"], "GameFontHighlightLeft")
 		g:NewSwitch (frame11, _, "$parentEnableDeathRecapSlider", "EnableDeathRecapSlider", 60, 20, _, _, _detalhes.death_recap.enabled, nil, nil, nil, nil, options_switch_template)
 
 		frame11.EnableDeathRecapSlider:SetPoint ("left", frame11.EnableDeathRecapLabel, "right", 2)
@@ -10636,10 +10636,10 @@ function window:CreateFrame11()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
-		window:CreateLineBackground2 (frame11, "EnableDeathRecapSlider", "EnableDeathRecapLabel", "Modify the Blizzard's Death Recap screen.")
+		window:CreateLineBackground2 (frame11, "EnableDeathRecapSlider", "EnableDeathRecapLabel", Loc["Modify the Blizzard's Death Recap screen."])
 
 		--time relevance
-		g:NewLabel (frame11, _, "$parentDeathRecapRelevanceLabel", "DeathRecapRelevanceLabel", "Relevance Time", "GameFontHighlightLeft")
+		g:NewLabel (frame11, _, "$parentDeathRecapRelevanceLabel", "DeathRecapRelevanceLabel", Loc["Relevance Time"], "GameFontHighlightLeft")
 		g:NewSlider (frame11, _, "$parentDeathRecapRelevanceSlider", "DeathRecapRelevanceSlider", SLIDER_WIDTH, SLIDER_HEIGHT, 1, 12, 1, _detalhes.death_recap.relevance_time, nil, nil, nil, options_slider_template)
 
 		frame11.DeathRecapRelevanceSlider:SetPoint ("left", frame11.DeathRecapRelevanceLabel, "right", 2)
@@ -10648,10 +10648,10 @@ function window:CreateFrame11()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end)
 
-		window:CreateLineBackground2 (frame11, "DeathRecapRelevanceSlider", "DeathRecapRelevanceLabel", "Attempt to fill the Death Recap with high damage (discart low hits) in the relevant time before death.")
+		window:CreateLineBackground2 (frame11, "DeathRecapRelevanceSlider", "DeathRecapRelevanceLabel", Loc["Attempt to fill the Death Recap with high damage (discart low hits) in the relevant time before death."])
 
 		--show life
-		g:NewLabel (frame11, _, "$parentEnableDeathRecapLifePercentLabel", "EnableDeathRecapLifePercentLabel", "Life Percent", "GameFontHighlightLeft")
+		g:NewLabel (frame11, _, "$parentEnableDeathRecapLifePercentLabel", "EnableDeathRecapLifePercentLabel",Loc ["Life Percent"], "GameFontHighlightLeft")
 		g:NewSwitch (frame11, _, "$parentEnableDeathRecapLifePercentSlider", "EnableDeathRecapLifePercentSlider", 60, 20, _, _, _detalhes.death_recap.show_life_percent, nil, nil, nil, nil, options_switch_template)
 
 		frame11.EnableDeathRecapLifePercentSlider:SetPoint ("left", frame11.EnableDeathRecapLifePercentLabel, "right", 2)
@@ -10661,10 +10661,10 @@ function window:CreateFrame11()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
-		window:CreateLineBackground2 (frame11, "EnableDeathRecapLifePercentSlider", "EnableDeathRecapLifePercentLabel", "Show the percent of life the player had when received the hit.")
+		window:CreateLineBackground2 (frame11, "EnableDeathRecapLifePercentSlider", "EnableDeathRecapLifePercentLabel", Loc["Show the percent of life the player had when received the hit."])
 
 		--show segments
-		g:NewLabel (frame11, _, "$parentEnableDeathRecapSegmentsLabel", "EnableDeathRecapSegmentsLabel", "Segment List", "GameFontHighlightLeft")
+		g:NewLabel (frame11, _, "$parentEnableDeathRecapSegmentsLabel", "EnableDeathRecapSegmentsLabel", Loc ["Segment List"], "GameFontHighlightLeft")
 		g:NewSwitch (frame11, _, "$parentEnableDeathRecapSegmentsSlider", "EnableDeathRecapSegmentsSlider", 60, 20, _, _, _detalhes.death_recap.show_segments, nil, nil, nil, nil, options_switch_template)
 
 		frame11.EnableDeathRecapSegmentsSlider:SetPoint ("left", frame11.EnableDeathRecapSegmentsLabel, "right", 2)
@@ -10674,7 +10674,7 @@ function window:CreateFrame11()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
-		window:CreateLineBackground2 (frame11, "EnableDeathRecapSegmentsSlider", "EnableDeathRecapSegmentsLabel", "Show a list of the latest segments in case you want to see recaps from previous fights.")
+		window:CreateLineBackground2 (frame11, "EnableDeathRecapSegmentsSlider", "EnableDeathRecapSegmentsLabel", Loc["Show a list of the latest segments in case you want to see recaps from previous fights."])
 
 
 	--> general tools
@@ -10723,7 +10723,7 @@ function window:CreateFrame11()
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorInterrupt", "AnnouncersInterrupt", Loc ["STRING_OPTIONS_RT_INTERRUPT_ANCHOR"], "GameFontNormal")
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorCooldowns", "AnnouncersCooldowns", Loc ["STRING_OPTIONS_RT_COOLDOWNS_ANCHOR"], "GameFontNormal")
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorDeaths", "AnnouncersDeaths", Loc ["STRING_OPTIONS_RT_DEATHS_ANCHOR"], "GameFontNormal")
-		g:NewLabel (frame11, _, "$parentAnnouncersAnchorDeathRecap", "AnnouncersDeathRecap", "Death Recap:", "GameFontNormal")
+		g:NewLabel (frame11, _, "$parentAnnouncersAnchorDeathRecap", "AnnouncersDeathRecap",Loc ["Death Recap:"], "GameFontNormal")
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorOther", "AnnouncersOther", Loc ["STRING_OPTIONS_RT_OTHER_ANCHOR"], "GameFontNormal")
 
 		local x = window.left_start_at
@@ -12063,7 +12063,7 @@ end --> if not window
 
 			GameCooltip:SetBackdrop (1, {edgeFile = [[Interface\Buttons\WHITE8X8]], edgeSize = 1, tileSize = 64, tile = true}, "black", "white")
 
-			GameCooltip:AddLine ("Editing Window:", editing_instance.meu_id)
+			GameCooltip:AddLine (Loc["Editing Window:"], editing_instance.meu_id)
 			GameCooltip:SetOwner (_G.DetailsOptionsWindowInstanceSelectDropdown, "bottom", "top", -212, -6)
 			GameCooltip:ShowCooltip (nil, "tooltip")
 

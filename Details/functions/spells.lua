@@ -126,6 +126,9 @@ do
 		[33206] = 256, -- Pain Suppression
 		[52985] = 256, -- Penance, Rank 4
 		[53007] = 256, -- ispoved
+		[308143] = 256, -- Rank 15 shild word t5
+		[47753] = 256, -- Divine Aegis (Priest) Rank 3
+
 
 		-- Holy Priest:
 		[48089] = 257, -- Circle of Healing, Rank 7
@@ -137,10 +140,10 @@ do
 		[15286] = 258, -- Vampiric Embrace
 		[47585] = 258, -- tuchka
 		[15473] = 258, -- forma
-		[48158] = 258, -- Shadow Word: Death, Rank 4
+		-- [48158] = 258, -- Shadow Word: Death, Rank 4
 		[48160] = 258, -- Vampiric Touch, Rank 5
-		[48127] = 258, -- Mind Blast, Rank 13
-		[48156] = 258, -- Mind Flay, Rank 9
+		-- [48127] = 258, -- Mind Blast, Rank 13
+		-- [48156] = 258, -- Mind Flay, Rank 9
 
 		-- Assassination Rogue:
 		[32645] = 259, -- Envenom

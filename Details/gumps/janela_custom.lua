@@ -139,7 +139,7 @@
 	function _detalhes:InitializeCustomDisplayWindow()
 		local DetailsCustomPanel = CreateFrame ("Frame", "DetailsCustomPanel", UIParent)
 		DetailsCustomPanel.Frame = DetailsCustomPanel
-		DetailsCustomPanel.__name = "Custom Displays"
+		DetailsCustomPanel.__name = Loc["Custom Displays"]
 		DetailsCustomPanel.real_name = "DETAILS_CUSTOMDISPLAY"
 		--DetailsCustomPanel.__icon = [[Interface\FriendsFrame\UI-FriendsList-Small-Up]]
 		DetailsCustomPanel.__icon = [[Interface\AddOns\Details\images\icons]]

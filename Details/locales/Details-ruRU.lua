@@ -1680,5 +1680,22 @@ L["STRING_WIPE_ERROR2"] = "вы не находитесь в рейдовом с
 L["STRING_WIPE_ERROR3"] = "не удалось закончить сражение."
 L["STRING_YES"] = "Да"
 
-
 L["In Combat Only"] = "Только в бою"
+
+L["Click_Through"] = "Клик насквозь"
+L["Affect Window"] = "Действие на окно"
+L["Affect Bars"] = "Действие на полоски в окне"
+L["Editing Group"] = "Изм. группу"
+L["Enabled"] = "Включить?"
+L["Modify the Blizzard's Death Recap screen."] = "Модифицировать стандартный лог смерти"
+L["Death Recap:"] = "Журнал смерти"
+L["Relevance Time"] = "Время смерти"
+L["Attempt to fill the Death Recap with high damage (discart low hits) in the relevant time before death."] = "Пытается заполнить лог смерти с большим дамагом (без мелких хитов) в соответствующее время до смерти."
+L["Life Percent"] = "Процент здоровья"
+L["Show the percent of life the player had when received the hit."] = "Показывает процент хп когда был получен смертельный урон"
+L["Segment List"] = "История"
+L["Show a list of the latest segments in case you want to see recaps from previous fights."] = "Показывает историю прошлых сражений в случае если надо посмотреть запись с прошлых сражений"
+L["Custom Displays"] = "Плагины"
+L["Macros"] = "Макросы"
+L["Options"] = "Настройки"
+L["Editing Window:"] = "Редактирование окна:"
