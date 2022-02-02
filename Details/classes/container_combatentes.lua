@@ -471,7 +471,7 @@
 	end
 
 	function container_combatentes:PegarCombatente (serial, nome, flag, criar)
-
+		-- print(nome)
 		--[[statistics]]-- _detalhes.statistics.container_calls = _detalhes.statistics.container_calls + 1
 
 		--if (flag and nome:find ("Kastfall") and bit.band (flag, 0x2000) ~= 0) then
@@ -526,13 +526,13 @@
 			--> seta a classe default para desconhecido, assim nenhum objeto fica com classe nil
 			novo_objeto.classe = "UNKNOW"
 
---8/11 00:57:49.096  SPELL_DAMAGE,
---Creature-0-2084-1220-24968-110715-00002BF677,"Archmage Modera",0x2111,0x0,
---Creature-0-2084-1220-24968-94688-00002BF6A7,"Diseased Grub",0x10a48,0x0,
---220128,"Frost Nova",0x10,Creature-0-2084-1220-24968-94688-00002BF6A7,0000000000000000,63802,311780,0,0,1,0,0,0,4319.26,4710.75,110,10271,-1,16,0,0,0,nil,nil,nil
+			--8/11 00:57:49.096  SPELL_DAMAGE,
+			--Creature-0-2084-1220-24968-110715-00002BF677,"Archmage Modera",0x2111,0x0,
+			--Creature-0-2084-1220-24968-94688-00002BF6A7,"Diseased Grub",0x10a48,0x0,
+			--220128,"Frost Nova",0x10,Creature-0-2084-1220-24968-94688-00002BF6A7,0000000000000000,63802,311780,0,0,1,0,0,0,4319.26,4710.75,110,10271,-1,16,0,0,0,nil,nil,nil
 
-		-- tipo do container
-	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+					-- tipo do container
+				------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 			if (self.tipo == container_damage) then --> CONTAINER DAMAGE
 
@@ -660,9 +660,11 @@
 
 			end
 
-	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	-- grava o objeto no mapa do container
+			------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			-- grava o objeto no mapa do container
+			if nome == nil then nome  = "UNKNOWN" end
 			local size = #self._ActorTable+1
+			-- print(size,665)
 			self._ActorTable [size] = novo_objeto --> grava na tabela de indexes
 			self._NameIndexTable [nome] = size --> grava no hash map o index deste jogador
 
@@ -681,7 +683,7 @@
 					_detalhes_global.debug_chr_log = _detalhes_global.debug_chr_log .. logLine
 				end
 			end
-
+			-- print(no)
 			return novo_objeto, dono_do_pet, nome
 		else
 			return nil, nil, nil

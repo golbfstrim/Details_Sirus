@@ -1163,7 +1163,7 @@ L["STRING_OPTIONS_TEXT_ROWICONS_ANCHOR"] = "Icons:"
 L["STRING_OPTIONS_TEXT_SHOW_BRACKET"] = "Bracket"
 L["STRING_OPTIONS_TEXT_SHOW_BRACKET_DESC"] = "Choose which character is used to open and close the per second and percent block."
 L["STRING_OPTIONS_TEXT_SHOW_PERCENT"] = "Show Percent"
-L["STRING_OPTIONS_TEXT_SHOW_PERCENT_DESC"] = [=[Show the percentage.
+L["STRING_OPTIONS_TEXT_SHOW_PERCENT_DESC"] = [=[entage.
 
 When disabling the percent, you might want to set 'Separator' to 'none' to avoid an extra comma after the DPS.]=]
 L["STRING_OPTIONS_TEXT_SHOW_PS"] = "Show Per Second"

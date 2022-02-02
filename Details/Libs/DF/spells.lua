@@ -763,6 +763,7 @@ DF.PotionIDs = {
 	[53915] = true, -- Shadow Protection
 	[53762] = true, -- Indestructible
 	[67490] = true, -- runic mana
+	[40211] = true, -- Potion of Speed
 }
 
 --	/dump UnitAura ("player", 1)

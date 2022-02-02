@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: Details!: TankInfo (plugin)
+## Notes: Show dmg at tanks
+## Notes-ruRU: Показывает развертку урона по танкам
+## DefaultState: Enabled
+## RequiredDeps: Details
+
+Details_CustomTankInfo.lua

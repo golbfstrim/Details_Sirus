@@ -1317,7 +1317,8 @@ local elvui_skin = function()
 	info:SetDetailInfoConfigs ("Interface\\AddOns\\Details\\images\\bar_serenity", {1, 1, 1, 0.35}, -6 + 100, 0)
 
 	window.bg1_sec_texture:SetPoint ("TOPLEFT", window.bg1, "TOPLEFT", 446, -86)
-	window.bg1_sec_texture:SetWidth (337)
+	-- vstavka 337
+	window.bg1_sec_texture:SetWidth (410)
 	window.bg1_sec_texture:SetHeight (362)
 
 	--container 3 bars
@@ -1695,6 +1696,7 @@ function gump:CriaJanelaInfo()
 		este_gump.bg1_sec_texture:SetDrawLayer ("BORDER", 4)
 		este_gump.bg1_sec_texture:SetPoint ("TOPLEFT", este_gump.bg1, "TOPLEFT", 450, -86)
 		este_gump.bg1_sec_texture:SetHeight (462)
+		-- vstavka 300
 		este_gump.bg1_sec_texture:SetWidth (264)
 
 		este_gump.bg2_sec_texture = SWW:CreateTexture ("DetailsPlayerDetailsWindow_BG2_SEC_Texture", "BORDER")

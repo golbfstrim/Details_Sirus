@@ -1699,3 +1699,25 @@ L["Custom Displays"] = "Плагины"
 L["Macros"] = "Макросы"
 L["Options"] = "Настройки"
 L["Editing Window:"] = "Редактирование окна:"
+L["Only apply click through when in combat."] = "Кликать насквозь в бою"
+L["Select Profile"] = "Выберите профиль"
+L["Import Profile"] = "Импорт профиля"
+L["Export Current Profile"] = "Экспорт текущего профиля"
+L["Width Offset"] = "Ширина"
+L["Height Offset"] = "Длина"
+L["Fine tune the size of the window while embeded in the chat."] = "Изменяет размер окна при встраивании в чат"
+
+L["Outline"] = "Обводка"
+L["Text Outline"] = "Обводка текст"
+L["Outline Color"] = "Цвет обводки"
+
+L["confirm"] = "Принять"
+
+L["Show Death Menu"] = "Показывать меню смерти"
+
+L["Show a panel below the Release / Death Recap panel with some shortcuts for Raid Leaders."] = "Показывает панель под Выходом из тела/Логом смерти с ссылками для рейд лидеров"
+
+
+
+
+

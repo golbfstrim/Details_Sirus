@@ -246,7 +246,7 @@ local who_aggro = function(self)
 
 	_detalhes.LastPullMsg = time()
 
-	local hitLine = self.HitBy or "|cFFFFBB00First Hit|r: *?*"
+	local hitLine = self.HitBy or "|cFFFFBB00Первый удар|r: *?*"
 	local targetLine = ""
 
 	for i = 1, 4 do
@@ -445,7 +445,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 					_detalhes.WhoAggroTimer:Cancel()
 				end
 				_detalhes.WhoAggroTimer = C_Timer:NewTicker(0.5, who_aggro, 1)
-				_detalhes.WhoAggroTimer.HitBy = "|cFFFFFF00First Hit|r: " ..(link or "") .. " from " ..(who_name or "Unknown")
+				_detalhes.WhoAggroTimer.HitBy = "|cFFFFFF00Первый удар|r: " ..(link or "") .. " от " ..(who_name or "Unknown")
 			end
 		else
 			--> entrar em combate se for dot e for do jogador e o ultimo combate ter sido a mais de 10 segundos atr�s

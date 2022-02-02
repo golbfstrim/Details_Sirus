@@ -4283,7 +4283,7 @@ function window:CreateFrame1()
 				end
 			end
 
-			window:CreateLineBackground2 (frame1, "clickThroughInCombatSlider", "clickThroughInCombatLabel", "Only apply click through when in combat.")
+			window:CreateLineBackground2 (frame1, "clickThroughInCombatSlider", "clickThroughInCombatLabel", Loc["Only apply click through when in combat."])
 
 			--window
 			g:NewLabel (frame1, _, "$parentclickThroughWindowLabel", "clickThroughWindowLabel", Loc["Affect Window"], "GameFontHighlightLeft")
@@ -4848,7 +4848,7 @@ function window:CreateFrame13()
 		end
 
 		local select_alwaysuseprofile_dropdown = g:NewDropDown (frame13, _, "$parentSelectAlwaysuseprofileDropdown", "SelectAlwaysuseprofileDropdown", 160, dropdown_height, build_profile_menu, _detalhes.always_use_profile_name, options_dropdown_template)
-		select_alwaysuseprofile_dropdown:SetEmptyTextAndIcon ("Select Profile")
+		select_alwaysuseprofile_dropdown:SetEmptyTextAndIcon (Loc["Select Profile"])
 
 		local select_alwaysuseprofile_label = g:NewLabel (frame13, _, "$parentSelectAlwaysuseprofileLabel", "SelectAlwaysuseprofileLabel", "Select Profile", "GameFontHighlightLeft")
 		select_alwaysuseprofile_dropdown:SetPoint ("left", select_alwaysuseprofile_label, "right", 2, 0)
@@ -5066,7 +5066,7 @@ function window:CreateFrame13()
 		end
 
 	--> import profile
-		local profileImportButton = g:NewButton (frame13, _, "$parentProfileImportButton", "profileImportButton", window.buttons_width, 18, import_profile, nil, nil, nil, "Import Profile", nil, options_button_template) --> localize-me
+		local profileImportButton = g:NewButton (frame13, _, "$parentProfileImportButton", "profileImportButton", window.buttons_width, 18, import_profile, nil, nil, nil, Loc["Import Profile"], nil, options_button_template) --> localize-me --- ok man
 		frame13.profileImportButton:SetIcon ([[Interface\BUTTONS\UI-GuildButton-OfficerNote-Up]], 14, 14, nil, {0, 1, 0, 1}, nil, 4, 2)
 		frame13.profileImportButton:SetTextColor (button_color_rgb)
 
@@ -5076,7 +5076,7 @@ function window:CreateFrame13()
 		window:CreateLineBackground2 (frame13, "profileImportButton", "profileImportButton", "Import current profile", nil, {1, 0.8, 0}, button_color_rgb)
 
 	-->  export profile
-		local profileExportButton = g:NewButton (frame13, _, "$parentProfileExportButton", "profileExportButton", window.buttons_width, 18, export_profile, nil, nil, nil, "Export Current Profile", nil, options_button_template) --> localize-me
+		local profileExportButton = g:NewButton (frame13, _, "$parentProfileExportButton", "profileExportButton", window.buttons_width, 18, export_profile, nil, nil, nil, Loc["Export Current Profile"], nil, options_button_template) --> localize-me --- ok man
 		frame13.profileExportButton:SetIcon ([[Interface\Buttons\UI-GuildButton-MOTD-Up]], 14, 14, nil, {1, 0, 0, 1}, nil, 4, 2)
 		frame13.profileExportButton:SetTextColor (button_color_rgb)
 
@@ -5642,7 +5642,7 @@ function window:CreateFrame3()
 		window:CreateLineBackground2 (frame3, "ChatTabEmbed2WindowsSlider", "ChatTabEmbed2WindowsLabel", Loc ["STRING_OPTIONS_TABEMB_SINGLE_DESC"])
 
 		--> size correction - width
-			g:NewLabel (frame3, _, "$parentChatTabEmbedSizeCorrectionLabel", "ChatTabEmbedSizeCorrectionLabel", "Width Offset", "GameFontHighlightLeft")
+			g:NewLabel (frame3, _, "$parentChatTabEmbedSizeCorrectionLabel", "ChatTabEmbedSizeCorrectionLabel", Loc["Width Offset"], "GameFontHighlightLeft")
 			local s = g:NewSlider (frame3, _, "$parentChatTabEmbedSizeCorrectionSlider", "ChatTabEmbedSizeCorrectionSlider", SLIDER_WIDTH, SLIDER_HEIGHT, -100, 100, 1, tonumber (_detalhes.chat_tab_embed.x_offset), nil, nil, nil, options_slider_template)
 
 			frame3.ChatTabEmbedSizeCorrectionSlider:SetPoint ("left", frame3.ChatTabEmbedSizeCorrectionLabel, "right", 2)
@@ -5655,10 +5655,10 @@ function window:CreateFrame3()
 
 				_detalhes:SendOptionsModifiedEvent (instance)
 			end)
-			window:CreateLineBackground2 (frame3, "ChatTabEmbedSizeCorrectionSlider", "ChatTabEmbedSizeCorrectionLabel", "Fine tune the size of the window while embeded in the chat.")
+			window:CreateLineBackground2 (frame3, "ChatTabEmbedSizeCorrectionSlider", "ChatTabEmbedSizeCorrectionLabel", Loc["Fine tune the size of the window while embeded in the chat."])
 		---------
 		--> size correction - height
-			g:NewLabel (frame3, _, "$parentChatTabEmbedSizeCorrection2Label", "ChatTabEmbedSizeCorrection2Label", "Height Offset", "GameFontHighlightLeft")
+			g:NewLabel (frame3, _, "$parentChatTabEmbedSizeCorrection2Label", "ChatTabEmbedSizeCorrection2Label", Loc["Height Offset"], "GameFontHighlightLeft")
 			local s = g:NewSlider (frame3, _, "$parentChatTabEmbedSizeCorrection2Slider", "ChatTabEmbedSizeCorrection2Slider", SLIDER_WIDTH, SLIDER_HEIGHT, -100, 100, 1, tonumber (_detalhes.chat_tab_embed.y_offset), nil, nil, nil, options_slider_template)
 
 			frame3.ChatTabEmbedSizeCorrection2Slider:SetPoint ("left", frame3.ChatTabEmbedSizeCorrection2Label, "right", 2)
@@ -5671,7 +5671,7 @@ function window:CreateFrame3()
 
 				_detalhes:SendOptionsModifiedEvent (instance)
 			end)
-			window:CreateLineBackground2 (frame3, "ChatTabEmbedSizeCorrection2Slider", "ChatTabEmbedSizeCorrection2Label", "Fine tune the size of the window while embeded in the chat.")
+			window:CreateLineBackground2 (frame3, "ChatTabEmbedSizeCorrection2Slider", "ChatTabEmbedSizeCorrection2Label", Loc["Fine tune the size of the window while embeded in the chat."])
 		--------
 
 	--> extra Options -~-extra
@@ -6594,7 +6594,7 @@ function window:CreateFrame5()
 
 	--> left outline small
 		g:NewSwitch (frame5, _, "$parentTextLeftOutlineSmallSlider", "textLeftOutlineSmallSlider", 60, 20, _, _, instance.row_info.textL_outline_small, nil, nil, nil, nil, options_switch_template)
-		g:NewLabel (frame5, _, "$parentTextLeftOutlineSmallLabel", "textLeftOutlineSmallLabel", "Outline", "GameFontHighlightLeft")
+		g:NewLabel (frame5, _, "$parentTextLeftOutlineSmallLabel", "textLeftOutlineSmallLabel", Loc["Outline"], "GameFontHighlightLeft")
 
 		frame5.textLeftOutlineSmallSlider:SetPoint ("left", frame5.textLeftOutlineSmallLabel, "right", 2)
 		frame5.textLeftOutlineSmallSlider:SetAsCheckBox()
@@ -6612,7 +6612,7 @@ function window:CreateFrame5()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
-		window:CreateLineBackground2 (frame5, "textLeftOutlineSmallSlider", "textLeftOutlineSmallLabel", "Text Outline")
+		window:CreateLineBackground2 (frame5, "textLeftOutlineSmallSlider", "textLeftOutlineSmallLabel", Loc["Text Outline"])
 
 	--> left outline small color
 		local left_outline_small_callback = function (button, r, g, b, a)
@@ -6630,10 +6630,10 @@ function window:CreateFrame5()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 		g:NewColorPickButton (frame5, "$parentOutlineSmallColorLeft", "OutlineSmallColorLeft", left_outline_small_callback, false, options_button_template)
-		local OutlineSmallColorTextLeft = g:NewLabel (frame5, _, "$parentOutlineSmallLabelLeft", "OutlineSmallColorLabelLeft", "Outline Color", "GameFontHighlightLeft")
+		local OutlineSmallColorTextLeft = g:NewLabel (frame5, _, "$parentOutlineSmallLabelLeft", "OutlineSmallColorLabelLeft", Loc["Outline Color"], "GameFontHighlightLeft")
 		frame5.OutlineSmallColorLeft:SetPoint ("left", OutlineSmallColorTextLeft, "right", 2, 0)
 
-		window:CreateLineBackground2 (frame5, "OutlineSmallColorLeft", "OutlineSmallColorLabelLeft", "Outline Color")
+		window:CreateLineBackground2 (frame5, "OutlineSmallColorLeft", "OutlineSmallColorLabelLeft", Loc["Outline Color"])
 
 	--> left show positio number
 		g:NewSwitch (frame5, _, "$parentPositionNumberSlider", "PositionNumberSlider", 60, 20, _, _, instance.row_info.textL_show_number, nil, nil, nil, nil, options_switch_template)
@@ -6706,7 +6706,7 @@ function window:CreateFrame5()
 
 	--> right outline small
 		g:NewSwitch (frame5, _, "$parentTextRightOutlineSmallSlider", "textRightOutlineSmallSlider", 60, 20, _, _, instance.row_info.textR_outline_small, nil, nil, nil, nil, options_switch_template)
-		g:NewLabel (frame5, _, "$parentTextRightOutlineSmallLabel", "textRightOutlineSmallLabel", "Outline", "GameFontHighlightLeft")
+		g:NewLabel (frame5, _, "$parentTextRightOutlineSmallLabel", "textRightOutlineSmallLabel", Loc["Outline"], "GameFontHighlightLeft")
 
 		frame5.textRightOutlineSmallSlider:SetPoint ("left", frame5.textRightOutlineSmallLabel, "right", 2)
 		frame5.textRightOutlineSmallSlider:SetAsCheckBox()
@@ -6744,10 +6744,10 @@ function window:CreateFrame5()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 		g:NewColorPickButton (frame5, "$parentOutlineSmallColorRight", "OutlineSmallColorRight", right_outline_small_callback, false, options_button_template)
-		local OutlineSmallColorTextRight = g:NewLabel (frame5, _, "$parentOutlineSmallLabelRight", "OutlineSmallColorLabelRight", "Outline Color", "GameFontHighlightRight")
+		local OutlineSmallColorTextRight = g:NewLabel (frame5, _, "$parentOutlineSmallLabelRight", "OutlineSmallColorLabelRight", Loc["Outline Color"], "GameFontHighlightRight")
 		frame5.OutlineSmallColorRight:SetPoint ("left", OutlineSmallColorTextRight, "right", 2, 0)
 
-		window:CreateLineBackground2 (frame5, "OutlineSmallColorRight", "OutlineSmallColorLabelRight", "Outline Color")
+		window:CreateLineBackground2 (frame5, "OutlineSmallColorRight", "OutlineSmallColorLabelRight", Loc["Outline Color"])
 
 	--> percent type
 		local onSelectPercent = function (_, instance, percentType)
@@ -7925,7 +7925,7 @@ function window:CreateFrame6()
 		local confirm_button = CreateFrame ("button", "DetailsDeleteInstanceButton", frame6, "OptionsButtonTemplate")
 		confirm_button:SetSize (60, 20)
 		confirm_button:SetPoint ("left", frame6.deleteInstanceDropdown.widget, "right", 2, 0)
-		confirm_button:SetText ("confirm")
+		confirm_button:SetText (Loc["confirm"])
 		confirm_button:SetScript ("OnClick", delete_instance)
 		frame6.deleteInstanceButton = confirm_button
 
@@ -10705,7 +10705,7 @@ function window:CreateFrame11()
 		window:CreateLineBackground2 (frame11, "EnabledFirstHitSlider", "EnabledFirstHitLabel", Loc ["STRING_OPTIONS_RT_FIRST_HIT_DESC"])
 
 		--> death menu
-		g:NewLabel (frame11, _, "$parentShowDeathMenuLabel", "ShowDeathMenuLabel", "Show Death Menu", "GameFontHighlightLeft") --localize-me
+		g:NewLabel (frame11, _, "$parentShowDeathMenuLabel", "ShowDeathMenuLabel", Loc["Show Death Menu"], "GameFontHighlightLeft") --localize-me
 		g:NewSwitch (frame11, _, "$parentShowDeathMenuSlider", "ShowDeathMenuSlider", 60, 20, _, _, _detalhes.on_death_menu, nil, nil, nil, nil, options_switch_template)
 
 		frame11.ShowDeathMenuSlider:SetPoint ("left", frame11.ShowDeathMenuLabel, "right", 2)
@@ -10715,7 +10715,7 @@ function window:CreateFrame11()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
-		window:CreateLineBackground2 (frame11, "ShowDeathMenuSlider", "ShowDeathMenuLabel", "Show a panel below the Release / Death Recap panel with some shortcuts for Raid Leaders.") --localize-me
+		window:CreateLineBackground2 (frame11, "ShowDeathMenuSlider", "ShowDeathMenuLabel", Loc["Show a panel below the Release / Death Recap panel with some shortcuts for Raid Leaders."]) --localize-me np bro
 
 	--> anchors
 

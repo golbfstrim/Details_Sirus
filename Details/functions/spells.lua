@@ -142,8 +142,8 @@ do
 		[15473] = 258, -- forma
 		-- [48158] = 258, -- Shadow Word: Death, Rank 4
 		[48160] = 258, -- Vampiric Touch, Rank 5
-		-- [48127] = 258, -- Mind Blast, Rank 13
-		-- [48156] = 258, -- Mind Flay, Rank 9
+		[48127] = 258, -- Mind Blast, Rank 13
+		[48156] = 258, -- Mind Flay, Rank 9
 
 		-- Assassination Rogue:
 		[32645] = 259, -- Envenom

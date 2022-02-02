@@ -1284,23 +1284,23 @@ function _detalhes:AddDefaultCustomDisplays()
 		]]
 	}
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_POT_DEFAULT"] and(custom.script_version and custom.script_version >= PotionUsed.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_POT_DEFAULT"]) then
-				table.remove(self.custom, i)
-			end
-		end
-		setmetatable(PotionUsed, _detalhes.atributo_custom)
-		PotionUsed.__index = _detalhes.atributo_custom
-		self.custom[#self.custom+1] = PotionUsed
-	end
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_POT_DEFAULT"] and(custom.script_version and custom.script_version >= PotionUsed.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_POT_DEFAULT"]) then
+	-- 			table.remove(self.custom, i)
+	-- 		end
+	-- 	end
+	-- 	setmetatable(PotionUsed, _detalhes.atributo_custom)
+	-- 	PotionUsed.__index = _detalhes.atributo_custom
+	-- 	self.custom[#self.custom+1] = PotionUsed
+	-- end
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --		/run _detalhes:AddDefaultCustomDisplays()
@@ -1380,23 +1380,23 @@ function _detalhes:AddDefaultCustomDisplays()
 		script_version = 15,
 	}
 --	/run _detalhes:AddDefaultCustomDisplays()
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_HEALTHSTONE_DEFAULT"] and(custom.script_version and custom.script_version >= Healthstone.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_HEALTHSTONE_DEFAULT"]) then
-				table.remove(self.custom, i)
-			end
-		end
-		setmetatable(Healthstone, _detalhes.atributo_custom)
-		Healthstone.__index = _detalhes.atributo_custom
-		self.custom[#self.custom+1] = Healthstone
-	end
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_HEALTHSTONE_DEFAULT"] and(custom.script_version and custom.script_version >= Healthstone.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_HEALTHSTONE_DEFAULT"]) then
+	-- 			table.remove(self.custom, i)
+	-- 		end
+	-- 	end
+	-- 	setmetatable(Healthstone, _detalhes.atributo_custom)
+	-- 	Healthstone.__index = _detalhes.atributo_custom
+	-- 	self.custom[#self.custom+1] = Healthstone
+	-- end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1446,23 +1446,23 @@ function _detalhes:AddDefaultCustomDisplays()
 		]],
 	}
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_DPS"] and(custom.script_version and custom.script_version >= DamageActivityTime.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_DPS"]) then
-				table.remove(self.custom, i)
-			end
-		end
-		setmetatable(DamageActivityTime, _detalhes.atributo_custom)
-		DamageActivityTime.__index = _detalhes.atributo_custom
-		self.custom[#self.custom+1] = DamageActivityTime
-	end
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_DPS"] and(custom.script_version and custom.script_version >= DamageActivityTime.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_DPS"]) then
+	-- 			table.remove(self.custom, i)
+	-- 		end
+	-- 	end
+	-- 	setmetatable(DamageActivityTime, _detalhes.atributo_custom)
+	-- 	DamageActivityTime.__index = _detalhes.atributo_custom
+	-- 	self.custom[#self.custom+1] = DamageActivityTime
+	-- end
 
 	local HealActivityTime = {
 		name = Loc["STRING_CUSTOM_ACTIVITY_HPS"],
@@ -1510,23 +1510,23 @@ function _detalhes:AddDefaultCustomDisplays()
 		]],
 	}
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_HPS"] and(custom.script_version and custom.script_version >= HealActivityTime.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_HPS"]) then
-				table.remove(self.custom, i)
-			end
-		end
-		setmetatable(HealActivityTime, _detalhes.atributo_custom)
-		HealActivityTime.__index = _detalhes.atributo_custom
-		self.custom[#self.custom+1] = HealActivityTime
-	end
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_HPS"] and(custom.script_version and custom.script_version >= HealActivityTime.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_ACTIVITY_HPS"]) then
+	-- 			table.remove(self.custom, i)
+	-- 		end
+	-- 	end
+	-- 	setmetatable(HealActivityTime, _detalhes.atributo_custom)
+	-- 	HealActivityTime.__index = _detalhes.atributo_custom
+	-- 	self.custom[#self.custom+1] = HealActivityTime
+	-- end
 
 ---------------------------------------
 
@@ -1611,28 +1611,28 @@ function _detalhes:AddDefaultCustomDisplays()
 
 --		/run _detalhes:AddDefaultCustomDisplays()
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_CC_DONE"] and(custom.script_version and custom.script_version >= CC_Done.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		setmetatable(CC_Done, _detalhes.atributo_custom)
-		CC_Done.__index = _detalhes.atributo_custom
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_CC_DONE"] and(custom.script_version and custom.script_version >= CC_Done.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	setmetatable(CC_Done, _detalhes.atributo_custom)
+	-- 	CC_Done.__index = _detalhes.atributo_custom
 
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_CC_DONE"]) then
-				table.remove(self.custom, i)
-				tinsert(self.custom, i, CC_Done)
-				have = true
-			end
-		end
-		if(not have) then
-			self.custom[#self.custom+1] = CC_Done
-		end
-	end
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_CC_DONE"]) then
+	-- 			table.remove(self.custom, i)
+	-- 			tinsert(self.custom, i, CC_Done)
+	-- 			have = true
+	-- 		end
+	-- 	end
+	-- 	if(not have) then
+	-- 		self.custom[#self.custom+1] = CC_Done
+	-- 	end
+	-- end
 
 	----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1745,28 +1745,28 @@ function _detalhes:AddDefaultCustomDisplays()
 
 --		/run _detalhes:AddDefaultCustomDisplays()
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_CC_RECEIVED"] and(custom.script_version and custom.script_version >= CC_Received.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		setmetatable(CC_Received, _detalhes.atributo_custom)
-		CC_Received.__index = _detalhes.atributo_custom
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_CC_RECEIVED"] and(custom.script_version and custom.script_version >= CC_Received.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	setmetatable(CC_Received, _detalhes.atributo_custom)
+	-- 	CC_Received.__index = _detalhes.atributo_custom
 
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_CC_RECEIVED"]) then
-				table.remove(self.custom, i)
-				tinsert(self.custom, i, CC_Received)
-				have = true
-			end
-		end
-		if(not have) then
-			self.custom[#self.custom+1] = CC_Received
-		end
-	end
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_CC_RECEIVED"]) then
+	-- 			table.remove(self.custom, i)
+	-- 			tinsert(self.custom, i, CC_Received)
+	-- 			have = true
+	-- 		end
+	-- 	end
+	-- 	if(not have) then
+	-- 		self.custom[#self.custom+1] = CC_Received
+	-- 	end
+	-- end
 
 	----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2028,28 +2028,28 @@ function _detalhes:AddDefaultCustomDisplays()
 		]],
 	}
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_MYSPELLS"] and(custom.script_version and custom.script_version >= MySpells.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		setmetatable(MySpells, _detalhes.atributo_custom)
-		MySpells.__index = _detalhes.atributo_custom
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_MYSPELLS"] and(custom.script_version and custom.script_version >= MySpells.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	setmetatable(MySpells, _detalhes.atributo_custom)
+	-- 	MySpells.__index = _detalhes.atributo_custom
 
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_MYSPELLS"]) then
-				table.remove(self.custom, i)
-				tinsert(self.custom, i, MySpells)
-				have = true
-			end
-		end
-		if(not have) then
-			self.custom[#self.custom+1] = MySpells
-		end
-	end
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_MYSPELLS"]) then
+	-- 			table.remove(self.custom, i)
+	-- 			tinsert(self.custom, i, MySpells)
+	-- 			have = true
+	-- 		end
+	-- 	end
+	-- 	if(not have) then
+	-- 		self.custom[#self.custom+1] = MySpells
+	-- 	end
+	-- end
 
 	----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2120,28 +2120,28 @@ function _detalhes:AddDefaultCustomDisplays()
 
 --		/run _detalhes:AddDefaultCustomDisplays()
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSKULL"] and(custom.script_version and custom.script_version >= DamageOnSkullTarget.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		setmetatable(DamageOnSkullTarget, _detalhes.atributo_custom)
-		DamageOnSkullTarget.__index = _detalhes.atributo_custom
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSKULL"] and(custom.script_version and custom.script_version >= DamageOnSkullTarget.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	setmetatable(DamageOnSkullTarget, _detalhes.atributo_custom)
+	-- 	DamageOnSkullTarget.__index = _detalhes.atributo_custom
 
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSKULL"]) then
-				table.remove(self.custom, i)
-				tinsert(self.custom, i, DamageOnSkullTarget)
-				have = true
-			end
-		end
-		if(not have) then
-			self.custom[#self.custom+1] = DamageOnSkullTarget
-		end
-	end
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSKULL"]) then
+	-- 			table.remove(self.custom, i)
+	-- 			tinsert(self.custom, i, DamageOnSkullTarget)
+	-- 			have = true
+	-- 		end
+	-- 	end
+	-- 	if(not have) then
+	-- 		self.custom[#self.custom+1] = DamageOnSkullTarget
+	-- 	end
+	-- end
 
 	----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2250,28 +2250,28 @@ function _detalhes:AddDefaultCustomDisplays()
 
 --		/run _detalhes:AddDefaultCustomDisplays()
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_DAMAGEONANYMARKEDTARGET"] and(custom.script_version and custom.script_version >= DamageOnAnyTarget.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		setmetatable(DamageOnAnyTarget, _detalhes.atributo_custom)
-		DamageOnAnyTarget.__index = _detalhes.atributo_custom
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_DAMAGEONANYMARKEDTARGET"] and(custom.script_version and custom.script_version >= DamageOnAnyTarget.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	setmetatable(DamageOnAnyTarget, _detalhes.atributo_custom)
+	-- 	DamageOnAnyTarget.__index = _detalhes.atributo_custom
 
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_DAMAGEONANYMARKEDTARGET"]) then
-				table.remove(self.custom, i)
-				tinsert(self.custom, i, DamageOnAnyTarget)
-				have = true
-			end
-		end
-		if(not have) then
-			self.custom[#self.custom+1] = DamageOnAnyTarget
-		end
-	end
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_DAMAGEONANYMARKEDTARGET"]) then
+	-- 			table.remove(self.custom, i)
+	-- 			tinsert(self.custom, i, DamageOnAnyTarget)
+	-- 			have = true
+	-- 		end
+	-- 	end
+	-- 	if(not have) then
+	-- 		self.custom[#self.custom+1] = DamageOnAnyTarget
+	-- 	end
+	-- end
 
 	----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2408,23 +2408,23 @@ function _detalhes:AddDefaultCustomDisplays()
 		]],
 	}
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_DYNAMICOVERAL"] and(custom.script_version and custom.script_version >= DynamicOverallDamage.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_DYNAMICOVERAL"]) then
-				table.remove(self.custom, i)
-			end
-		end
-		setmetatable(DynamicOverallDamage, _detalhes.atributo_custom)
-		DynamicOverallDamage.__index = _detalhes.atributo_custom
-		self.custom[#self.custom+1] = DynamicOverallDamage
-	end
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_DYNAMICOVERAL"] and(custom.script_version and custom.script_version >= DynamicOverallDamage.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_DYNAMICOVERAL"]) then
+	-- 			table.remove(self.custom, i)
+	-- 		end
+	-- 	end
+	-- 	setmetatable(DynamicOverallDamage, _detalhes.atributo_custom)
+	-- 	DynamicOverallDamage.__index = _detalhes.atributo_custom
+	-- 	self.custom[#self.custom+1] = DynamicOverallDamage
+	-- end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2509,23 +2509,23 @@ function _detalhes:AddDefaultCustomDisplays()
 		]],
 	}
 
-	local have = false
-	for _, custom in ipairs(self.custom) do
-		if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSHIELDS"] and(custom.script_version and custom.script_version >= DamageOnShields.script_version) ) then
-			have = true
-			break
-		end
-	end
-	if(not have) then
-		for i, custom in ipairs(self.custom) do
-			if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSHIELDS"]) then
-				table.remove(self.custom, i)
-			end
-		end
-		setmetatable(DamageOnShields, _detalhes.atributo_custom)
-		DamageOnShields.__index = _detalhes.atributo_custom
-		self.custom[#self.custom+1] = DamageOnShields
-	end
+	-- local have = false
+	-- for _, custom in ipairs(self.custom) do
+	-- 	if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSHIELDS"] and(custom.script_version and custom.script_version >= DamageOnShields.script_version) ) then
+	-- 		have = true
+	-- 		break
+	-- 	end
+	-- end
+	-- if(not have) then
+	-- 	for i, custom in ipairs(self.custom) do
+	-- 		if(custom.name == Loc["STRING_CUSTOM_DAMAGEONSHIELDS"]) then
+	-- 			table.remove(self.custom, i)
+	-- 		end
+	-- 	end
+	-- 	setmetatable(DamageOnShields, _detalhes.atributo_custom)
+	-- 	DamageOnShields.__index = _detalhes.atributo_custom
+	-- 	self.custom[#self.custom+1] = DamageOnShields
+	-- end
 
 ---------------------------------------
 

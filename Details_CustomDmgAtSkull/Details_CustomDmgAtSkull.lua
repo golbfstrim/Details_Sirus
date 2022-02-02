@@ -7,7 +7,7 @@ local DmgAtSkull = {
 	target = false,
 	author = "fxpw",
 	desc = "DmgAtSkull",
-	script_version = 2,
+	script_version = 3,
 	script = [[
 		--get the parameters passed
 		local Combat, CustomContainer, Instance = ...
@@ -49,7 +49,8 @@ local DmgAtSkull = {
 		return value
 	]],
 	percent_script = [[
-
+		local value, top, total, combat, instance = ...
+		return string.format("%2.f",(value/total)*100)
 	]],
 	tooltip =[[	
 		
