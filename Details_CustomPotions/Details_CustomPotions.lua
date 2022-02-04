@@ -7,7 +7,7 @@ local potionUsed = {
 	target = false,
 	author = "fxpw",
 	desc = "Shows who uses potions",
-	script_version = 5,
+	script_version = 7,
 	script = [[
 		--init:
 		local combat, instance_container, instance = ...
@@ -45,7 +45,7 @@ local potionUsed = {
 				local buff_uptime_container = player.buff_uptime and player.buff_uptime_spells and player.buff_uptime_spells._ActorTable
 				if(buff_uptime_container) then
 					for spellId, _ in pairs(DetailsFramework.PotionIDs) do
-						local potionUsed = buff_uptime_container[spellId] or (DETAILS_CUSTOM_POILO[spellid])
+						local potionUsed = buff_uptime_container[spellId]
 						-- print(spellId)
 						
 						if(potionUsed) then
@@ -88,7 +88,7 @@ local potionUsed = {
 			end
 			
 			if(found) then
-				amount = amount + 2
+				amount = amount + 1
 			end
 		end
 
@@ -127,7 +127,7 @@ local potionUsed = {
 		local buff_uptime_container = player.buff_uptime and player.buff_uptime_spells and player.buff_uptime_spells._ActorTable
 		if(buff_uptime_container) then
 			for spellId, _ in pairs(DetailsFramework.PotionIDs) do
-				local potionUsed = buff_uptime_container[spellId] or (DETAILS_CUSTOM_POILO[spellid])
+				local potionUsed = buff_uptime_container[spellId] 
 				
 				if(potionUsed) then
 					
@@ -138,19 +138,21 @@ local potionUsed = {
 					GameCooltip:AddIcon(icon, 1, 1, _detalhes.tooltip.line_height, _detalhes.tooltip.line_height)
 				end
 			end
-		end
-
-		local actor, combat, instance = ...
-
-		--get the cooltip object(we dont use the convencional GameTooltip here)
-		local GameCooltip = GameCooltip
+		end		
 		local R, G, B, A = 0, 0, 0, 0.75
 
-		local ntta = actor:GetSpell(52697)
-		if(ntta) then
-			GameCooltip:AddLine(select(1, GetSpellInfo(52697)),  _detalhes:ToK(ntta.total+1))
-			GameCooltip:AddIcon(select(3, GetSpellInfo(52697)), 1, 1, _detalhes.tooltip.line_height, _detalhes.tooltip.line_height)
-			GameCooltip:AddStatusBar(100, 1, R, G, B, A)
+
+		local AllHealCharacters = combat:GetActorList(DETAILS_ATTRIBUTE_HEAL)
+		for index, character in ipairs(AllHealCharacters) do
+			local AllSpells = character:GetSpellList()
+			local found = false
+			for spellid, spell in pairs(AllSpells) do
+				if(DETAILS_CUSTOM_POILO[spellid]) then
+					GameCooltip:AddLine(select(1, GetSpellInfo(52697)),  _detalhes:ToK(spell.total+1))
+					GameCooltip:AddIcon(select(3, GetSpellInfo(52697)), 1, 1, _detalhes.tooltip.line_height, _detalhes.tooltip.line_height)
+					GameCooltip:AddStatusBar(100, 1, R, G, B, A)
+				end
+			end
 		end
 	]]
 }
