@@ -1419,7 +1419,8 @@ function _detalhes:CatchRaidBuffUptime (in_or_out)
 						if (in_or_out == "BUFF_UPTIME_IN") then
 							if (_detalhes.PotionList [spellid]) then
 								pot_usage [playerName] = spellid
-
+								--
+							-- print(spellid,1423)
 							elseif (runes_id [spellid]) then
 								focus_augmentation [playerName] = true
 							end
@@ -1469,7 +1470,8 @@ function _detalhes:CatchRaidBuffUptime (in_or_out)
 						if (in_or_out == "BUFF_UPTIME_IN") then
 							if (_detalhes.PotionList [spellid]) then
 								pot_usage [playerName] = spellid
-
+								--
+								-- print(spellid,1474)
 							elseif (runes_id [spellid]) then
 								focus_augmentation [playerName] = true
 							end
@@ -1490,6 +1492,8 @@ function _detalhes:CatchRaidBuffUptime (in_or_out)
 				if (playerGUID) then
 					if (in_or_out == "BUFF_UPTIME_IN") then
 						if (_detalhes.PotionList [spellid]) then
+							--
+							-- print(spellid,1496)
 							pot_usage [playerName] = spellid
 						elseif (runes_id [spellid]) then
 							focus_augmentation [playerName] = true
@@ -1533,6 +1537,8 @@ function _detalhes:CatchRaidBuffUptime (in_or_out)
 					if (in_or_out == "BUFF_UPTIME_IN") then
 						if (_detalhes.PotionList [spellid]) then
 							pot_usage [playerName] = spellid
+							--
+							-- print(spellid,1537)
 						elseif (runes_id [spellid]) then
 							focus_augmentation [playerName] = true
 						end

@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: Details!: Dmg At Shields (plugin)
+## Notes: Shows who do dmg at shields
+## Notes-ruRU: Показывает сколько урона идет в щиты
+## DefaultState: Enabled
+## RequiredDeps: Details
+
+Details_CustomAbsorbDmg.lua
