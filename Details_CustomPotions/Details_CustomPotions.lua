@@ -145,7 +145,7 @@ local potionUsed = {
 		local AllHealCharacters = combat:GetActorList(DETAILS_ATTRIBUTE_HEAL)
 		for index, character in ipairs(AllHealCharacters) do
 			local AllSpells = character:GetSpellList()
-			local found = false
+			--local found = false
 			for spellid, spell in pairs(AllSpells) do
 				if(DETAILS_CUSTOM_POILO[spellid]) then
 					GameCooltip:AddLine(select(1, GetSpellInfo(52697)),  _detalhes:ToK(spell.total+1))
