@@ -274,11 +274,13 @@ do --> data for Karazhan
 		"ui-ej-boss-netherspite",
 		"UI-EJ-BOSS-Nightbane",
 		"ui-ej-boss-prince malchezaar",
+		"ui-ej-boss-opera",
+		"ui-ej-boss-opera",
 	}
 
 	-- TODO: Opera
 	local ENCOUNTER_ID_CL = {
-		16152, 15687, 16457, 17535, 34437, 15688, 16524, 15689, 17225, 15690,
+		16152, 15687, 16457, 17535, 34437, 15688, 16524, 15689, 17225, 15690,100552,
 		[16152] = 1, --Attumen the Huntsman
 		[15687] = 2, --Moroes
 		[16457] = 3, --Maiden of Virtue
@@ -289,6 +291,7 @@ do --> data for Karazhan
 		[15689] = 8, --Netherspite
 		[17225] = 9, --Nightbane
 		[15690] = 10, --Prince Malchezaar
+		[100552] = 11, -- opera hm
 	}
 
 	--> install the raid
@@ -303,6 +306,8 @@ do --> data for Karazhan
 		LBB["Netherspite"],
 		LBB["Nightbane"],
 		LBB["Prince Malchezaar"],
+		LBB["Galindra"],
+		LBB["Zelfira"],
 	}
 
 	local ENCOUNTERS = {}
@@ -348,6 +353,8 @@ do --> data for Karazhan
 			[15689] = 8, --Netherspite
 			[17225] = 9, --Nightbane
 			[15690] = 10, --Prince Malchezaar
+			[100551] = 11, -- galinda
+			[100552] = 11, -- zelfira
 		},
 	})
 end

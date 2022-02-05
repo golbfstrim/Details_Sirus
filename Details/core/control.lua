@@ -1646,6 +1646,7 @@ function _detalhes:BuildInstanceBarTooltip(frame)
 end
 
 function _detalhes:MontaTooltip(frame, qual_barra, keydown)
+	-- print("asdas")
 	self:BuildInstanceBarTooltip(frame)
 
 	local GameCooltip = GameCooltip
@@ -1668,21 +1669,35 @@ function _detalhes:MontaTooltip(frame, qual_barra, keydown)
 	end
 
 	local t = objeto:ToolTip(self, qual_barra, esta_barra, keydown) --> inst�ncia, n� barra, objeto barra, keydown
+	-- print(t)
 	if t then
+		-- print(1674)
 		if objeto.serial and objeto.serial ~= "" then
-			local avatar = NickTag:GetNicknameTable(objeto.serial, true)
+			-- print(objeto.serial)
+			-- print(1676)
+			local avatar = NickTag:GetNicknameTable(objeto.nome, true)
+			-- print(avatar)
+			-- print(objeto.nome)
 			if avatar and not _detalhes.ignore_nicktag then
+				-- print(1679)
 				if avatar[2] and avatar[4] and avatar[1] then
-					GameCooltip:SetBannerImage(1, avatar[2], 80, 40, avatarPoint, avatarTexCoord, nil) --> overlay[2] avatar path
-					GameCooltip:SetBannerImage(2, avatar[4], 200, 55, backgroundPoint, avatar[5], avatar[6]) --> background
-					GameCooltip:SetBannerText(1, (not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, 14, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+					if objeto.nome == "Шутка" or objeto.nome == "Пьяная" then
+						-- print(avatar[2])
+						GameCooltip:SetBannerImage(1, [[Interface\AddOns\Details\textures\СustomTextures\fxpw]], 100, 60, avatarPoint, avatarTexCoord, nil) --> overlay[2] avatar path
+						GameCooltip:SetBannerImage(2, avatar[4], 256, 64, backgroundPoint, avatar[5], avatar[6]) --> background
+						GameCooltip:SetBannerText(1, (not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, 14, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+					else
+						GameCooltip:SetBannerImage(1, avatar[2], 100, 60, avatarPoint, avatarTexCoord, nil) --> overlay[2] avatar path
+						GameCooltip:SetBannerImage(2, avatar[4], 256, 64, backgroundPoint, avatar[5], avatar[6]) --> background
+						GameCooltip:SetBannerText(1, (not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, 14, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+				end
 				end
 			else
---				if _detalhes.remove_realm_from_name and objeto.displayName:find("%*") then
---					GameCooltip:SetBannerImage(1,[[Interface\AddOns\Details\images\background]], 20, 30, avatarPoint, avatarTexCoord, {0, 0, 0, 0}) --> overlay[2] avatar path
---					GameCooltip:SetBannerImage(2,[[Interface\PetBattles\Weather-BurntEarth]], 160, 30, {{"bottomleft", "topleft", 0, -5}, {"bottomright", "topright", 0, -5}}, {0.12, 0.88, 1, 0}, {0, 0, 0, 0.1}) --> overlay[2] avatar path {0, 0, 0, 0}
---					GameCooltip:SetBannerText(1, objeto.nome, {"left", "left", 11, -8}, {1, 1, 1, 0.7}, 10, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
---				end
+				-- if _detalhes.remove_realm_from_name and objeto.displayName:find("%*") then
+				-- 	GameCooltip:SetBannerImage(1,[[Interface\AddOns\Details\images\background]], 20, 30, avatarPoint, avatarTexCoord, {0, 0, 0, 0}) --> overlay[2] avatar path
+				-- 	GameCooltip:SetBannerImage(2,[[Interface\PetBattles\Weather-BurntEarth]], 160, 30, {{"bottomleft", "topleft", 0, -5}, {"bottomright", "topright", 0, -5}}, {0.12, 0.88, 1, 0}, {0, 0, 0, 0.1}) --> overlay[2] avatar path {0, 0, 0, 0}
+				-- 	GameCooltip:SetBannerText(1, objeto.nome, {"left", "left", 11, -8}, {1, 1, 1, 0.7}, 10, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+				-- end
 			end
 		end
 

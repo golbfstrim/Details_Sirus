@@ -122,6 +122,72 @@ NickTag.avatar_pool = {
 	{[[Interface\AddOns\Details\textures\EncounterJournal\UI-EJ-BOSS-Gunship Alliance]], "Gunship Alliance"},
 	{[[Interface\AddOns\Details\textures\EncounterJournal\UI-EJ-BOSS-Deathbringer Saurfang]], "Deathbringer Saurfang"},
 	{[[Interface\AddOns\Details\textures\EncounterJournal\UI-EJ-BOSS-The Lich King]], "The Lich King"},
+	-------------------add for sirus
+	{[[Interface\encounterjournal\ui-ej-boss-baron silverlaine]], "Baron Silverlaine"},
+	{[[interface\encounterjournal\ui-ej-boss-Arcanist Doan]], "Arcanist Doan"},
+	{[[interface\encounterjournal\ui-ej-boss-baelog]], "Baelog"},
+	{[[Interface\EncounterJournal\UI-EJ-BOSS-Baron Ashbury]], "Baron Ashbury"},
+	{[[interface\encounterjournal\ui-ej-boss-baron silverlaine]], "Baron Silverlaine"},
+	{[[interface\encounterjournal\ui-ej-boss-blood guard porung]], "Blood Guard Porung"},
+	{[[interface\encounterjournal\ui-ej-boss-bronjahm]], "Bronjahm"},
+	{[[interface\encounterjournal\ui-ej-boss-chief ukorz sandscalp]], "Chief Ukorz Sandscalp"},
+	{[[interface\encounterjournal\ui-ej-boss-commander kolurg]], "Commander Kolurg"},
+	{[[interface\encounterjournal\ui-ej-boss-Commander-Malor]], "Commander Malor"},
+	{[[interface\encounterjournal\ui-ej-boss-commander sarannis]], "Commander Sarannis"},
+	{[[interface\encounterjournal\ui-ej-boss-commander springvale]], "Commander Springvale"},
+	{[[interface\encounterjournal\ui-ej-boss-commander stoutbeard]], "Commander Stoutbeard"},
+	{[[interface\encounterjournal\ui-ej-boss-cyanigosa]], "Cyanigosa"},
+	{[[interface\encounterjournal\ui-ej-boss-Darkmaster-Gandling]], "Darkmaster Gandling"},
+	{[[interface\encounterjournal\UI-EJ-BOSS-Doctor Theolen Krastinov]], "Doctor Theolen Krastinov"},---+
+	{[[interface\encounterjournal\ui-ej-boss-doomrel]], "DoomRel"},
+	{[[interface\encounterjournal\ui-ej-boss-emperor thaurissan]], "Emperor Thaurissan"},
+	{[[interface\encounterjournal\ui-ej-boss-exarch maladaar]], "Exarch Maladaar"},
+	{[[interface\encounterjournal\ui-ej-boss-fineous darkvire]], "Fineous Darkvire"},
+	{[[interface\encounterjournal\ui-ej-boss-galdarah]], "Galdarah"},
+	{[[interface\encounterjournal\ui-ej-boss-grand magus telestra]], "Grand Magus Telestra"},
+	{[[interface\encounterjournal\ui-ej-boss-hazzarah]], "Hazzarah"},
+	{[[interface\encounterjournal\ui-ej-boss-hearthsinger forresten]], "Hearthsinger Forresten"},
+	{[[interface\encounterjournal\ui-ej-boss-high botanist freywinn]], "High Botanist Freywinn"},
+	{[[interface\encounterjournal\ui-ej-boss-High Inquisitor Whitemane]], "High Inquisitor Whitemane"},
+	{[[interface\encounterjournal\ui-ej-boss-high interrogator gerstahn]], "High Interrogator Gerstahn"},
+	{[[interface\encounterjournal\ui-ej-boss-high justice grimstone]], "High Justice Grimstone"},
+	{[[interface\encounterjournal\ui-ej-boss-Houndmaster Loksey]], "Houndmaster Loksey"},
+	{[[interface\encounterjournal\ui-ej-boss-illyanna ravenoak]], "Illyanna Ravenoak"},
+	{[[interface\encounterjournal\ui-ej-boss-ingvar the plunderer]], "Ingvar the Plunderer"},
+	{[[interface\encounterjournal\ui-ej-boss-Archivist-Galford]], "Instructor Galford"},
+	{[[interface\encounterjournal\UI-EJ-BOSS-Instructor Malicia]], "Instructor Malicia"},
+	{[[interface\encounterjournal\ui-ej-boss-Interrogator Vishas]], "Interrogator Vishas"},
+	{[[interface\encounterjournal\UI-EJ-BOSS-Lady-Jaina-Proudmoure-ICC]], "Jaina Proudmoore"}, ----++
+	{[[interface\encounterjournal\UI-EJ-BOSS-Jandice Barov]], "Jandice Barov"},
+	{[[interface\encounterjournal\ui-ej-boss-kaelthas sunstrider]], "Kaelthas Sunstrider"},
+	{[[interface\encounterjournal\ui-ej-boss-kelidan the breaker]], "Kelidan the Breaker"},
+	{[[interface\encounterjournal\ui-ej-boss-krick]], "Krick"},
+	{[[interface\encounterjournal\ui-ej-boss-lady anacondra]], "Lady Anacondra"},
+	{[[interface\encounterjournal\UI-EJ-BOSS-Lady Illucia Barov]], "Lady Illucia Barov"},
+	{[[interface\encounterjournal\ui-ej-boss-lethtendris]], "Lethtendris"},
+	{[[interface\encounterjournal\ui-ej-boss-loken]], "Loken"},
+	{[[interface\encounterjournal\UI-EJ-BOSS-Lord Alexei Barov]], "Lord Alexei Barov"},---++
+	{[[interface\encounterjournal\ui-ej-boss-Baron-Rivendare]], "Lord Aurius Rivendare"},
+	{[[interface\encounterjournal\ui-ej-boss-lord cobrahn]], "Lord Cobrahn"},
+	{[[interface\encounterjournal\ui-ej-boss-lord pythas]], "Lord Pythas"},
+	{[[interface\encounterjournal\ui-ej-boss-lord serpentis]], "Lord Serpentis"},
+	{[[interface\encounterjournal\ui-ej-boss-mage lord urom]], "Mage Lord Urom"},
+	{[[interface\encounterjournal\ui-ej-boss-magister kalendris]], "Magister Kalendris"},
+	{[[interface\encounterjournal\ui-ej-boss-maiden of grief]], "Maiden of Grief"},
+	{[[interface\encounterjournal\ui-ej-boss-maleki the pallid]], "Maleki the Pallid"},
+	{[[interface\encounterjournal\ui-ej-boss-nethermancer sepethrea]], "Nethermancer Sepethrea"},
+	{[[interface\encounterjournal\ui-ej-boss-pathaleon the calculator]], "Pathaleon the Calculator"},
+	{[[interface\encounterjournal\ui-ej-boss-prince tortheldrin]], "Prince Tortheldrin"},
+	{[[interface\encounterjournal\ui-ej-boss-renataki]], "Renataki"},
+	{[[interface\encounterjournal\ui-ej-boss-Scarlet Commander Mograine]], "Scarlet Commander Mograine"},
+	{[[interface\encounterjournal\ui-ej-boss-skarvald the constructor]], "Skarvald the Constructor"},
+	{[[interface\encounterjournal\ui-ej-boss-tribunal of the ages]], "Tribunal of the Ages"},
+	{[[interface\encounterjournal\ui-ej-boss-twilight lord kelris]], "Twilight Lord Kelris"},
+	{[[interface\encounterjournal\ui-ej-boss-Edwin-VanCleef]], "Edwin VanCleef"},
+	{[[interface\encounterjournal\ui-ej-boss-vazruden]], "Vazruden"},
+	{[[interface\encounterjournal\ui-ej-boss-Warchief Rend Blackhand]], "Warchief Rend Blackhand"},
+	{[[interface\encounterjournal\ui-ej-boss-witch doctor zumrah]], "Witch Doctor Zumrah"},
+	-- {[[Interface\AddOns\Details\textures\CustomTextures\fxpw]], "fxpw"},
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 --> send and receive functions
@@ -368,6 +434,25 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 --> basic functions
+local cyrillic = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯЁЂЃЄЅІЇЈЉЊЋЌЎЏҐабвгдежзийклмнопрстуфхцчшщъыьэюяёђѓєѕіїјљњћќўџґАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"
+local latin = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+local chinese = "ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟﾡﾢﾣﾤﾥﾦﾧﾨﾩﾪﾫﾬﾭﾮﾯﾰﾱﾲﾳﾴﾵﾶﾷﾸﾹﾺﾻﾼﾽﾾￂￃￄￅￆￇￊￋￌￍￎￏￒￓￔￕￖￗￚￛￜ"
+
+local alphabet = {
+	["cyrillic"] = {},
+	["latin"] = {},
+	["chinese"] = {},
+}
+
+for letter in cyrillic:gmatch(".") do
+	alphabet["cyrillic"][letter] = true
+end
+for letter in latin:gmatch(".") do
+	alphabet["latin"][letter] = true
+end
+for letter in chinese:gmatch(".") do
+	alphabet["chinese"][letter] = true
+end
 
 --> trim from from http://lua-users.org/wiki/StringTrim
 function trim(s)
@@ -402,26 +487,49 @@ function NickTag:CheckName(name)
 
 	name = trim(name)
 
+		--which alphabet to use
+		local alphabetToUse = "latin"
+		local firstLetter = name:match("^.")
+		local maxLength = 14
+
+		if (alphabet["cyrillic"][firstLetter]) then
+			--reserve cyrillic only to clients running ruRU
+			if (GetLocale() == "ruRU") then
+				alphabetToUse = "cyrillic"
+				maxLength = 28 --cyrillic uses two bytes
+			else
+				alphabetToUse = "latin"
+			end
+
+		elseif (alphabet["chinese"][firstLetter]) then
+			if (GetLocale() == "zhCN" or GetLocale() == "zhTW") then
+				alphabetToUse = "chinese"
+				maxLength = 56 --chinese uses 4 bytes
+			else
+				alphabetToUse = "latin"
+			end
+		end
+
 	--> limit nickname to 12 characters, same as wow.
-	local len = string.len(name)
-	if len > 12 then
-		return false, LibStub("AceLocale-3.0"):GetLocale("NickTag-1.0")["STRING_ERROR_1"] --> error 1 = nickname is too long, max of 12 characters.
-	end
+	local len = string.len (name)
+		if (len > maxLength) then
+			return false, LibStub ("AceLocale-3.0"):GetLocale ("NickTag-1.0")["STRING_ERROR_1"] --> error 1 = nickname is too long, max of 12 characters.
+		end
 
 	--> check if contain any non allowed characters, by now only accpet letters, numbers and spaces.
 	--> by default wow do not accetp spaces, but here will allow.
 	--> tested over lua 5.2 and this capture was okey with accents, not sure why inside wow this doesn't work.
-	local notallow = string.find(name, "[^a-zA-Z�������%s]")
-	if notallow then
-		return false, LibStub("AceLocale-3.0"):GetLocale("NickTag-1.0")["STRING_ERROR_2"] --> error 2 = nickname only support letters, numbers and spaces.
-	end
+	-- local notallow = string.find(name, "[^a-zA-Z�������%s]")
+	-- if notallow then
+	-- 	return false, LibStub("AceLocale-3.0"):GetLocale("NickTag-1.0")["STRING_ERROR_2"] --> error 2 = nickname only support letters, numbers and spaces.
+	-- end
 
 	--> check if there is sequencial repeated characters, like "Jasooon" were repeats 3 times the "o" character.
 	--> got this from http://stackoverflow.com/questions/15608299/lua-pattern-matching-repeating-character
 	have_repeated = false
 	count_spaces = 0
 	string.gsub(name, '.', '\0%0%0'):gsub('(.)%z%1','%1'):gsub('%z.([^%z]+)', check_repeated)
-	if count_spaces > 2 then
+	if count_spaces > 3 then
 		have_repeated = true
 	end
 	if have_repeated then
