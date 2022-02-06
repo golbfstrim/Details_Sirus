@@ -604,7 +604,6 @@ local BossIDs = {
 	[17521] = true, -- The Big Bad Wolf
 	[17533] = true, -- Romulo
 	[17534] = true, -- Julianne
-
 	[100551] = true, -- Галиндра
 	[100552] = true, -- Зельфира
 
