@@ -38,7 +38,7 @@ function GetCurrentMapAreaID()
 end
 ]]
 
--- if not C_Timer or C_Timer._version ~= 2 then
+-- if not C_Timer or C_Timer:_version ~= 2 then
 -- 	-- print("dasfas")
 -- 	local setmetatable = setmetatable
 -- 	local type = type
@@ -46,7 +46,7 @@ end
 -- 	local tremove = table.remove
 
 -- 	C_Timer = C_Timer or {}
--- 	C_Timer._version = 2
+-- 	C_Timer:_version = 2
 
 -- 	local TickerPrototype = {}
 -- 	local TickerMetatable = {
