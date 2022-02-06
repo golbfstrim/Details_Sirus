@@ -1,6 +1,6 @@
 local tankInfo = {
-	name = "TankInfo",
-	icon = [[Interface\Icons\INV_Alchemy_Elixir_02]],
+	name = "All Tank Info",
+	icon = [[Interface\Icons\Ability_Defend]],
 	source = false,
 	attribute = false,
 	spellid = false,

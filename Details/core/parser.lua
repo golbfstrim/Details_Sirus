@@ -214,6 +214,15 @@ local ignored_npc_ids = {
 	["1234567890"] = true,
 }
 
+local overridespell = { ---------- переопределение id спелов чтобы не было разных
+	[308001] = 308000, ----shaman elem t5 thorns to 308000
+	[308002] = 308000, ----shaman elem t5 thorns
+	[308003] = 308000, ----shaman elem t5 thorns
+	[308004] = 308000, ----shaman elem t5 thorns
+	[49240] = 49238, ----shaman elem light proc
+}
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --> internal functions
 
@@ -337,12 +346,13 @@ end
 [15]=1
 --]=]
 
-
 function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
 ------------------------------------------------------------------------------------------------
--- print(alvo_flags)
---> early checks and fixes
-	if who_serial == "" then
+	-- if who_name == "Шутка" then
+	-- 	print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
+	-- end
+	
+if who_serial == "" then
 		if who_flags and _bit_band(who_flags, OBJECT_TYPE_PETS) ~= 0 then --> � um pet
 			--> pets must have a serial
 			return
@@ -4408,6 +4418,11 @@ end)
 function _detalhes.OnParserEvent(_, _, time, token, who_serial, who_name, who_flags, target_serial, target_name, target_flags, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
 	local funcao = token_list[token]
 	if funcao then
+
+		if overridespell[A1] then
+			A1 = overridespell[A1]
+		end
+		-- print(time, token, who_serial, who_name, who_flags, target_serial, target_name, target_flags, A1, A2, A3, A4, A5, A6)
 		return funcao(nil, token, time, who_serial, who_name, who_flags, target_serial, target_name, target_flags, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
 	else
 		return
