@@ -4304,7 +4304,7 @@ function window:CreateFrame1()
 				end
 			end
 
-			window:CreateLineBackground2 (frame1, "clickThroughWindowSlider", "clickThroughWindowLabel", "The window will be click through.")
+			window:CreateLineBackground2 (frame1, "clickThroughWindowSlider", "clickThroughWindowLabel", Loc["The window will be click through."])
 
 			--bars
 			g:NewLabel (frame1, _, "$parentclickThroughBarsLabel", "clickThroughBarsLabel", Loc["Affect Bars"], "GameFontHighlightLeft")
@@ -4325,7 +4325,7 @@ function window:CreateFrame1()
 				end
 			end
 
-			window:CreateLineBackground2 (frame1, "clickThroughBarsSlider", "clickThroughBarsLabel", "Player bars will be click through, won't show tooltips when hover hover them.")
+			window:CreateLineBackground2 (frame1, "clickThroughBarsSlider", "clickThroughBarsLabel", Loc["Player bars will be click through, won't show tooltips when hover hover them."])
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -6726,7 +6726,7 @@ function window:CreateFrame5()
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
-		window:CreateLineBackground2 (frame5, "textRightOutlineSmallSlider", "textRightOutlineSmallLabel", "Text Outline")
+		window:CreateLineBackground2 (frame5, "textRightOutlineSmallSlider", "textRightOutlineSmallLabel", Loc["Text Outline"])
 
 	--> right outline small color
 		local right_outline_small_callback = function (button, r, g, b, a)

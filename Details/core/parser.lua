@@ -219,7 +219,7 @@ local overridespell = { ---------- переопределение id спело�
 	[308002] = 308000, ----shaman elem t5 thorns
 	[308003] = 308000, ----shaman elem t5 thorns
 	[308004] = 308000, ----shaman elem t5 thorns
-	[49240] = 49238, ----shaman elem light proc
+	-- [49240] = 49238, ----shaman elem light proc
 }
 
 
@@ -4418,7 +4418,7 @@ end)
 function _detalhes.OnParserEvent(_, _, time, token, who_serial, who_name, who_flags, target_serial, target_name, target_flags, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
 	local funcao = token_list[token]
 	if funcao then
-
+		-- print("DASDAFA")
 		if overridespell[A1] then
 			A1 = overridespell[A1]
 		end

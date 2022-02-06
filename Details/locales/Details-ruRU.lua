@@ -1717,6 +1717,10 @@ L["Show Death Menu"] = "Показывать меню смерти"
 
 L["Show a panel below the Release / Death Recap panel with some shortcuts for Raid Leaders."] = "Показывает панель под Выходом из тела/Логом смерти с ссылками для рейд лидеров"
 
+L["The window will be click through."] = "Клик насквозь для для окна"
+L["Player bars will be click through, won't show tooltips when hover hover them."] = "Не кликабельные бары(полоски)и без показа тултипов"
+
+
 
 
 
