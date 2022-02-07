@@ -1094,7 +1094,7 @@ do
 		[54808] = 12, -- Noise Machine proc Sonic Shield
 		[55019] = 12, -- Sonic Shield (one of these too ought to be wrong)
 		[64411] = 15, -- Blessing of the Ancient (Val'anyr Hammer of Ancient Kings equip effect)
-		[64413] = 8, -- Val'anyr, Hammer of Ancient Kings proc Protection of Ancient Kings
+		[64413] = 1, -- Val'anyr, Hammer of Ancient Kings proc Protection of Ancient Kings
 		-- Misc
 		[40322] = 30, -- Teron's Vengeful Spirit Ghost - Spirit Shield
 		-- Boss abilities
@@ -1107,8 +1107,13 @@ do
 		[67259] = 15, -- 700000
 		[67261] = 15, -- 1200000
 
+		[313124] = 60, -- bs vnevremennaya pregrada test
+		-- [317901] = 30, -- bs vnevremennaya pregrada test
+
 
 	}
+	-- /run for i = 1,30 do local name, rank, icon, count, dbf, dur, expt, caster, issteal,scons, spellId = UnitBuff("player",i) print(name, rank, spellId) end
+
 
 	-- ~cooldown 1 self
 	_detalhes.DefensiveCooldownSpellsNoBuff = {
