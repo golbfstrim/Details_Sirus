@@ -864,6 +864,9 @@ local BossIDs = {
 
 	-- Ulduar: The Keepers of Ulduar
 	[33350] = true, -- Mimiron
+	[33670] = true,
+	[33651] = true,
+	[33432] = true,
 	[32906] = true, -- Freya
 	[32865] = true, -- Thorim
 	[32845] = true, -- Hodir

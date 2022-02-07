@@ -1844,7 +1844,7 @@
 			local button_template = fw:GetTemplate ("button", "OPTIONS_BUTTON_TEMPLATE")
 
 			--aura name
-			local name_label = fw:CreateLabel (f, "Aura Name: ", nil, nil, "GameFontNormal")
+			local name_label = fw:CreateLabel (f, L["Aura Name: "], nil, nil, "GameFontNormal")
 			local name_textentry = fw:CreateTextEntry (f, _detalhes.empty_function, 150, 20, "AuraName", "$parentAuraName")
 			name_textentry:SetTemplate (slider_template)
 			name_textentry:SetPoint ("LEFT", name_label, "RIGHT", 2, 0)
@@ -1865,7 +1865,7 @@
 				return aura_type_table
 			end
 			local aura_type = fw:CreateDropDown (f, aura_type_options, 1, 150, 20, "AuraTypeDropdown", "$parentAuraTypeDropdown")
-			local aura_type_label = fw:CreateLabel (f, "Aura Type: ", nil, nil, "GameFontNormal")
+			local aura_type_label = fw:CreateLabel (f, L["Aura Type: "], nil, nil, "GameFontNormal")
 			aura_type:SetPoint ("LEFT", aura_type_label, "RIGHT", 2, 0)
 			aura_type:Hide()
 
@@ -1977,23 +1977,23 @@
 				return aura_on_table
 			end
 			local aura_on = fw:CreateDropDown (f, aura_on_options, 1, 150, 20, "AuraOnDropdown", "$parentAuraOnDropdown")
-			local aura_on_label = fw:CreateLabel (f, "Trigger On: ", nil, nil, "GameFontNormal")
+			local aura_on_label = fw:CreateLabel (f, L["Trigger On: "], nil, nil, "GameFontNormal")
 			aura_on:SetPoint ("LEFT", aura_on_label, "RIGHT", 2, 0)
 			aura_on:Hide()
 
 			local triggerList = {
-				{name = "Debuff on You", value = 1},
-				{name = "Debuff on Target", value = 2}, --2
-				{name = "Debuff on Focus", value = 3},
-				{name = "Buff on You", value = 11}, --4
-				{name = "Buff on Target", value = 12},
-				{name = "Buff on Focus", value = 13},
-				{name = "Spell Cast Started", value = 21}, --7
-				{name = "Spell Cast Successful", value = 22},
-				{name = "DBM Time Bar", value = 31},
-				{name = "BigWigs Time Bar", value = 32},
-				{name = "Spell Interrupt", value = 41},
-				{name = "Spell Dispell", value = 42},
+				{name = L["Debuff on You"], value = 1},
+				{name = L["Debuff on Target"], value = 2}, --2
+				{name = L["Debuff on Focus"], value = 3},
+				{name = L["Buff on You"], value = 11}, --4
+				{name = L["Buff on Target"], value = 12},
+				{name = L["Buff on Focus"], value = 13},
+				{name = L["Spell Cast Started"], value = 21}, --7
+				{name = L["Spell Cast Successful"], value = 22},
+				{name = L["DBM Time Bar"], value = 31},
+				{name = L["BigWigs Time Bar"], value = 32},
+				{name = L["Spell Interrupt"], value = 41},
+				{name = L["Spell Dispell"], value = 42},
 			}
 
 			local SetTriggerState = function (triggerID)
@@ -2035,7 +2035,7 @@
 
 
 			--spellname
-			local spellname_label = fw:CreateLabel (f, "Spell Name: ", nil, nil, "GameFontNormal")
+			local spellname_label = fw:CreateLabel (f, L["Spell Name: "], nil, nil, "GameFontNormal")
 			local spellname_textentry = fw:CreateTextEntry (f, _detalhes.empty_function, 150, 20, "SpellName", "$parentSpellName")
 			spellname_textentry:SetTemplate (slider_template)
 			spellname_textentry:SetPoint ("LEFT", spellname_label, "RIGHT", 2, 0)
@@ -2050,7 +2050,7 @@
 			auraid_textentry:SetPoint ("LEFT", auraid_label, "RIGHT", 2, 0)
 
 			--use spellid
-			local usespellid_label = fw:CreateLabel (f, "Use SpellId: ", nil, nil, "GameFontNormal")
+			local usespellid_label = fw:CreateLabel (f, L["Use SpellId: "], nil, nil, "GameFontNormal")
 			local aura_use_spellid = fw:CreateSwitch (f, function(_, _, state) if (state) then auraid_textentry:Enable() else auraid_textentry:Disable() end end, false, nil, nil, nil, nil, "UseSpellId")
 			aura_use_spellid:SetTemplate (fw:GetTemplate ("switch", "OPTIONS_CHECKBOX_TEMPLATE"))
 			aura_use_spellid:SetAsCheckBox()
@@ -2059,7 +2059,7 @@
 			aura_use_spellid.tooltip = "Use the spell id instead of the spell name, for advanced users."
 
 			--in combat only
-			local incombat_label = fw:CreateLabel (f, "Only in Combat: ", nil, nil, "GameFontNormal")
+			local incombat_label = fw:CreateLabel (f, L["Only in Combat: "], nil, nil, "GameFontNormal")
 			local aura_incombat = fw:CreateSwitch (f, function(_, _, state) end, true, nil, nil, nil, nil, "UseInCombat")
 			aura_incombat:SetTemplate (fw:GetTemplate ("switch", "OPTIONS_CHECKBOX_TEMPLATE"))
 			aura_incombat:SetAsCheckBox()
@@ -2067,7 +2067,7 @@
 			aura_incombat.tooltip = "Only active when in combat."
 
 			--aura icon
-			local icon_label = fw:CreateLabel (f, "Icon: ", nil, nil, "GameFontNormal")
+			local icon_label = fw:CreateLabel (f, L["Icon: "], nil, nil, "GameFontNormal")
 			local icon_button_func = function (texture)
 				f.IconButton.icon.texture = texture
 			end
@@ -2081,7 +2081,7 @@
 			f.icon = icon_button_icon
 
 			--is cooldown
-			local iscooldown_label = fw:CreateLabel (f, "Cooldown Animation: ", nil, nil, "GameFontNormal")
+			local iscooldown_label = fw:CreateLabel (f, L["Cooldown Animation: "], nil, nil, "GameFontNormal")
 			local aura_iscooldown = fw:CreateSwitch (f, function(_, _, state) end, true, nil, nil, nil, nil, "IsCooldown")
 			aura_iscooldown:SetTemplate (fw:GetTemplate ("switch", "OPTIONS_CHECKBOX_TEMPLATE"))
 			aura_iscooldown:SetAsCheckBox()
@@ -2092,7 +2092,7 @@
 			local stack_slider = fw:NewSlider (f, f, "$parentStackSlider", "StackSlider", 150, 20, 0, 30, 1, 0, true)
 			stack_slider.useDecimals = true
 			stack_slider:SetTemplate (slider_template)
-			local stack_label = fw:CreateLabel (f, "Trigger Stack Size: ", nil, nil, "GameFontNormal")
+			local stack_label = fw:CreateLabel (f, L["Trigger Stack Size: "], nil, nil, "GameFontNormal")
 			stack_slider:SetPoint ("LEFT", stack_label, "RIGHT", 2, 0)
 			stack_slider.tooltip = "Minimum amount of stacks to trigger the aura."
 
@@ -2190,26 +2190,26 @@
 			end
 			local sound_effect = fw:CreateDropDown (f, sound_options, 1, 150, 20, "SoundEffectDropdown", "$parentSoundEffectDropdown")
 			sound_effect:SetTemplate (slider_template)
-			local sound_effect_label = fw:CreateLabel (f, "Play Sound: ", nil, nil, "GameFontNormal")
+			local sound_effect_label = fw:CreateLabel (f, L["Play Sound: "], nil, nil, "GameFontNormal")
 			sound_effect:SetPoint ("LEFT", sound_effect_label, "RIGHT", 2, 0)
 			sound_effect.tooltip = "Sound played when the aura triggers."
 
 			--say something
-			local say_something_label = fw:CreateLabel (f, "/Say on Trigger: ", nil, nil, "GameFontNormal")
+			local say_something_label = fw:CreateLabel (f, L["/Say on Trigger: "], nil, nil, "GameFontNormal")
 			local say_something = fw:CreateTextEntry (f, _detalhes.empty_function, 150, 20, "SaySomething", "$parentSaySomething")
 			say_something:SetTemplate (slider_template)
 			say_something:SetPoint ("LEFT", say_something_label, "RIGHT", 2, 0)
 			say_something.tooltip = "Your character /say this phrase when the aura triggers."
 
 			--aura text
-			local aura_text_label = fw:CreateLabel (f, "Aura Text: ", nil, nil, "GameFontNormal")
+			local aura_text_label = fw:CreateLabel (f, L["Aura Text: "], nil, nil, "GameFontNormal")
 			local aura_text = fw:CreateTextEntry (f, _detalhes.empty_function, 150, 20, "AuraText", "$parentAuraText")
 			aura_text:SetTemplate (slider_template)
 			aura_text:SetPoint ("LEFT", aura_text_label, "RIGHT", 2, 0)
 			aura_text.tooltip = "Text shown at aura's icon right side."
 
 			--apply glow
-			local useglow_label = fw:CreateLabel (f, "Glow Effect: ", nil, nil, "GameFontNormal")
+			local useglow_label = fw:CreateLabel (f, L["Glow Effect: "], nil, nil, "GameFontNormal")
 			local useglow = fw:CreateSwitch (f, function(self, _, state)
 				if (state and self.glow_test) then
 --					self.glow_test:Show()
@@ -2237,7 +2237,7 @@
 --			useglow.glow_test:Hide()
 
 			--encounter id
-			local encounterid_label = fw:CreateLabel (f, "Encounter ID: ", nil, nil, "GameFontNormal")
+			local encounterid_label = fw:CreateLabel (f, L["Encounter ID: "], nil, nil, "GameFontNormal")
 			local encounterid = fw:CreateTextEntry (f, _detalhes.empty_function, 150, 20, "EncounterIdText", "$parentEncounterIdText")
 			encounterid:SetTemplate (slider_template)
 			encounterid:SetPoint ("LEFT", encounterid_label, "RIGHT", 2, 0)
@@ -2456,32 +2456,32 @@
 				f.IsCooldown:Enable()
 
 				if (aura_type == "icon") then
-					aura_text_label:SetText ("Icon Text: ")
-					icon_size_label:SetText ("Width/Height: ")
+					aura_text_label:SetText (L["Icon Text: "])
+					icon_size_label:SetText (L["Width/Height: "])
 					f.IconSizeSlider:SetValue (64)
 
 				elseif (aura_type == "text") then
-					aura_text_label:SetText ("Text: ")
-					icon_size_label:SetText ("Font Size: ")
+					aura_text_label:SetText (L["Text: "])
+					icon_size_label:SetText (L["Font Size: "])
 					f.IconSizeSlider:SetValue (12)
 					f.IsCooldown:Disable()
 
 				elseif (aura_type == "aurabar") then
-					aura_text_label:SetText ("Left Text: ")
-					icon_size_label:SetText ("Bar Width: ")
+					aura_text_label:SetText (L["Left Text: "])
+					icon_size_label:SetText (L["Bar Width: "])
 					f.IconSizeSlider:SetValue (250)
 					f.IsCooldown:Disable()
 				end
 
 				if (trigger >= 1 and trigger <= 19) then --buff and debuff
-					stack_label:SetText ("Trigger Stack Size: ")
+					stack_label:SetText (L["Trigger Stack Size: "])
 
 				elseif (trigger >= 20 and trigger <= 29) then --cast end cast start
-					stack_label:SetText ("Cast Duration: ")
+					stack_label:SetText (L["Cast Duration: "])
 					f.StackSlider:SetValue (2)
 
 				elseif (trigger >= 30 and trigger <= 39) then --boss mods
-					stack_label:SetText ("Trigger Remaining Time:")
+					stack_label:SetText (L["Trigger Remaining Time:"])
 					f.StackSlider:SetValue (4)
 					f.StackSlider.tooltip = "Will trigger when the bar remaining time reach this value."
 					f.IconSizeSlider:SetValue (64)
@@ -2500,14 +2500,14 @@
 					f.SaySomething:Disable()
 					f.IconButton:Disable()
 					f.UseGlow:Disable()
-					icon_size_label:SetText ("Text Size: ")
+					icon_size_label:SetText (L["Text Size: "])
 					f.IconSizeSlider:SetValue (11)
 					if (trigger == 41) then
 						f.AuraText:SetText ("=Not Interrupted!=")
-						aura_text_label.text = "Not Interrupted: "
+						aura_text_label.text = L["Not Interrupted: "]
 					elseif (trigger == 42) then
 						f.AuraText:SetText (DetailsAuraPanel.name.text:gsub ("%(d!%)", "") .. "Dispells")
-						aura_text_label.text = "Title Text: "
+						aura_text_label.text = L["Title Text: "]
 					end
 				end
 

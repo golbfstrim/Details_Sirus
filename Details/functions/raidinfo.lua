@@ -1040,7 +1040,7 @@ do --> data for Ulduar
 	}
 
 	local ENCOUNTER_ID_CL = {
-		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
+		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33432, 33271, 33136, 32871,
 		[33113] = 1, --Flame Leviathan
 		[33118] = 2, --Ignis the Furnace Master
 		[33186] = 3, --Razorscale
@@ -1051,7 +1051,7 @@ do --> data for Ulduar
 		[32845] = 8, --Hodir
 		[32865] = 9, --Thorim
 		[32906] = 10, --Freya
-		[33350] = 11, --Mimiron
+		[33432] = 11, --Mimiron
 		[33271] = 12, --General Vezax
 		[33136] = 13, --Yogg-Saron
 		[32871] = 14, --Algalon the Observer
@@ -1115,6 +1115,9 @@ do --> data for Ulduar
 			-- [32882] = 9, --Jormungar Behemoth
 			[32906] = 10, --Freya
 			[33350] = 11, --Mimiron
+			[33670] = 11, --slame board
+			[33651] = 11, -- pishka
+			[33432] = 11, --lefiafan mk 2
 			[33271] = 12, --General Vezax
 			[33136] = 13, --Guardian of Yogg-Saron
 			[33288] = 13, --Yogg-Saron
