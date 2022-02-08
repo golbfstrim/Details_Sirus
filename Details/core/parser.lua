@@ -429,6 +429,7 @@ if who_serial == "" then
 	end
 
 	if absorbed and absorbed > 0 and alvo_name and escudo[alvo_name] and who_name then
+		-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed)
 		parser:heal_absorb(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed)
 	end
 
@@ -1278,6 +1279,7 @@ if who_serial == "" then
 	end
 
 	function parser:heal_absorb(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed)
+		-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed)
 		local mintime = nil
 		local owner_serial, owner_name, owner_flags, shieldid
 		if escudo[alvo_name] then
@@ -1961,7 +1963,7 @@ if who_serial == "" then
 				if (absorb_spell_list[spellid]) then
 					-- print(spellid)
 					if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][alvo_name] then
-						escudo[alvo_name][spellid][who_name].timestamp = time + 0.1
+						
 						escudo[alvo_name][spellid][alvo_name].timestamp = time + 0.1
 						-- if spellid == 48066 then
 							-- 	-- print("tralala")
@@ -1969,6 +1971,9 @@ if who_serial == "" then
 						-- end
 						-- print(escudo[alvo_name][spellid].alvo_name, "imya ", 1914)
 						-- print(escudo[alvo_name][spellid][alvo_name].timestamp, "ubralsya", 1915)
+					end
+					if escudo[alvo_name] and escudo[alvo_name][spellid] and escudo[alvo_name][spellid][who_name] then
+						escudo[alvo_name][spellid][who_name].timestamp = time + 0.1
 					end
 				--end
 				-- elseif (absorb_spell_list[spellid]) and spellid == 48066 then
