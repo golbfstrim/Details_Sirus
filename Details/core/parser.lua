@@ -1589,8 +1589,12 @@ if who_serial == "" then
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 	function parser:buff(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount, arg1, arg2, arg3)
-
+	-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount, arg1, arg2, arg3)
+	-- print(who_name,alvo_name)
 	--> not yet well know about unnamed buff casters
+	-- for k,v in pairs(raid_members_cache) do
+	-- 	print(k,v,1596)
+	-- end
 		if(not alvo_name) then
 			alvo_name = "[*] Unknown shield target"
 
@@ -1671,6 +1675,7 @@ if who_serial == "" then
 
 				if(_recording_ability_with_buffs) then
 					if(who_name == _detalhes.playername) then
+						-- print("DAS")
 
 						--> record debuff uptime
 						local SoloDebuffUptime = _current_combat.SoloDebuffUptime
@@ -1948,7 +1953,8 @@ if who_serial == "" then
 			------------------------------------------------------------------------------------------------
 			--> buff uptime
 				if(_recording_buffs_and_debuffs) then
-					if(who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
+					-- if(who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
+						if(raid_members_cache[who_serial] and _in_combat) then
 						--> call record buffs uptime
 						parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
 					elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
@@ -2263,12 +2269,16 @@ if who_serial == "" then
 		if(not spell) then
 			spell = este_jogador.debuff_uptime_spells:PegaHabilidade(spellid, true, "DEBUFF_UPTIME")
 		end
+		-- print(spell, alvo_serial, alvo_name, alvo_flags, who_name, este_jogador, "BUFF_OR_DEBUFF", in_out)
 		return spell_misc_func(spell, alvo_serial, alvo_name, alvo_flags, who_name, este_jogador, "BUFF_OR_DEBUFF", in_out)
 
 	end
 
 	function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, in_out)
-
+		-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, in_out)
+		-- for k,v in pairs(misc_cache) do
+		-- 	print(k,v,2284)
+		-- end
 	------------------------------------------------------------------------------------------------
 	--> early checks and fixes
 
@@ -2280,6 +2290,7 @@ if who_serial == "" then
 		if(not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
 			misc_cache[who_name] = este_jogador
+			-- print(2299)
 		end
 
 	------------------------------------------------------------------------------------------------
@@ -2289,6 +2300,7 @@ if who_serial == "" then
 			este_jogador.buff_uptime = 0
 			este_jogador.buff_uptime_spells = container_habilidades:NovoContainer(container_misc)
 			este_jogador.buff_uptime_targets = {}
+			-- print(2309)
 		end
 
 	------------------------------------------------------------------------------------------------
@@ -2301,7 +2313,9 @@ if who_serial == "" then
 		local spell = este_jogador.buff_uptime_spells._ActorTable[spellid]
 		if(not spell) then
 			spell = este_jogador.buff_uptime_spells:PegaHabilidade(spellid, true, "BUFF_UPTIME")
+			-- print(2322)
 		end
+		-- print((spell, alvo_serial, alvo_name, alvo_flags, who_name, este_jogador, "BUFF_OR_DEBUFF", in_out)
 		return spell_misc_func(spell, alvo_serial, alvo_name, alvo_flags, who_name, este_jogador, "BUFF_OR_DEBUFF", in_out)
 
 	end

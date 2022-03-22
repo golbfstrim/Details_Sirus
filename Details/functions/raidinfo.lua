@@ -1187,3 +1187,66 @@ do --> data for The bronze Sanctum
 		},
 	})
 end
+
+do --> data for TTG
+	local INSTANCE_MAPID = 955
+	local HDIMAGESPATH = "Details\\images\\raid"
+	local HDFILEPREFIX = "TheBronzeSanctuary"  --TODO
+	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenRubySanctum", {0, 1, 285/1024, 875/1024}
+	local EJ_DUNGEONBG = "UI-EJ-DUNGEONBUTTON-BaradinHold"
+	local EJ_LOREBG = "UI-EJ-LOREBG-BaradinHold"
+
+	local PORTRAIT_LIST = {
+		"UI-EJ-BOSS-Argaloth",
+		"ui-ej-boss-herald volazj",
+		"ui-ej-boss-shadhar",
+	}
+
+
+
+	local ENCOUNTER_ID_CL = {
+		84000,84002,84017,
+	[84000] = 1, --Argaloth
+	[84002] = 2, --HeraldVolazj
+	[84017] = 3, --Shadhar
+	}
+
+	local BOSSNAMES = {
+		LBB["Argaloth"],
+		LBB["HeraldVolazj"],
+		LBB["Shadhar"],
+	}
+
+	local ENCOUNTERS = {}
+
+	for i = 1, #PORTRAIT_LIST do
+		local encounterTable = {
+			boss = BOSSNAMES[i],
+			portrait = "Interface\\EncounterJournal\\"..PORTRAIT_LIST[i],
+		}
+		tinsert(ENCOUNTERS, encounterTable)
+	end
+
+	_detalhes:InstallEncounter({
+		id = INSTANCE_MAPID,
+
+		name = LBZ["Tol'GarotPrison"],
+		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
+		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
+		is_raid = true,
+		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
+		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
+
+		encounter_ids2 = ENCOUNTER_ID_CL,
+		boss_names = BOSSNAMES,
+		encounters = ENCOUNTERS,
+
+		boss_ids = {
+		[84000] = 1, --Argaloth
+		[84002] = 2, --HeraldVolazj
+		[84017] = 3, --Shadhar
+		},
+	})
+end
+
+-- /run local mapID, isContenent = GetCurrentMapAreaID() print(mapID, isContenent)

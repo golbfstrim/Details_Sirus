@@ -47,12 +47,20 @@
 
 	--> register a new buff name
 	function _detalhes.Buffs:NewBuff (BuffName, BuffId)
+		-- print("DA")
 		if (not BuffName) then
 			BuffName = GetSpellInfo (BuffId)
 		end
 		if (_detalhes.Buffs.BuffsTable [BuffName]) then
 			return false
 		else
+			--
+			--
+			--
+			--
+			--
+			--
+			-- print(BuffName,BuffId)
 			_detalhes.Buffs.BuffsTable [BuffName] = _detalhes.Buffs:BuildBuffTable (BuffName, BuffId)
 		end
 	end

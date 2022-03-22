@@ -17,6 +17,7 @@ if not lib then return end
 local GAME_LOCALE = GetLocale()
 
 lib:SetBaseTranslations {
+	["Tol'GarotPrison"] ="Тюрьма ТолГарода",
 	["Abyssal Depths"] = "Abyssal Depths",
 	["Ahn'kahet: The Old Kingdom"] = "Ahn'kahet: The Old Kingdom",
 	["Ahn'Qiraj"] = "Ahn'Qiraj",
@@ -28,6 +29,7 @@ lib:SetBaseTranslations {
 	["Arathi Basin"] = "Arathi Basin",
 	["Arathi Highlands"] = "Arathi Highlands",
 	Armory = "Armory",
+
 	Ashenvale = "Ashenvale",
 	Auberdine = "Auberdine",
 	["Auchenai Crypts"] = "Auchenai Crypts",
@@ -1695,6 +1697,7 @@ elseif GAME_LOCALE == "esMX" then
 }
 elseif GAME_LOCALE == "ruRU" then
 	lib:SetCurrentTranslations {
+	["Tol'GarotPrison"] ="Тюрьма ТолГарода",
 	-- ["Abyssal Depths"] = "",
 	["Ahn'kahet: The Old Kingdom"] = "Ан'кахет: Старое Королевство",
 	["Ahn'Qiraj"] = "Ан'Кираж",

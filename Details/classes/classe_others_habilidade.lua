@@ -51,6 +51,14 @@
 	end
 
 	function habilidade_misc:Add (serial, nome, flag, who_nome, token, spellID, spellName)
+		-- print(serial, nome, flag, who_nome, token, spellID, spellName,54)
+		-- print(serial,"serial")
+		-- print(nome,"nome")
+		-- print(flag,"flag")
+		-- print(who_nome,"who_nome")
+		-- print(token,"token")
+		-- print(spellID,"spellID")
+		-- print(spellName,"spellName")
 
 		--print (self.id, GetSpellInfo (self.id))
 
@@ -60,6 +68,7 @@
 				self.counter = self.counter + 1
 				--> target
 				self.targets [nome] = (self.targets [nome] or 0) + 1
+				-- self.targets [who_nome] = (self.targets [who_nome] or 0) + 1
 
 			elseif (spellName == "BUFF_UPTIME_REFRESH") then
 				if (self.actived_at and self.actived) then
