@@ -1145,7 +1145,8 @@ do
 
 --		["ROGUE"] = {},
 
---		["SHAMAN"] = {},
+		-- ["SHAMAN"] = {},
+		[16190]	= {300, 12, 1}, -- Twilight Ward 1 = self
 
 --		["WARLOCK"] = {108416, 6229},
 		[6229]	= {30, 30, 1}, -- Twilight Ward 1 = self
@@ -1171,7 +1172,7 @@ do
 		[62606] = {1.5, 6}, -- Savage Defense
 		[61336] = {180, 12}, -- Survival Instincts
 		[22812] = {60, 12}, -- Barkskin
-		["DRUID"] = {62606, 61336, 22812, 740, 22842},
+		["DRUID"] = {62606, 61336, 22812, 740, 22842, 17116},
 
 		-- Hunter
 		[19263] = {120, 5}, -- Deterrence
@@ -1193,7 +1194,7 @@ do
 		[47788] = {180, 10}, -- Guardian Spirit
 		[47585] = {120, 6}, -- Dispersion
 		[33206] = {180, 8}, -- Pain Suppression
-		["PRIEST"] = {47788, 47585, 33206, 62618, 109964, 64843},
+		["PRIEST"] = {47788, 47585, 33206, 62618, 109964, 64843, 10060},
 
 		-- Rogue
 		[1966] = {1.5, 5}, -- Feint
@@ -1447,6 +1448,7 @@ do
 		[57994]	=	true, -- Wind Shear
 		[8056]	=	true, -- Frost Shock
 		[114074] 	= 	true, -- Lava Beam
+		[16190] 	= 	true, -- totem mana
 
 		--warlock
 		--[77799]	=	true, --fel flame
