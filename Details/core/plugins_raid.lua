@@ -236,10 +236,11 @@ function _detalhes:SendMsgToChannel(msg, channel, towho)
 	elseif channel == "PRINT" then
 		print(msg)
 	else -- say channel?
+		-- print("da")
 		if IsInInstance() then --patch 80205 cannot use 'say' channel outside instances
-			SendChatMessage(msg, channel)
+			SendChatMessage(msg, channel,GetDefaultLanguage("player"))
 		end
---	elseif(channel == "SAY" or channel == "YELL" or channel == "RAID_WARNING" or channel == "OFFICER" or channel == "GUILD" or channel == "EMOTE") then
+	--	elseif(channel == "SAY" or channel == "YELL" or channel == "RAID_WARNING" or channel == "OFFICER" or channel == "GUILD" or channel == "EMOTE") then     -----TODO
 
 	end
 end
@@ -247,6 +248,7 @@ end
 --/run local s = "teste {spell}"; s = s:gsub("{spell}", "tercio"); print(s)
 function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, extraSpellID, extraSpellName, extraSchool)
 	local channel = _detalhes.announce_interrupts.channel
+	-- print(channel)
 	if channel ~= "PRINT" and who_name == _detalhes.playername then
 		local next = _detalhes.announce_interrupts.next
 		local custom = _detalhes.announce_interrupts.custom
@@ -266,8 +268,10 @@ function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_fl
 
 			if zone == "raid" then
 				channel = "RAID"
-			elseif zone == "party" then
+			elseif zone == "party" and UnitInParty("player") then
 				channel = "PARTY"
+			else
+				channel = "SAY"
 			end
 
 			local _, instanceType = IsInInstance()
@@ -286,8 +290,12 @@ function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_fl
 			if next ~= "" then
 				msg = msg.." ".._cstr(Loc["STRING_OPTIONS_RT_INTERRUPT_NEXT"], next)
 			end
-
-			_detalhes:SendMsgToChannel(msg, channel, _detalhes.announce_interrupts.whisper)
+			-- if channel == "SAY" then
+				_detalhes:SendMsgToChannel(msg, channel, _detalhes.announce_interrupts.whisper)
+			-- else
+				-- _detalhes:SendMsgToChannel(msg, channel, _detalhes.announce_interrupts.whisper)
+			-- end
+			
 		end
 	elseif channel == "PRINT" then
 		local custom = _detalhes.announce_interrupts.custom
@@ -318,7 +326,7 @@ function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_fl
 			if second < 10 then
 				second = "0"..second
 			end
-			local msg = "|cFFFFFF00[|r".. minute..":"..second.."|cFFFFFF00]|r Interrupt: "..spellname.."("..class_color.._detalhes:GetOnlyName(who_name).."|r)"
+			local msg = "|cFFFFFF00[|r".. minute..":"..second.."|cFFFFFF00]|r Прерывание: "..spellname.."("..class_color.._detalhes:GetOnlyName(who_name).."|r)"
 
 			_detalhes:SendMsgToChannel(msg, "PRINT")
 		end

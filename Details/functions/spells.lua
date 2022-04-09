@@ -163,7 +163,7 @@ do
 		[36554] = 261, -- iшаг сквозь тень
 
 		-- Elemental Shaman:
-		[61882] = 262, -- Earthquake
+		-- [61882] = 262, -- Earthquake
 		[60188] = 262, -- Elemental Fury
 		--[29000] = 262, -- Elemental Reach --removed from the game
 		--[62099] = 262, -- Shamanism --removed from the game
@@ -173,6 +173,13 @@ do
 		[59159] = 262, -- Thunderstorm, Rank 4
 		[16166] = 262, -- pokorenye
 		[30706] = 262, -- totem
+		[57522] = 262, -- totem elems
+		[309231] = 262, -- Earthquake
+		[308000] = 262,
+		[308001] = 262,
+		[308002] = 262,-- yeee 5 stones
+		[308003] = 262,
+		[308004] = 262,
 		-- [8042] = 262, -- Earth Shock
 
 		-- Enhancement Shaman:
@@ -190,6 +197,7 @@ do
 		[10444] = 263, -- Flametongue attack
 		[60103] = 263, -- Lava Lash
 		[30812] = 263, -- Mental Quickness, Rank 1
+		[30823] = 263, -- lomai menya esli smo
 		[30813] = 263, -- Mental Quickness, Rank 2
 		[30814] = 263, -- Mental Quickness, Rank 3
 		[51521] = 263, -- Primal Wisdom, Rank 2

@@ -1189,7 +1189,7 @@ do --> data for The bronze Sanctum
 end
 
 do --> data for TTG
-	local INSTANCE_MAPID = 955
+	local INSTANCE_MAPID = 954
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "TheBronzeSanctuary"  --TODO
 	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenRubySanctum", {0, 1, 285/1024, 875/1024}
