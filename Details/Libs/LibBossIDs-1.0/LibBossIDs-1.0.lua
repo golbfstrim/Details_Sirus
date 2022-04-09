@@ -26,6 +26,12 @@ if not lib then return end
 -- Otherwise comments indicate why they are not yet included.
 
 local BossIDs = {
+	----sirus category
+	[125030] = true, -- 5 cat --- ye cat like meaw
+	[125033] = true, -- 4 cat
+	[70011] = true, -- 3 cat
+	[59900] = true, -- 2 cat
+	[90001] = true, -- 1 cat
 	-- Ragefire Chasm
 	[11517] = true, -- Oggleflint
 	[11520] = true, -- Taragaman the Hungerer

@@ -1961,10 +1961,11 @@ local _utf8sub = string.utf8sub
 					local className = select (2, GetClassInfo (t.class or 0))
 					local classColor = "FFFFFFFF"
 					if (className) then
-						classColor = RAID_CLASS_COLORS [className] and RAID_CLASS_COLORS [className].colorStr
+						classColor = RAID_CLASS_COLORS [className] and RAID_CLASS_COLORS [className].colorStr or "FFFFFFFF"
 					end
 
 					local playerNameFormated = _detalhes:GetOnlyName (playerName)
+
 					tinsert (sortTable, {
 						"|c" .. classColor .. playerNameFormated .. "|r",
 						_detalhes:comma_value (t.ps),
