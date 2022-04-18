@@ -431,7 +431,7 @@ do --> data for Onyxia's Lair
 	local HDIMAGESPATH = "Details\\images\\raid"
 	local HDFILEPREFIX = "OnyxiaLair"
 	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenRaid", {0, 1, 285/1024, 875/1024}
-	local EJ_DUNGEONBG = "ui-ej-dungeonbutton-onxyiaslair"
+	local EJ_DUNGEONBG = "ui-ej-dungeonbutton-onyxia"
 	local EJ_LOREBG = "ui-ej-lorebg-onxyiaslair"
 
 	local PORTRAIT_LIST = {
@@ -1040,12 +1040,12 @@ do --> data for Ulduar
 	}
 
 	local ENCOUNTER_ID_CL = {
-		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
+		33113, 33118, 33186, 33293, 32857, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
 		[33113] = 1, --Flame Leviathan
 		[33118] = 2, --Ignis the Furnace Master
 		[33186] = 3, --Razorscale
 		[33293] = 4, --XT-002 Deconstructor
-		[32867] = 5, --Assembly of Iron
+		[32857] = 5, --Assembly of Iron
 		[32930] = 6, --Kologarn
 		[33515] = 7, --Auriaya
 		[32845] = 8, --Hodir

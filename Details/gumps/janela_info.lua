@@ -2634,8 +2634,12 @@ function gump:CriaJanelaInfo()
 		--
 
 		local wa_button = function (self, mouseButton, spellID, auraType)
+			if spellID then
 			local spellName, _, spellIcon = GetSpellInfo (spellID)
 			_detalhes:OpenAuraPanel (spellID, spellName, spellIcon, nil, auraType == "BUFF" and 4 or 2, 1)
+			else
+				print("У вас не установлен аддон WeakAuras")
+			end
 		end
 
 		local scroll_createline = function (self, index)
@@ -2745,22 +2749,22 @@ function gump:CriaJanelaInfo()
 
 
 
-		local buffLabel = DF:CreateLabel (frame, "Buff Name")
+		local buffLabel = DF:CreateLabel (frame, Loc["Buff Name"])
 		buffLabel:SetPoint (headerOffsetsBuffs[1], -10)
-		local uptimeLabel = DF:CreateLabel (frame, "Uptime")
+		local uptimeLabel = DF:CreateLabel (frame, Loc["Uptime"])
 		uptimeLabel:SetPoint (headerOffsetsBuffs[2], -10)
 
 		local appliedLabel = DF:CreateLabel (frame, "A")
 		appliedLabel:SetPoint (headerOffsetsBuffs[3], -10)
-		create_titledesc_frame (appliedLabel.widget, "applications")
+		create_titledesc_frame (appliedLabel.widget, Loc["applications"])
 
 		local refreshedLabel = DF:CreateLabel (frame, "R")
 		refreshedLabel:SetPoint (headerOffsetsBuffs[4], -10)
-		create_titledesc_frame (refreshedLabel.widget, "refreshes")
+		create_titledesc_frame (refreshedLabel.widget, Loc["refreshes"])
 
 		local waLabel = DF:CreateLabel (frame, "WA")
 		waLabel:SetPoint (headerOffsetsBuffs[5], -10)
-		create_titledesc_frame (waLabel.widget, "create weak aura")
+		create_titledesc_frame (waLabel.widget, Loc["create weak aura"])
 
 		local buffScroll = DF:CreateScrollBox (frame, "$parentBuffUptimeScroll", scroll_buff_refresh, {}, scroll_width, scrollHeight, scroll_line_amount, scroll_line_height)
 		buffScroll:SetPoint ("TOPLEFT", frame, "TOPLEFT", 5, -30)
@@ -2775,22 +2779,22 @@ function gump:CriaJanelaInfo()
 		--icon - name - applications - refreshes - uptime
 		--
 
-		local debuffLabel = DF:CreateLabel (frame, "Debuff Name")
+		local debuffLabel = DF:CreateLabel (frame, Loc["Debuff Name"])
 		debuffLabel:SetPoint (headerOffsetsDebuffs[1], -10)
-		local uptimeLabel2 = DF:CreateLabel (frame, "Uptime")
+		local uptimeLabel2 = DF:CreateLabel (frame, Loc["Uptime"])
 		uptimeLabel2:SetPoint (headerOffsetsDebuffs[2], -10)
 
 		local appliedLabel2 = DF:CreateLabel (frame, "A")
 		appliedLabel2:SetPoint (headerOffsetsDebuffs[3], -10)
-		create_titledesc_frame (appliedLabel2.widget, "applications")
+		create_titledesc_frame (appliedLabel2.widget, Loc["applications"])
 
 		local refreshedLabel2 = DF:CreateLabel (frame, "R")
 		refreshedLabel2:SetPoint (headerOffsetsDebuffs[4], -10)
-		create_titledesc_frame (refreshedLabel2.widget, "refreshes")
+		create_titledesc_frame (refreshedLabel2.widget, Loc["refreshes"])
 
 		local waLabel2 = DF:CreateLabel (frame, "WA")
 		waLabel2:SetPoint (headerOffsetsDebuffs[5], -10)
-		create_titledesc_frame (waLabel2.widget, "create weak aura")
+		create_titledesc_frame (waLabel2.widget, Loc["create weak aura"])
 
 
 
@@ -4668,7 +4672,7 @@ function gump:CriaJanelaInfo()
 
 			local noPLayersToShow = frame2:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 			noPLayersToShow:SetPoint ("CENTER")
-			noPLayersToShow:SetText ("There's no more players to compare (with the same class/spec)")
+			noPLayersToShow:SetText (Loc["There's no more players to compare (with the same class/spec)"])
 			noPLayersToShow:SetSize (spell_compare_frame_width[2] - 10, spell_compare_frame_height)
 			noPLayersToShow:SetJustifyH ("CENTER")
 			noPLayersToShow:SetJustifyV ("CENTER")
@@ -4732,7 +4736,7 @@ function gump:CriaJanelaInfo()
 
 			local noPLayersToShow = frame3:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 			noPLayersToShow:SetPoint ("CENTER")
-			noPLayersToShow:SetText ("There's no more players to compare (with the same class/spec)")
+			noPLayersToShow:SetText (Loc["There's no more players to compare (with the same class/spec)"])
 			noPLayersToShow:SetSize (spell_compare_frame_width[2] - 10, spell_compare_frame_height)
 			noPLayersToShow:SetJustifyH ("CENTER")
 			noPLayersToShow:SetJustifyV ("CENTER")

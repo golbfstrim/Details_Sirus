@@ -234,7 +234,7 @@ L["STRING_FORGE_HEADER_ENCOUNTERID"] = "ID сражения"
 L["STRING_FORGE_HEADER_ENCOUNTERNAME"] = "Имя сражения"
 L["STRING_FORGE_HEADER_EVENT"] = "Событие"
 L["STRING_FORGE_HEADER_FLAG"] = "Флаг"
-L["STRING_FORGE_HEADER_GUID"] = "ГУИ"
+L["STRING_FORGE_HEADER_GUID"] = "GUID"
 L["STRING_FORGE_HEADER_ICON"] = "Значок"
 L["STRING_FORGE_HEADER_ID"] = "ID"
 L["STRING_FORGE_HEADER_INDEX"] = "Индекс"
@@ -1720,7 +1720,13 @@ L["Show a panel below the Release / Death Recap panel with some shortcuts for Ra
 L["The window will be click through."] = "Клик насквозь для для окна"
 L["Player bars will be click through, won't show tooltips when hover hover them."] = "Не кликабельные бары(полоски)и без показа тултипов"
 
-
+L["Buff Name"] = "Имя бафа"
+L["Uptime"] = "Длительность"
+L["applications"] = "Наложений"
+L["refreshes"] = "Обновлений"
+L["create weak aura"] = "Создать WeakAura"
+L["Debuff Name"] = "Имя дебафа"
+L["There's no more players to compare (with the same class/spec)"] = "Нет более игроков для сравнения (с таким же классом/спеком как у вас)"
 ------------------------locs for wa comp
 L["Aura Name: "]= "Имя ауры: "
 L["Aura Type: "] = "Тип ауры: "

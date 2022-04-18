@@ -546,7 +546,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			-- )
 			then
 				--Player's pet attacks a mob
-				print('da2')
+				-- print('da2')
 				_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 				if _detalhes.announce_firsthit.enabled then
 					-- print("--------------------------------------------457")
