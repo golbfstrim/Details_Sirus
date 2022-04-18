@@ -956,7 +956,8 @@ do
 		[304736] = 10, -- Priest, Divine Charm (T4), T4
 		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
 
-
+		-- trinkets
+		[317293] = 10, -- bronze statuette
 
 		[55277] = 12, -- shmn ttm
 
