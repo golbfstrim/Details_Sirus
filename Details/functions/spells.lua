@@ -965,7 +965,7 @@ do
 		[317905] = 10,   --- духовный барьер ТТГ
 		[317907] = 10,
 		[317909] = 10,
-		[31791] = 10,
+		[317911] = 10,
 
 		-- Death Knight
 		[48707] = 5, -- Anti-Magic Shell (DK) Rank 1 -- Does not currently seem to show tracable combat log events. It shows energizes which do not reveal the amount of damage absorbed
