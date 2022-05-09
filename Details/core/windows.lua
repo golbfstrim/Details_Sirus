@@ -1385,7 +1385,10 @@ local _utf8sub = string.utf8sub
 					if (prefix == CONST_GUILD_SYNC) then
 						--received a list of encounter IDs
 						if (guildSyncID == "L") then
-
+							if ( f.RequestedAmount == 0 or not f.RequestedAmount) then
+								--if the receiving player reloads, f.RequestedAmount is nil
+								return
+							end
 						--received one encounter table
 						elseif (guildSyncID == "A") then
 							f.DownloadedAmount = (f.DownloadedAmount or 0) + 1
@@ -1395,7 +1398,7 @@ local _utf8sub = string.utf8sub
 							f.DownloadedSize = f.DownloadedSize + length
 							local downloadSpeed = f.DownloadedSize / (time() - f.SyncStartTime)
 
-							f.SyncText:SetText ("working [downloading " .. f.DownloadedAmount .. "/" .. f.RequestedAmount .. ", " .. format ("%.2f", downloadSpeed/1024) .. "Kbps]")
+							f.SyncText:SetText ("working [downloading " .. f.DownloadedAmount .. "/" .. f.RequestedAmount .. ", " .. format ("%.2f", downloadSpeed/1024) .. "Kbps]" .. " from ".. playerName)
 						end
 					end
 				end
@@ -2142,11 +2145,11 @@ local _utf8sub = string.utf8sub
 			f.FirstRun = true
 
 		end
-
+		local statsWindow = _G.DetailsRaidHistoryWindow
 		--> table means some button send the request - nil for other ways
 
 		if (type (_raid) == "table" or (not _raid and not _boss and not _difficulty and not _role and not _guild and not _player_base and not _player_name)) then
-			local f = _G.DetailsRaidHistoryWindow
+			local f = statsWindow
 			if (f.LatestSelection) then
 				_raid = f.LatestSelection.Raid
 				_boss = f.LatestSelection.Boss
@@ -2158,7 +2161,7 @@ local _utf8sub = string.utf8sub
 			end
 		end
 
-		if (_G.DetailsRaidHistoryWindow.FirstRun) then
+		if (statsWindow.FirstRun) then
 			_difficulty = _detalhes.rank_window.last_difficulty or _difficulty
 			if (IsInGuild()) then
 				local guildName = GetGuildInfo ("player")
@@ -2170,63 +2173,63 @@ local _utf8sub = string.utf8sub
 				_raid = _detalhes.rank_window.last_raid or _raid
 			end
 
-			_G.DetailsRaidHistoryWindow.FirstRun = nil
+			-- _G.DetailsRaidHistoryWindow.FirstRun = nil
 		end
 
-		_G.DetailsRaidHistoryWindow:UpdateDropdowns()
-		_G.DetailsRaidHistoryWindow:UpdateDropdowns()
+		statsWindow:UpdateDropdowns()
+		-- _G.DetailsRaidHistoryWindow:UpdateDropdowns()
 
-		_G.DetailsRaidHistoryWindow:Refresh()
-		_G.DetailsRaidHistoryWindow:Show()
+		statsWindow:Refresh()
+		statsWindow:Show()
 
 		if (_history_type == 1 or _history_type == 2) then
-			DetailsRaidHistoryWindow.Mode = _history_type
-			if (DetailsRaidHistoryWindow.Mode == 1) then
+			statsWindow.Mode = _history_type
+			if (statsWindow.Mode == 1) then
 				--overall
-				DetailsRaidHistoryWindow.HistoryCheckBox:SetValue (true)
-				DetailsRaidHistoryWindow.GuildRankCheckBox:SetValue (false)
-			elseif (DetailsRaidHistoryWindow.Mode == 2) then
+				statsWindow.HistoryCheckBox:SetValue (true)
+				statsWindow.GuildRankCheckBox:SetValue (false)
+			elseif (statsWindow.Mode == 2) then
 				--guild rank
-				DetailsRaidHistoryWindow.GuildRankCheckBox:SetValue (true)
-				DetailsRaidHistoryWindow.HistoryCheckBox:SetValue (false)
+				statsWindow.GuildRankCheckBox:SetValue (true)
+				statsWindow.HistoryCheckBox:SetValue (false)
 			end
 		end
 
 		if (_raid) then
-			DetailsRaidHistoryWindow.select_raid:Select (_raid)
-			_G.DetailsRaidHistoryWindow:Refresh()
-			DetailsRaidHistoryWindow.UpdateBossDropdown()
+			statsWindow.select_raid:Select (_raid)
+			statsWindow:Refresh()
+			statsWindow.UpdateBossDropdown()
 		end
 		if (_boss) then
-			DetailsRaidHistoryWindow.select_boss:Select (_boss)
-			_G.DetailsRaidHistoryWindow:Refresh()
+			statsWindow.select_boss:Select (_boss)
+			statsWindow:Refresh()
 		end
 		if (_difficulty) then
-			DetailsRaidHistoryWindow.select_diff:Select (_difficulty)
-			_G.DetailsRaidHistoryWindow:Refresh()
+			statsWindow.select_diff:Select (_difficulty)
+			statsWindow:Refresh()
 		end
 		if (_role) then
-			DetailsRaidHistoryWindow.select_role:Select (_role)
-			_G.DetailsRaidHistoryWindow:Refresh()
+			statsWindow.select_role:Select (_role)
+			statsWindow:Refresh()
 		end
 		if (_guild) then
 			if (type (_guild) == "boolean") then
 				_guild = GetGuildInfo ("player")
 			end
-			DetailsRaidHistoryWindow.select_guild:Select (_guild)
-			_G.DetailsRaidHistoryWindow:Refresh()
+			statsWindow.select_guild:Select (_guild)
+			statsWindow:Refresh()
 		end
 		if (_player_base) then
-			DetailsRaidHistoryWindow.select_player:Select (_player_base)
-			_G.DetailsRaidHistoryWindow:Refresh()
+			statsWindow.select_player:Select (_player_base)
+			statsWindow:Refresh()
 		end
 		if (_player_name) then
-			DetailsRaidHistoryWindow.select_player2:Refresh()
-			DetailsRaidHistoryWindow.select_player2:Select (_player_name)
-			_G.DetailsRaidHistoryWindow:Refresh (_player_name)
+			statsWindow.select_player2:Refresh()
+			statsWindow.select_player2:Select (_player_name)
+			statsWindow:Refresh (_player_name)
 		end
 
-		DetailsPluginContainerWindow.OpenPlugin (DetailsRaidHistoryWindow)
+		DetailsPluginContainerWindow.OpenPlugin (statsWindow)
 	end
 
 --> feedback window

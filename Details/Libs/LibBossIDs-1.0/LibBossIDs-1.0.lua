@@ -1019,6 +1019,8 @@ local BossIDs = {
 
 		--tolgorod
 	[70010] = true, -- Norigorn
+	--zort
+	[50702] = true, -- zort
 
 }
 

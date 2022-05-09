@@ -2339,6 +2339,10 @@ end
 					this_event[9] = false
 					this_event[10] = false
 
+					for a = 1,#this_event do
+						this_event[a] = this_event[a] or nil
+					end
+			
 					i = i + 1
 
 					if(i == _death_event_amt+1) then
@@ -2469,9 +2473,9 @@ end
 	------------------------------------------------------------------------------------------------
 	--> get actors
 		local este_jogador = misc_cache[who_name]
-		if(not este_jogador) then --> pode ser um desconhecido ou um pet
+		if (not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
-			misc_cache[who_name] = este_jogador
+			misc_cache[who_name] = este_jogador or {}
 			-- print(2299)
 		end
 
@@ -3802,7 +3806,7 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 
 	_detalhes.time_type = _detalhes.time_type_original
 
-	_detalhes:CheckChatOnZoneChange(zoneType)
+	-- _detalhes:CheckChatOnZoneChange(zoneType)
 
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) zone change:", _detalhes.zone_name, "is a", _detalhes.zone_type, "zone.")

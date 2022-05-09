@@ -771,7 +771,11 @@
 		local mapa = self._NameIndexTable
 		local conteudo = self._ActorTable
 		for i = 1, #conteudo do
-			mapa [conteudo[i].nome] = i
+			if mapa [conteudo[i].nome] then
+				mapa [conteudo[i].nome] = i
+			else
+				mapa [conteudo[i].nome] = {}
+			end
 		end
 	end
 

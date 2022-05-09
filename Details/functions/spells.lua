@@ -339,7 +339,7 @@ do
 		--t5 war
 		[310210] = "WARRIOR", -- t5 war absorb
 
-
+		-- [307921] = "PALADIN", --pal absorb t5
 	--death knight
 		[3714]	= "DEATHKNIGHT", -- Path of Frost
 		[42650]	= "DEATHKNIGHT", -- Army of the Dead
@@ -942,6 +942,8 @@ do
 
 	_detalhes.AbsorbSpells = {
 		--t5 absorb
+
+		[319166] = 10, --hpal absorb t4
 
 		[308125] = 10, -- Death Knight, Ice Armor, T5
 		[308136] = 20, -- bdk absorb

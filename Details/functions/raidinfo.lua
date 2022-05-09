@@ -1145,7 +1145,7 @@ do --> data for The bronze Sanctum
 	local ENCOUNTER_ID_CL = {
 		50608,50610,50612,
 	[50608] = 1, --Imporus
-	[50610] = 2, --Elonus
+	[50609] = 2, --Elonus
 	[50612] = 3, --Murozond
 	}
 
@@ -1182,7 +1182,7 @@ do --> data for The bronze Sanctum
 
 		boss_ids = {
 		[50608] = 1, --Imporus
-		[50610] = 2, --Elonus
+		[50609] = 2, --Elonus
 		[50612] = 3, --Murozond
 		},
 	})

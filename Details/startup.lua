@@ -729,9 +729,9 @@ function _G._detalhes:Start()
 	_detalhes:ScheduleTimer ("RegisterHotCorner", 5)
 
 	--> get in the realm chat channel
-	if (not _detalhes.schedule_chat_enter and not _detalhes.schedule_chat_leave) then
-		_detalhes:ScheduleTimer ("CheckChatOnZoneChange", 60)
-	end
+	-- if (not _detalhes.schedule_chat_enter and not _detalhes.schedule_chat_leave) then
+	-- 	_detalhes:ScheduleTimer ("CheckChatOnZoneChange", 60)
+	-- end
 
 	--> open profiler
 	_detalhes:OpenProfiler()

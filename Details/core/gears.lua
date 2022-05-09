@@ -993,6 +993,7 @@ function _detalhes.storage:GetIDsToGuildSync()
 	end
 
 	local IDs = {}
+	local myGuildName = GetGuildInfo("player")
 
 	--build the encounter ID list
 	for diff, diffTable in pairs (db or {}) do
@@ -1001,7 +1002,9 @@ function _detalhes.storage:GetIDsToGuildSync()
 				if (encounter_is_current_tier (encounterID)) then
 					for index, encounter in ipairs (encounterTable) do
 						if (encounter.servertime) then
+							if (myGuildName == encounter.guild) then
 							tinsert (IDs, encounter.servertime)
+							end
 						end
 					end
 				end
@@ -1040,6 +1043,7 @@ function _detalhes.storage:CheckMissingIDsToGuildSync (IDsList)
 
 	--check missing IDs
 	for index, ID in ipairs (IDsList) do
+		-- print(ID)
 		if (not have_encounter (db, ID)) then
 			if (not have_recent_requested_encounter (ID)) then
 				tinsert (RequestIDs, ID)
@@ -1412,6 +1416,54 @@ function _detalhes.OpenStorage()
 	end
 end
 
+Details.Database = {}
+
+function Details.Database.LoadDB()
+	--check if the storage is already loaded
+	if (not IsAddOnLoaded("Details_DataStorage")) then
+		local loaded, reason = LoadAddOn("Details_DataStorage")
+		if (not loaded) then
+			if (_detalhes.debug) then
+				print ("|cFFFFFF00Details! Storage|r: can't save the encounter, couldn't load DataStorage, may be the addon is disabled.")
+			end
+			return
+		end
+	end
+
+	--> get the storage table
+	local db = _G.DetailsDataStorage
+	
+	if (not db and _detalhes.CreateStorageDB) then
+		db = _detalhes:CreateStorageDB()
+		if (not db) then
+			if (_detalhes.debug) then
+				print ("|cFFFFFF00Details! Storage|r: can't save the encounter, couldn't load DataStorage, may be the addon is disabled.")
+			end
+			return
+		end
+	elseif (not db) then
+		if (_detalhes.debug) then
+			print ("|cFFFFFF00Details! Storage|r: can't save the encounter, couldn't load DataStorage, may be the addon is disabled.")
+		end
+		return
+	end
+
+	return db
+end
+
+function Details.Database.GetBossKillsDB(db)
+	--total kills in a boss on raid or dungeon
+	local totalkills_database = db["totalkills"]
+	if (not totalkills_database) then
+		db["totalkills"] = {}
+		totalkills_database = db["totalkills"]
+	end
+
+	return totalkills_database
+end
+
+-- function Details.Database.StoreWipe(combat)
+
 function _detalhes:StoreEncounter (combat)
 	combat = combat or _detalhes.tabela_vigente
 
@@ -1531,10 +1583,10 @@ function _detalhes:StoreEncounter (combat)
 
 		for i = 1, GetNumGroupMembers() do
 
-			local role = "DAMAGER" -- UnitGroupRolesAssigned ("raid" .. i)
+			-- local role = "DAMAGER" -- UnitGroupRolesAssigned ("raid" .. i)
 
 			if (UnitIsInMyGuild ("raid" .. i)) then
-				if (role == "DAMAGER" or role == "TANK") then
+				-- if (role == "DAMAGER" or role == "TANK") then
 					local player_name, player_realm = UnitName ("raid" .. i)
 					if (player_realm and player_realm ~= "") then
 						player_name = player_name .. "-" .. player_realm
@@ -1547,20 +1599,20 @@ function _detalhes:StoreEncounter (combat)
 						local guid = UnitGUID (player_name) or UnitGUID (UnitName ("raid" .. i))
 						this_combat_data.damage [player_name] = {floor (damage_actor.total), (ItemLevelMixIn and ItemLevelMixIn:GetItemLevel(guid)) or _detalhes.item_level_pool [guid] and _detalhes.item_level_pool [guid].ilvl or 0, class or 0}
 					end
-				elseif (role == "HEALER") then
-					local player_name, player_realm = UnitName ("raid" .. i)
-					if (player_realm and player_realm ~= "") then
-						player_name = player_name .. "-" .. player_realm
-					end
+				-- elseif (role == "HEALER") then
+				-- 	local player_name, player_realm = UnitName ("raid" .. i)
+				-- 	if (player_realm and player_realm ~= "") then
+				-- 		player_name = player_name .. "-" .. player_realm
+				-- 	end
 
-					local _, _, class = UnitClass (player_name)
+				-- 	local _, _, class = UnitClass (player_name)
 
 					local heal_actor = healing_container_pool [healing_container_hash [player_name]]
 					if (heal_actor) then
 						local guid = UnitGUID (player_name) or UnitGUID (UnitName ("raid" .. i))
 						this_combat_data.healing [player_name] = {floor (heal_actor.total), (ItemLevelMixIn and ItemLevelMixIn:GetItemLevel(guid)) or _detalhes.item_level_pool [guid] and _detalhes.item_level_pool [guid].ilvl or 0, class or 0}
 					end
-				end
+				-- end
 			end
 		end
 
@@ -1721,31 +1773,31 @@ function ilvl_core:CalcItemLevel (unitid, guid, shout)
 		local item_level = 0
 		local failed = 0
 
-		for equip_id = 1, 17 do
-			if (equip_id ~= 4) then --shirt slot
-				local item = GetInventoryItemLink (unitid, equip_id)
-				if (item) then
-					local _, _, itemRarity, iLevel, _, _, _, _, equipSlot = GetItemInfo (item)
-					if (iLevel) then
-						item_level = item_level + iLevel
+		-- for equip_id = 1, 17 do
+		-- 	if (equip_id ~= 4) then --shirt slot
+		-- 		local item = GetInventoryItemLink (unitid, equip_id)
+		-- 		if (item) then
+		-- 			local _, _, itemRarity, iLevel, _, _, _, _, equipSlot = GetItemInfo (item)
+		-- 			if (iLevel) then
+		-- 				item_level = item_level + iLevel
 
-						--> 16 = main hand 17 = off hand
-						-->  if using a two-hand, ignore the off hand slot
-						if (equip_id == 16 and two_hand [equipSlot]) then
-							item_amount = 15
-							break
-						end
-					end
-				else
-					failed = failed + 1
-					if (failed > 2) then
-						break
-					end
-				end
-			end
-		end
-
-		local average = item_level / item_amount
+		-- 				--> 16 = main hand 17 = off hand
+		-- 				-->  if using a two-hand, ignore the off hand slot
+		-- 				if (equip_id == 16 and two_hand [equipSlot]) then
+		-- 					item_amount = 15
+		-- 					break
+		-- 				end
+		-- 			end
+		-- 		else
+		-- 			failed = failed + 1
+		-- 			if (failed > 2) then
+		-- 				break
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
+		-- /run print()
+		local average = ItemLevelMixIn:GetItemLevel( guid)
 		--print (UnitName (unitid), "ILVL:", average, unitid, "items:", item_amount)
 
 		--> register
@@ -2194,3 +2246,360 @@ function Details:DecompressData (data, dataType)
 	end
 end
 
+local NEEDTODO = false
+--talent tree
+if (NEEDTODO) then
+-- do
+	local talentWatchClassic = CreateFrame ("frame")
+	talentWatchClassic:RegisterEvent("CHARACTER_POINTS_CHANGED")
+	talentWatchClassic:RegisterEvent("SPELLS_CHANGED")
+	talentWatchClassic:RegisterEvent("PLAYER_ENTERING_WORLD")
+	talentWatchClassic:RegisterEvent("GROUP_ROSTER_UPDATE")
+
+	talentWatchClassic.cooldown = 0
+
+	C_Timer:NewTicker (600, function()
+		Details:GetOldSchoolTalentInformation()
+	end)
+
+	talentWatchClassic:SetScript("OnEvent", function(self, event, ...)
+		if (talentWatchClassic.delayedUpdate and not talentWatchClassic.delayedUpdate._cancelled) then
+			return
+		else
+			talentWatchClassic.delayedUpdate = C_Timer:NewTimer(5, Details.GetOldSchoolTalentInformation)
+		end
+	end)
+
+	function Details.GetOldSchoolTalentInformation()
+		--cancel any schedule
+		if (talentWatchClassic.delayedUpdate and not talentWatchClassic.delayedUpdate._cancelled) then
+			talentWatchClassic.delayedUpdate:Cancel()
+		end
+		talentWatchClassic.delayedUpdate = nil
+
+		--amount of tabs existing
+		local numTabs = GetNumTalentTabs() or 3
+
+		--store the background textures for each tab
+		local pointsPerSpec = {}
+		local talentsSelected = {}
+
+		for i = 1, (MAX_TALENT_TABS or 3) do
+			if (i <= numTabs) then
+				--tab information
+				local name, iconTexture, pointsSpent, fileName = GetTalentTabInfo (i)
+				if (name) then
+					tinsert (pointsPerSpec, {name, pointsSpent, fileName})
+				end
+
+				--talents information
+				local numTalents = GetNumTalents (i) or 20
+				local MAX_NUM_TALENTS = MAX_NUM_TALENTS or 20
+
+				for talentIndex = 1, MAX_NUM_TALENTS do
+					if (talentIndex <= numTalents) then
+						local name, iconTexture, tier, column, rank, maxRank, isExceptional, available = GetTalentInfo (i, talentIndex)
+						if (name and rank and type (rank) == "number") then
+							--send the specID instead of the specName
+							local specID = Details.textureToSpec [fileName]
+							tinsert (talentsSelected, {iconTexture, rank, tier, column, i, specID, maxRank})
+						end
+					end
+				end
+			end
+		end
+
+		local MIN_SPECS = 4
+
+		--put the spec with more talent point to the top
+		table.sort (pointsPerSpec, function (t1, t2) return t1[2] > t2[2] end)
+
+		--get the spec with more points spent
+		local spec = pointsPerSpec[1]
+		if (spec and spec[2] >= MIN_SPECS) then
+			local specTexture = spec[3]
+
+			--add the spec into the spec cache
+			Details.playerClassicSpec = {}
+			Details.playerClassicSpec.specs = Details.GetClassicSpecByTalentTexture(specTexture)
+			Details.playerClassicSpec.talents = talentsSelected
+
+			--cache the player specId
+			_detalhes.cached_specs [UnitGUID ("player")] = Details.playerClassicSpec.specs
+			--cache the player talents
+			_detalhes.cached_talents [UnitGUID ("player")] = talentsSelected
+
+			local role = Details:GetRoleFromSpec(Details.playerClassicSpec.specs, UnitGUID("player"))
+
+			if (Details.playerClassicSpec.specs == 103) then
+				if (role == "TANK") then
+					Details.playerClassicSpec.specs = 104
+					_detalhes.cached_specs [UnitGUID ("player")] = Details.playerClassicSpec.specs
+				end
+			end
+
+			_detalhes.cached_roles[UnitGUID ("player")] = role
+
+			--gear status
+			-- local item_amount = 16
+			-- local item_level = 0
+			-- local failed = 0
+			
+			-- local two_hand = {
+			-- 	["INVTYPE_2HWEAPON"] = true,
+			-- 	["INVTYPE_RANGED"] = true,
+			-- 	["INVTYPE_RANGEDRIGHT"] = true,
+			-- }
+			
+			-- for equip_id = 1, 17 do
+			-- 	if (equip_id ~= 4) then --shirt slot, trinkets
+			-- 		local item = GetInventoryItemLink("player", equip_id)
+			-- 		if (item) then
+			-- 			local _, _, itemRarity, iLevel, _, _, _, _, equipSlot = GetItemInfo(item)
+			-- 			if (iLevel) then
+			-- 				if (ItemUpgradeInfo) then
+			-- 					local ilvl = ItemUpgradeInfo:GetUpgradedItemLevel (item)
+			-- 					item_level = item_level + (ilvl or iLevel)
+			-- 				else
+			-- 					item_level = item_level + iLevel
+			-- 				end
+							
+			-- 				--> 16 = main hand 17 = off hand
+			-- 				-->  if using a two-hand, ignore the off hand slot
+			-- 				if (equip_id == 16 and two_hand [equipSlot]) then
+			-- 					item_amount = 15
+			-- 					break
+			-- 				end
+			-- 			end
+			-- 		else
+			-- 			failed = failed + 1
+			-- 			if (failed > 2) then
+			-- 				break
+			-- 			end
+			-- 		end
+			-- 	end
+			-- end
+
+    		local itemLevel = ItemLevelMixIn:GetItemLevel(UnitGUID ("player"))
+			local dataToShare = {role or "NONE", Details.playerClassicSpec.specs or 0, itemLevel or 0, talentsSelected, UnitGUID("player")}
+			--local serialized = _detalhes:Serialize(dataToShare)
+			local compressedData = Details:CompressData(dataToShare, "comm")
+
+			if (IsInRaid()) then
+				_detalhes:SendRaidData(DETAILS_PREFIX_TBC_DATA, compressedData)
+				if (_detalhes.debug) then
+					_detalhes:Msg ("(debug) sent talents data to Raid")
+				end
+
+			elseif (IsInGroup()) then
+				_detalhes:SendPartyData(DETAILS_PREFIX_TBC_DATA, compressedData)
+				if (_detalhes.debug) then
+					_detalhes:Msg ("(debug) sent talents data to Party")
+				end
+			end
+		end
+	end
+
+	Details.specToRole = {
+		--DRUID
+		[102] = "DAMAGER", --BALANCE
+		[103] = "DAMAGER", --FERAL DRUID
+		[105] = "HEALER", --RESTORATION
+
+		[252] = "DAMAGER", -- Unholy Death Knight
+		[251] = "DAMAGER", -- Frost Death Knight
+		[250] = "DAMAGER", -- Blood Death Knight
+		--HUNTER
+		[253] = "DAMAGER", --BM
+		[254] = "DAMAGER", --MM
+		[255] = "DAMAGER", --SURVIVOR
+	
+		--MAGE
+		[62] = "DAMAGER", --ARCANE
+		[64] = "DAMAGER", --FROST
+		[63] = "DAMAGER", ---FIRE
+	
+		--PALADIN
+		[70] = "DAMAGER", --RET
+		[65] = "HEALER", --HOLY
+		[66] = "DAMAGER", --PROT
+	
+		--PRIEST
+		[257] = "HEALER", --HOLY
+		[256] = "HEALER", --DISC
+		[258] = "DAMAGER", --SHADOW
+	
+		--ROGUE
+		[259] = "DAMAGER", --ASSASSINATION
+		[260] = "DAMAGER", --COMBAT
+		[261] = "DAMAGER", --SUB
+	
+		--SHAMAN
+		[262] = "DAMAGER", --ELEMENTAL
+		[263] = "DAMAGER", --ENHAN
+		[264] = "HEALER", --RESTO
+	
+		--WARLOCK
+		[265] = "DAMAGER", --AFF
+		[266] = "DAMAGER", --DESTRO
+		[267] = "DAMAGER", --DEMO
+	
+		--WARRIOR
+		[71] = "DAMAGER", --ARMS
+		[72] = "DAMAGER", --FURY
+		[73] = "DAMAGER", --PROT
+	}
+
+	function _detalhes:GetRoleFromSpec (specId, unitGUID)
+		if (specId == 103) then --feral druid
+			local talents = _detalhes.cached_talents [unitGUID]
+			if (talents) then
+				local tankTalents = 0
+				for i = 1, #talents do
+					local iconTexture, rank, tier, column = unpack (talents [i])
+					if (tier == 2) then
+						if (column == 1 and rank == 5) then
+							tankTalents = tankTalents + 5
+						end
+						if (column == 3 and rank == 5) then
+							tankTalents = tankTalents + 5
+						end
+	
+						if (tankTalents >= 10) then
+							return "TANK"
+						end
+					end
+				end
+			end
+		end
+		
+		return Details.specToRole [specId] or "NONE"
+	end
+
+	Details.validSpecIds = {
+		[250] = true,
+		[252] = true,
+		[251] = true,
+		[102] = true,
+		[103] = true,
+		[104] = true,
+		[105] = true,
+		[253] = true,
+		[254] = true,
+		[255] = true,
+		[62] = true,
+		[63] = true,
+		[64] = true,
+		[70] = true,
+		[65] = true,
+		[66] = true,
+		[257] = true,
+		[256] = true,
+		[258] = true,
+		[259] = true,
+		[260] = true,
+		[261] = true,
+		[262] = true,
+		[263] = true,
+		[264] = true,
+		[265] = true,
+		[266] = true,
+		[267] = true,
+		[71] = true,
+		[72] = true,
+		[73] = true,
+	}
+
+	Details.textureToSpec = {
+
+		DruidBalance = 102,
+		DruidFeralCombat = 103,
+		DruidRestoration = 105,
+
+		HunterBeastMastery = 253,
+		HunterMarksmanship = 254,
+		HunterSurvival = 255,
+
+
+		DKUnholy = 252, -- Unholy Death Knight
+		DKFrost = 251, -- Frost Death Knight
+		DKBlood = 250, -- Blood Death Knight
+
+		MageArcane = 62,
+		MageFrost = 64,
+		MageFire = 63,
+
+		PaladinCombat = 70,
+		PaladinHoly = 65,
+		PaladinProtection = 66,
+
+		PriestHoly = 257,
+		PriestDiscipline = 256,
+		PriestShadow = 258,
+
+		RogueAssassination = 259,
+		RogueCombat = 260,
+		RogueSubtlety = 261,
+
+		ShamanElementalCombat = 262,
+		ShamanEnhancement = 263,
+		ShamanRestoration = 264,
+
+		WarlockCurses = 265,
+		WarlockDestruction = 266,
+		WarlockSummoning = 267,
+
+		--WarriorArm = 71,
+		WarriorArms = 71,
+		WarriorFury = 72,
+		WarriorProtection = 73,
+	}
+
+
+	Details.specToTexture = {
+		[102] = "DruidBalance",
+		[103] = "DruidFeralCombat",
+		[105] = "DruidRestoration",
+
+		[253] = "HunterBeastMastery",
+		[254] = "HunterMarksmanship",
+		[255] = "HunterSurvival",
+
+		[62] = "MageArcane",
+		[64] = "MageFrost",
+		[63] = "MageFire",
+
+		[70] = "PaladinCombat",
+		[65] = "PaladinHoly",
+		[66] = "PaladinProtection",
+
+		[257] = "PriestHoly",
+		[256] = "PriestDiscipline",
+		[258] = "PriestShadow",
+
+		[259] = "RogueAssassination",
+		[260] = "RogueCombat",
+		[261] = "RogueSubtlety",
+
+		[262] = "ShamanElementalCombat",
+		[263] = "ShamanEnhancement",
+		[264] = "ShamanRestoration",
+
+		[265] = "WarlockCurses",
+		[266] = "WarlockDestruction",
+		[267] = "WarlockSummoning",
+
+		--[71] = "WarriorArm",
+		[71] = "WarriorArms",
+		[72] = "WarriorFury",
+		[73] = "WarriorProtection",
+	}
+
+	function Details.IsValidSpecId (specId)
+		return Details.validSpecIds [specId]
+	end
+
+	function Details.GetClassicSpecByTalentTexture (talentTexture)
+		return Details.textureToSpec [talentTexture] or nil
+	end
+end
