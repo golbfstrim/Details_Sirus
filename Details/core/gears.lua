@@ -1623,24 +1623,36 @@ function _detalhes:StoreEncounter (combat)
 		end
 
 		local myrole = "DAMAGER" --UnitGroupRolesAssigned ("player")
+		local myrole2 = "HEALER"
 		local mybest, onencounter = _detalhes.storage:GetBestFromPlayer (diff, encounter_id, myrole, _detalhes.playername, true) --> get dps or hps
-		local myBestDps = mybest [1] / onencounter.elapsed
+		local myBestDps = (mybest [1] / onencounter.elapsed) or 0
+		local mybest2, onencounter2 = _detalhes.storage:GetBestFromPlayer (diff, encounter_id, myrole2, _detalhes.playername, true) --> get dps or hps
+		local myBestHps = (mybest2 [1] / onencounter2.elapsed) or 0
+		if (mybest or mybest2) then
+			local d_one_dps = 0
+			local d_one_hps = 0
+			-- if (myrole == "DAMAGER" or myrole == "TANK") then
+				d_one_dps = combat (1, _detalhes.playername) and combat (1, _detalhes.playername).total / combat:GetCombatTime()
+			-- elseif (myrole == "HEALER") then
+				d_one_hps = combat (2, _detalhes.playername) and combat (2, _detalhes.playername).total / combat:GetCombatTime()
+			-- end
 
-		if (mybest) then
-			local d_one = 0
-			if (myrole == "DAMAGER" or myrole == "TANK") then
-				d_one = combat (1, _detalhes.playername) and combat (1, _detalhes.playername).total / combat:GetCombatTime()
-			elseif (myrole == "HEALER") then
-				d_one = combat (2, _detalhes.playername) and combat (2, _detalhes.playername).total / combat:GetCombatTime()
-			end
-
-			if (myBestDps > d_one) then
+			if (myBestDps > d_one_dps) then
 				if (not _detalhes.deny_score_messages) then
-					print (Loc ["STRING_DETAILS1"] .. format (Loc ["STRING_SCORE_NOTBEST"], _detalhes:ToK2 (d_one), _detalhes:ToK2 (myBestDps), onencounter.date, mybest[2]))
+					print (Loc ["STRING_DETAILS1"] .. format (Loc ["STRING_SCORE_NOTBEST"], _detalhes:ToK2 (d_one_dps), _detalhes:ToK2 (myBestDps), onencounter.date, mybest[2]))
 				end
 			else
 				if (not _detalhes.deny_score_messages) then
-					print (Loc ["STRING_DETAILS1"] .. format (Loc ["STRING_SCORE_BEST"], _detalhes:ToK2 (d_one)))
+					print (Loc ["STRING_DETAILS1"] .. format (Loc ["STRING_SCORE_BEST"], _detalhes:ToK2 (d_one_dps)))
+				end
+			end
+			if (myBestHps > d_one_hps) then
+				if (not _detalhes.deny_score_messages) then
+					print (Loc ["STRING_DETAILS1"] .. format (Loc ["STRING_SCORE_NOTBEST_HPS"], _detalhes:ToK2 (d_one_hps), _detalhes:ToK2 (myBestHps), onencounter.date, mybest2[2]))
+				end
+			else
+				if (not _detalhes.deny_score_messages) then
+					print (Loc ["STRING_DETAILS1"] .. format (Loc ["STRING_SCORE_BEST_HPS"], _detalhes:ToK2 (d_one_hps)))
 				end
 			end
 		end
