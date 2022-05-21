@@ -2532,7 +2532,6 @@ if (NEEDTODO) then
 		HunterMarksmanship = 254,
 		HunterSurvival = 255,
 
-
 		DKUnholy = 252, -- Unholy Death Knight
 		DKFrost = 251, -- Frost Death Knight
 		DKBlood = 250, -- Blood Death Knight

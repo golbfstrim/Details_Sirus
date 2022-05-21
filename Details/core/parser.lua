@@ -2429,6 +2429,7 @@ end
 
 	------------------------------------------------------------------------------------------------
 	--> get actors
+	if not who_name then who_name = UNKNOWN end
 		local este_jogador = misc_cache[who_name]
 		if(not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
@@ -2472,6 +2473,7 @@ end
 
 	------------------------------------------------------------------------------------------------
 	--> get actors
+	if not who_name then who_name = UNKNOWN end
 		local este_jogador = misc_cache[who_name]
 		if (not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)

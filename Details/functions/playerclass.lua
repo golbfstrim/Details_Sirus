@@ -213,7 +213,7 @@ do
 
 	-- try get the spec from actor name
 	function _detalhes:GetSpec(name)
-		-- if not name 
+		if not name then return end
 		local guid = _UnitGUID(name)
 		if guid then
 			local spec = _detalhes.cached_specs[guid]
