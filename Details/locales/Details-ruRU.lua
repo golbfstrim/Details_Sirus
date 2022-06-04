@@ -986,6 +986,7 @@ L["STRING_OPTIONS_ROWADV_TITLE_DESC"] = "Эти параметры позвол�
 L["STRING_OPTIONS_RT_COOLDOWN1"] = "%s использован(а) на %s!"
 L["STRING_OPTIONS_RT_COOLDOWN2"] = "%s использован(а)!"
 L["STRING_OPTIONS_RT_COOLDOWNS_ANCHOR"] = "Объявлять кулдауны:"
+L["STRING_OPTIONS_RT_CUSTOM_ANCHOR"] = "Для sirus:"
 L["STRING_OPTIONS_RT_COOLDOWNS_CHANNEL"] = "Канал"
 L["STRING_OPTIONS_RT_COOLDOWNS_CHANNEL_DESC"] = [=[Какой канал чата используется для отправки предупреждающего сообщения.
 
@@ -1770,4 +1771,6 @@ L["Font Size: "] = "Размер текста: "
 L["Left Text: "] = "Левый текст: "
 L["Bar Width: "] = "Длина бара: "
 
-
+-----------------custom sirus
+L["MurozondDmgSkip"] = "Мурозонд: без урона по щиту"
+L["MurozondDmgSkipDesc"] = "Не считать урон в щит при перефазе мурозонда"

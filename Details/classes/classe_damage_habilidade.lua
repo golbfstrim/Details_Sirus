@@ -71,6 +71,7 @@ function habilidade_dano:AddMiss(serial, nome, flags, who_nome, missType)
 end
 
 function habilidade_dano:Add(serial, nome, flag, amount, who_nome, resisted, blocked, absorbed, critical, glacing, token, isoffhand)
+	-- print(serial, nome, flag, amount, who_nome, resisted, blocked, absorbed, critical, glacing, token, isoffhand)
 	self.total = self.total + amount
 
 	self.targets[nome] = (self.targets[nome] or 0) + amount
@@ -169,7 +170,7 @@ function habilidade_dano:Add(serial, nome, flag, amount, who_nome, resisted, blo
 			end
 		end
 	end
-
+	-- print("last")
 end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

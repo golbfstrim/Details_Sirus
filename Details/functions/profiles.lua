@@ -1217,6 +1217,10 @@ local default_player_data = {
 			enabled = true,
 			channel = "SELF",
 		},
+		SirusCustom = {
+			MurazondDmgSkip = true,
+			-- channel = "SELF",
+		},
 		announce_damagerecord = {
 			enabled = true,
 			channel = "SELF",

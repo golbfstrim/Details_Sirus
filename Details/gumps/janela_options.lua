@@ -10714,9 +10714,21 @@ function window:CreateFrame11()
 			_detalhes.on_death_menu = value
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
-
+		
 		window:CreateLineBackground2 (frame11, "ShowDeathMenuSlider", "ShowDeathMenuLabel", Loc["Show a panel below the Release / Death Recap panel with some shortcuts for Raid Leaders."]) --localize-me np bro
-
+		
+		-- custom for sirus
+		g:NewLabel (frame11, _, "$parentAnnouncersCustomLabel", "AnnouncersCustomLabel", Loc ["MurozondDmgSkip"], "GameFontHighlightLeft")
+		
+		g:NewSwitch (frame11, _, "$parentAnnouncersCustomSlider1", "AnnouncersCustomSlider1", 60, 20, _, _, _detalhes.SirusCustom.MurazondDmgSkip, nil, nil, nil, nil, options_switch_template)
+		frame11.AnnouncersCustomSlider1:SetPoint ("left", frame11.AnnouncersCustomLabel, "right", 2)
+		frame11.AnnouncersCustomSlider1:SetAsCheckBox()
+		frame11.AnnouncersCustomSlider1.OnSwitch = function (_, _, value)
+			_detalhes.SirusCustom.MurazondDmgSkip = value
+			-- _detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
+		end
+		window:CreateLineBackground2 (frame11, "AnnouncersCustomSlider1", "AnnouncersCustomLabel", Loc ["MurozondDmgSkipDesc"])
+		
 	--> anchors
 
 		--announcers anchor
@@ -10725,7 +10737,11 @@ function window:CreateFrame11()
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorDeaths", "AnnouncersDeaths", Loc ["STRING_OPTIONS_RT_DEATHS_ANCHOR"], "GameFontNormal")
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorDeathRecap", "AnnouncersDeathRecap",Loc ["Death Recap:"], "GameFontNormal")
 		g:NewLabel (frame11, _, "$parentAnnouncersAnchorOther", "AnnouncersOther", Loc ["STRING_OPTIONS_RT_OTHER_ANCHOR"], "GameFontNormal")
-
+		-- custom for sirus
+		g:NewLabel (frame11, _, "$parentAnnouncersCustom", "AnnouncersCustom", Loc ["STRING_OPTIONS_RT_CUSTOM_ANCHOR"], "GameFontNormal")
+		
+		
+		
 		local x = window.left_start_at
 
 		titulo1:SetPoint (x, window.title_y_pos)
@@ -10764,6 +10780,8 @@ function window:CreateFrame11()
 			{"EnabledPrePotLabel", 7},
 			{"EnabledFirstHitLabel", 8},
 			{"ShowDeathMenuLabel", 9},
+			{"AnnouncersCustom", 7, true},
+			{"AnnouncersCustomLabel", 8},
 		}
 
 		window:arrange_menu (frame11, right_side, window.right_start_at, window.top_start_at)
