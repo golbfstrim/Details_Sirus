@@ -102,6 +102,7 @@ do
 		[42914] = 64, -- Ice Lance, Rank 3
 		[42842] = 64, -- Frostbolt, Rank 16
 		[47610]	= 64, -- Frostfire Bolt, Rank 2
+		[44572] = 64, -- Deep Freeze
 
 		-- Holy Paladin:
 		[31821] = 65, -- Devotion Aura
@@ -200,8 +201,8 @@ do
 		[30823] = 263, -- lomai menya esli smo
 		[30813] = 263, -- Mental Quickness, Rank 2
 		[30814] = 263, -- Mental Quickness, Rank 3
-		[51521] = 263, -- Primal Wisdom, Rank 2
-		[51522] = 263, -- Primal Wisdom, Rank 2
+		[51521] = 263, -- Improved Stormstrike, Rank 1
+		[51522] = 263, -- Improved Stormstrike, Rank 2
 
 		-- Restoration Shaman:
 		[51566] = 264, -- Tidal Waves, Rank 5
@@ -1160,7 +1161,7 @@ do
 		[28810] = 30, -- Faith Set Proc Armor of Faith
 		[54808] = 12, -- Noise Machine proc Sonic Shield
 		[55019] = 12, -- Sonic Shield (one of these too ought to be wrong)
-		[64411] = 15, -- Blessing of the Ancient (Val'anyr Hammer of Ancient Kings equip effect)
+		[64411] = 8, -- Blessing of the Ancient (Val'anyr Hammer of Ancient Kings equip effect)
 		[64413] = 1, -- Val'anyr, Hammer of Ancient Kings proc Protection of Ancient Kings
 		-- Misc
 		[40322] = 30, -- Teron's Vengeful Spirit Ghost - Spirit Shield
@@ -1173,6 +1174,8 @@ do
 		[67260] = 15, -- 300000
 		[67259] = 15, -- 700000
 		[67261] = 15, -- 1200000
+		[65686] = 86400, -- Twin Val'kyr Light Essence
+		[65684] = 86400, -- Twin Val'kyr Dark Essence
 
 		[313124] = 60, -- bs vnevremennaya pregrada test
 		-- [317901] = 30, -- bs vnevremennaya pregrada test

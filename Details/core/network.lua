@@ -312,7 +312,7 @@ function _detalhes.network.Cloud_DataReceived	(player, realm, core_version, ...)
 
 				end
 			elseif (IsInGroup()) then
-				for i = 1, GetNumGroupMembers()-1 do
+				for i = 1, GetNumGroupMembers() do
 					if (name:find ("-")) then --> other realm
 						local nname, server = _UnitName ("party"..i)
 						if (server and server ~= "") then
@@ -512,7 +512,7 @@ _detalhes.network.functions = {
 function _detalhes:CommReceived (_, data, _, source)
 
 	local prefix, player, realm, dversion, arg6, arg7, arg8, arg9 =  _select (2, _detalhes:Deserialize (data))
-	player = source
+	-- player = source
 	-- _detalhes.debug = true
 	if (_detalhes.debug) then
 		_detalhes:Msg ("(debug) network received:", prefix, "length:", string.len (data))

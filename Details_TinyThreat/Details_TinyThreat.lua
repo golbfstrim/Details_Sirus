@@ -256,6 +256,7 @@ local function CreatePluginFrames ()
 					end
 
 					local isTanking, status, threatpct, rawthreatpct, threatvalue = _UnitDetailedThreatSituation ("raid"..i, "target")
+					-- print(threatvalue)
 					if (status) then
 						threat_table [2] = threatpct
 						threat_table [3] = isTanking

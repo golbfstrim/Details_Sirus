@@ -55,9 +55,9 @@ do
 		end
 	end
 
-	local lightOfTheMartyr_Name, _, lightOfTheMartyr_Icon = _GetSpellInfo (196917)
-	lightOfTheMartyr_Name = lightOfTheMartyr_Name or "Deprecated Spell - Light of the Martyr"
-	lightOfTheMartyr_Icon = lightOfTheMartyr_Icon or ""
+	-- local lightOfTheMartyr_Name, _, lightOfTheMartyr_Icon = _GetSpellInfo (196917)
+	-- lightOfTheMartyr_Name = lightOfTheMartyr_Name or "Deprecated Spell - Light of the Martyr"
+	-- lightOfTheMartyr_Icon = lightOfTheMartyr_Icon or ""
 
 	local default_user_spells = {
 		[1] = {name = Loc ["STRING_MELEE"], icon = [[Interface\ICONS\INV_Sword_04]]},

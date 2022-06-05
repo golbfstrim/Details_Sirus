@@ -400,6 +400,7 @@ function _detalhes:EntrarEmCombate(...)
 	_table_wipe(_detalhes.pets_no_owner)
 	_detalhes.container_pets:BuscarPets()
 
+	_table_wipe(_detalhes.cache_dead_npc)
 	_table_wipe(_detalhes.cache_damage_group)
 	_table_wipe(_detalhes.cache_healing_group)
 	_detalhes:UpdateParserGears()
@@ -416,7 +417,7 @@ function _detalhes:EntrarEmCombate(...)
 		boss_found(encounter_table.index, encounter_table.name, encounter_table.zone, encounter_table.mapid, encounter_table.diff, encounter_table.id)
 	else
 		--> if we don't have this infor right now, lets check in few seconds dop
-		if _detalhes.EncounterInformation[_detalhes.zone_id] then
+		if _detalhes:IsInInstance() then
 			_detalhes:ScheduleTimer("ReadBossFrames", 1)
 			_detalhes:ScheduleTimer("ReadBossFrames", 30)
 		end

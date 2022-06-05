@@ -1040,12 +1040,12 @@ do --> data for Ulduar
 	}
 
 	local ENCOUNTER_ID_CL = {
-		33113, 33118, 33186, 33293, 32857, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
+		33113, 33118, 33186, 33293, 32867, 32930, 33515, 32845, 32865, 32906, 33350, 33271, 33136, 32871,
 		[33113] = 1, --Flame Leviathan
 		[33118] = 2, --Ignis the Furnace Master
 		[33186] = 3, --Razorscale
 		[33293] = 4, --XT-002 Deconstructor
-		[32857] = 5, --Assembly of Iron
+		[32867] = 5, --Assembly of Iron
 		[32930] = 6, --Kologarn
 		[33515] = 7, --Auriaya
 		[32845] = 8, --Hodir
@@ -1245,6 +1245,63 @@ do --> data for TTG
 		[84000] = 1, --Argaloth
 		[84002] = 2, --HeraldVolazj
 		[84017] = 3, --Shadhar
+		},
+	})
+end
+
+
+do --> data for norigorn
+	local INSTANCE_MAPID = 946
+	local HDIMAGESPATH = "Details\\images\\raid"
+	local HDFILEPREFIX = "TheBronzeSanctuary"  --TODO
+	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenMalygos", {0, 1, 285/1024, 875/1024}
+	local EJ_DUNGEONBG = "UI-EJ-DUNGEONBUTTON-WORLD"
+	local EJ_LOREBG = "UI-EJ-LOREBG-WORLD"
+
+	local PORTRAIT_LIST = {
+		"UI-EJ-BOSS-Norigorn",
+	}
+
+
+
+	local ENCOUNTER_ID_CL = {
+		70010,
+	[70010] = 1, --norigorn
+
+	}
+
+	local BOSSNAMES = {
+		LBB["Norigorn"],
+
+	}
+
+	local ENCOUNTERS = {}
+
+	for i = 1, #PORTRAIT_LIST do
+		local encounterTable = {
+			boss = BOSSNAMES[i],
+			portrait = "Interface\\EncounterJournal\\"..PORTRAIT_LIST[i],
+		}
+		tinsert(ENCOUNTERS, encounterTable)
+	end
+
+	_detalhes:InstallEncounter({
+		id = INSTANCE_MAPID,
+
+		name = LBZ["TolGarod"],
+		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
+		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
+		is_raid = true,
+		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
+		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
+
+		encounter_ids2 = ENCOUNTER_ID_CL,
+		boss_names = BOSSNAMES,
+		encounters = ENCOUNTERS,
+
+		boss_ids = {
+		[70010] = 1, --norigorn
+
 		},
 	})
 end

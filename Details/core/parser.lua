@@ -22,7 +22,7 @@ local _IsInGroup = IsInGroup --wow api local
 local _GetNumGroupMembers = GetNumGroupMembers --wow api local
 local _UnitGroupRolesAssigned = DetailsFramework.UnitGroupRolesAssigned
 local _GetTime = GetTime
-local _select = select
+-- local _select = select
 local _UnitBuff = UnitBuff
 
 local _cstr = string.format --lua local
@@ -2772,13 +2772,21 @@ function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, al
 
 	------------------------------------------------------------------------------------------------
 	--> get actors
-	if not who_name then who_name = UNKNOWN end
+
 		local este_jogador = misc_cache[who_name]
 		if (not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
-			misc_cache[who_name] = este_jogador or {}
+			misc_cache[who_name] = este_jogador
 			-- print(2299)
 		end
+
+		-- if not who_name then who_name = UNKNOWN end
+		-- local este_jogador = misc_cache[who_name]
+		-- if (not este_jogador) then --> pode ser um desconhecido ou um pet
+		-- 	este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
+		-- 	misc_cache[who_name] = este_jogador or {}
+		-- 	-- print(2299)
+		-- end
 
 	------------------------------------------------------------------------------------------------
 	--> build containers on the fly
@@ -3539,19 +3547,10 @@ function parser:dead(token, time, who_serial, who_name, who_flags, alvo_serial, 
 
 ------------------------------------------------------------------------------------------------
 --> build dead
-	local encounterID = tonumber(alvo_serial:sub(-12, -7), 16)
-	if _detalhes.encounter_table and _detalhes.encounter_table.id == encounterID then
-		local mapid = _GetCurrentMapAreaID()
-		local boss_ids = _detalhes:GetBossIds(mapid)
-		if not boss_ids then
-			return
-		end
-
-		local bossindex = boss_ids[encounterID]
-		if bossindex then
-			local _, _, _, _, maxPlayers = GetInstanceInfo()
-			local difficulty = GetInstanceDifficulty()
-			_detalhes.parser_functions:ENCOUNTER_END(encounterID, _detalhes:GetBossName(mapid, bossindex), difficulty, maxPlayers)
+	if _bit_band(alvo_flags, OBJECT_CONTROL_NPC) ~= 0 then
+		local npcID = npcid_cache[alvo_serial]
+		if npcID then
+			_table_insert(_detalhes.cache_dead_npc, npcID)
 		end
 	end
 
@@ -3852,6 +3851,7 @@ function _detalhes:CaptureDisable(capture_type)
 		token_list["SPELL_PERIODIC_ENERGIZE"] = nil
 	elseif capture_type == "spellcast" then
 		token_list["SPELL_CAST_SUCCESS"] = nil
+		token_list["SPELL_CAST_START"] = nil
 	elseif capture_type == "miscdata" then
 		-- dispell
 		token_list["SPELL_DISPEL"] = nil
@@ -3911,6 +3911,7 @@ function _detalhes:CaptureEnable(capture_type)
 		token_list["SPELL_PERIODIC_ENERGIZE"] = parser.energize
 	elseif capture_type == "spellcast" then
 		token_list["SPELL_CAST_SUCCESS"] = parser.spellcast
+		token_list["SPELL_CAST_START"] = parser.spellcast
 	elseif capture_type == "miscdata" then
 		-- dispell
 		token_list["SPELL_DISPEL"] = parser.dispell
@@ -4112,12 +4113,12 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 	end
 
 	-- TODO
-	if _detalhes.encounter_table and _detalhes.encounter_table.id == 36597 then
-		_table_wipe(_detalhes.encounter_table)
-		if _detalhes.debug then
-			_detalhes:Msg ("(debug) map changed with encounter table pointing to the lich king encounter, wiping the encounter table.")
-		end
-	end
+	-- if _detalhes.encounter_table and _detalhes.encounter_table.id == 36597 then
+	-- 	_table_wipe(_detalhes.encounter_table)
+	-- 	if _detalhes.debug then
+	-- 		_detalhes:Msg ("(debug) map changed with encounter table pointing to the lich king encounter, wiping the encounter table.")
+	-- 	end
+	-- end
 
 	_detalhes.time_type = _detalhes.time_type_original
 
@@ -4255,9 +4256,11 @@ function _detalhes.parser_functions:ENCOUNTER_START(...)
 	local dbm_mod, dbm_time = _detalhes.encounter_table.DBM_Mod, _detalhes.encounter_table.DBM_ModTime
 	_table_wipe(_detalhes.encounter_table)
 
-	local encounterID, encounterName, difficultyID, raidSize = ...
-	local zoneName = _GetInstanceInfo()
-	local zoneMapID = _GetCurrentMapAreaID()
+
+	-- local zoneName = _GetInstanceInfo()
+
+	-- local zoneMapID = _GetCurrentMapAreaID()
+	local zoneMapID = _detalhes.zone_id
 
 	--print(encounterID, encounterName, difficultyID, raidSize)
 	_detalhes.encounter_table.phase = 1
@@ -4270,7 +4273,7 @@ function _detalhes.parser_functions:ENCOUNTER_START(...)
 	_detalhes.encounter_table.name = encounterName
 	_detalhes.encounter_table.diff = difficultyID
 	_detalhes.encounter_table.size = raidSize
-	_detalhes.encounter_table.zone = zoneName
+	_detalhes.encounter_table.zone = _detalhes.zone_name
 	_detalhes.encounter_table.mapid = zoneMapID
 
 	if dbm_mod and dbm_time == time() then --pode ser time() � usado no start pra saber se foi no mesmo segundo.
@@ -4544,29 +4547,29 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 			print("player is dead:", UnitHealth("player") < 1)
 		end
 	end
-	-- for _, npcID in _ipairs(_detalhes.cache_dead_npc) do
-	-- 	if _detalhes.encounter_table and _detalhes.encounter_table.id == npcID then
-	-- 		local mapID = _detalhes.zone_id
-	-- 		local bossIDs = _detalhes:GetBossIds(mapID)
-	-- 		if not bossIDs then
-	-- 			for id, data in _pairs(_detalhes.EncounterInformation) do
-	-- 				if data.name == _detalhes.zone_name then
-	-- 					bossIDs = _detalhes:GetBossIds(id)
-	-- 					mapID = id
-	-- 					break
-	-- 				end
-	-- 			end
-	-- 		end
+	for _, npcID in _ipairs(_detalhes.cache_dead_npc) do
+		if _detalhes.encounter_table and _detalhes.encounter_table.id == npcID then
+			local mapID = _detalhes.zone_id
+			local bossIDs = _detalhes:GetBossIds(mapID)
+			if not bossIDs then
+				for id, data in _pairs(_detalhes.EncounterInformation) do
+					if data.name == _detalhes.zone_name then
+						bossIDs = _detalhes:GetBossIds(id)
+						mapID = id
+						break
+					end
+				end
+			end
 
-	-- 		local bossIndex = bossIDs and bossIDs[npcID]
-	-- 		if bossIndex then
-	-- 			local _, _, _, _, maxPlayers = GetInstanceInfo()
-	-- 			local difficulty = GetInstanceDifficulty()
-	-- 			_detalhes.parser_functions:ENCOUNTER_END(npcID, _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
-	-- 			break
-	-- 		end
-	-- 	end
-	-- end
+			local bossIndex = bossIDs and bossIDs[npcID]
+			if bossIndex then
+				local _, _, _, _, maxPlayers = GetInstanceInfo()
+				local difficulty = GetInstanceDifficulty()
+				_detalhes.parser_functions:ENCOUNTER_END(npcID, _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
+				break
+			end
+		end
+	end
 	--elapsed combat time
 	_detalhes.LatestCombatDone = GetTime()
 	_detalhes.tabela_vigente.CombatEndedAt = GetTime()
@@ -4703,12 +4706,12 @@ function _detalhes.parser_functions:UNIT_FACTION(unit)
 end
 
 -- TEMP
-function _detalhes.parser_functions:ROLE_CHANGED_INFORM(...)
-	if(_detalhes.last_assigned_role ~= _UnitGroupRolesAssigned("player")) then
-		_detalhes:CheckSwitchOnLogon(true)
-		_detalhes.last_assigned_role = _UnitGroupRolesAssigned("player")
-	end
-end
+-- function _detalhes.parser_functions:ROLE_CHANGED_INFORM(...)
+-- 	if(_detalhes.last_assigned_role ~= _UnitGroupRolesAssigned("player")) then
+-- 		_detalhes:CheckSwitchOnLogon(true)
+-- 		_detalhes.last_assigned_role = _UnitGroupRolesAssigned("player")
+-- 	end
+-- end
 
 function _detalhes.parser_functions:PLAYER_ROLES_ASSIGNED(...)
 	if _detalhes.last_assigned_role ~= _UnitGroupRolesAssigned("player") then

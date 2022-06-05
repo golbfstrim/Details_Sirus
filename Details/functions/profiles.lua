@@ -1219,7 +1219,7 @@ local default_player_data = {
 		},
 		SirusCustom = {
 			MurazondDmgSkip = true,
-			-- channel = "SELF",
+			channel = "SELF",
 		},
 		announce_damagerecord = {
 			enabled = true,
