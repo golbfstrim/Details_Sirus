@@ -3994,6 +3994,7 @@ local all_parser_tokens = {
 	["SPELL_PERIODIC_ENERGIZE"] = "energize",
 
 	["SPELL_CAST_SUCCESS"] = "spellcast",
+	["SPELL_CAST_START"] = "spellcast",
 	["SPELL_DISPEL"] = "dispell",
 	["SPELL_STOLEN"] = "dispell",
 	["SPELL_AURA_BROKEN"] = "break_cc",
@@ -4133,7 +4134,7 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 	end
 
 	if _detalhes.is_in_battleground and zoneType ~= "pvp" then
-		_detalhes.pvp_parser_frame:StopBgUpdater()
+		-- _detalhes.pvp_parser_frame:StopBgUpdater()
 		_detalhes.is_in_battleground = nil
 		_detalhes.time_type = _detalhes.time_type_original
 	end
@@ -4162,7 +4163,7 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 				_detalhes.time_type = 2
 			end
 
-			_detalhes.pvp_parser_frame:StartBgUpdater()
+			-- _detalhes.pvp_parser_frame:StartBgUpdater()
 		else
 			if _detalhes.force_activity_time_pvp then
 				_detalhes.time_type_original = _detalhes.time_type
@@ -5288,90 +5289,90 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --> battleground parser
 
-_detalhes.pvp_parser_frame:SetScript("OnEvent", function(self, event)
-	self:ReadPvPData()
-end)
+-- _detalhes.pvp_parser_frame:SetScript("OnEvent", function(self, event)
+-- 	self:ReadPvPData()
+-- end)
 
-function _detalhes:BgScoreUpdate()
-	RequestBattlefieldScoreData()
-end
+-- function _detalhes:BgScoreUpdate()
+-- 	RequestBattlefieldScoreData()
+-- end
 
-function _detalhes.pvp_parser_frame:StartBgUpdater()
-	_detalhes.pvp_parser_frame:RegisterEvent("UPDATE_BATTLEFIELD_SCORE")
-	if _detalhes.pvp_parser_frame.ticker then
-		_detalhes:CancelTimer(_detalhes.pvp_parser_frame.ticker)
-	end
-	_detalhes.pvp_parser_frame.ticker = _detalhes:ScheduleRepeatingTimer("BgScoreUpdate", 10)
-end
+-- function _detalhes.pvp_parser_frame:StartBgUpdater()
+-- 	_detalhes.pvp_parser_frame:RegisterEvent("UPDATE_BATTLEFIELD_SCORE")
+-- 	if _detalhes.pvp_parser_frame.ticker then
+-- 		_detalhes:CancelTimer(_detalhes.pvp_parser_frame.ticker)
+-- 	end
+-- 	_detalhes.pvp_parser_frame.ticker = _detalhes:ScheduleRepeatingTimer("BgScoreUpdate", 10)
+-- end
 
-function _detalhes.pvp_parser_frame:StopBgUpdater()
-	_detalhes.pvp_parser_frame:UnregisterEvent("UPDATE_BATTLEFIELD_SCORE")
-	_detalhes:CancelTimer(_detalhes.pvp_parser_frame.ticker)
-	_detalhes.pvp_parser_frame.ticker = nil
-end
+-- function _detalhes.pvp_parser_frame:StopBgUpdater()
+-- 	_detalhes.pvp_parser_frame:UnregisterEvent("UPDATE_BATTLEFIELD_SCORE")
+-- 	_detalhes:CancelTimer(_detalhes.pvp_parser_frame.ticker)
+-- 	_detalhes.pvp_parser_frame.ticker = nil
+-- end
 
-function _detalhes.pvp_parser_frame:ReadPvPData()
-	local players = GetNumBattlefieldScores()
+-- function _detalhes.pvp_parser_frame:ReadPvPData()
+-- 	local players = GetNumBattlefieldScores()
 
-	for i = 1, players do
-		local name, killingBlows, honorableKills, deaths, honorGained, faction, race, class, classToken, damageDone, healingDone = GetBattlefieldScore(i)
+-- 	for i = 1, players do
+-- 		local name, killingBlows, honorableKills, deaths, honorGained, faction, race, class, classToken, damageDone, healingDone = GetBattlefieldScore(i)
 
-		local actor = _detalhes.tabela_vigente(1, name)
-		if actor then
-			if damageDone == 0 then
-				damageDone = damageDone + _detalhes:GetOrderNumber()
-			end
+-- 		local actor = _detalhes.tabela_vigente(1, name)
+-- 		if actor then
+-- 			if damageDone == 0 then
+-- 				damageDone = damageDone + _detalhes:GetOrderNumber()
+-- 			end
 
-			actor.total = damageDone
-			actor.classe = classToken or "UNKNOW"
-		elseif name ~= UNKNOWN and type(name) == "string" and string.len(name) > 1 then
-			local guid = _UnitGUID(name)
-			if guid then
-				local flag
-				if _detalhes.faction_id == faction then --> is from the same faction
-					flag = 0x514
-				else
-					flag = 0x548
-				end
+-- 			actor.total = damageDone
+-- 			actor.classe = classToken or "UNKNOW"
+-- 		elseif name ~= UNKNOWN and type(name) == "string" and string.len(name) > 1 then
+-- 			local guid = _UnitGUID(name)
+-- 			if guid then
+-- 				local flag
+-- 				if _detalhes.faction_id == faction then --> is from the same faction
+-- 					flag = 0x514
+-- 				else
+-- 					flag = 0x548
+-- 				end
 
-				actor = _current_damage_container:PegarCombatente(guid, name, flag, true)
-				actor.total = _detalhes:GetOrderNumber()
-				actor.classe = classToken or "UNKNOW"
+-- 				actor = _current_damage_container:PegarCombatente(guid, name, flag, true)
+-- 				actor.total = _detalhes:GetOrderNumber()
+-- 				actor.classe = classToken or "UNKNOW"
 
-				if flag == 0x548 then
-					--oponent
-					actor.enemy = true
-				end
-			end
-		end
+-- 				if flag == 0x548 then
+-- 					--oponent
+-- 					actor.enemy = true
+-- 				end
+-- 			end
+-- 		end
 
-		local actor = _detalhes.tabela_vigente(2, name)
-		if actor then
-			if healingDone == 0 then
-				healingDone = healingDone + _detalhes:GetOrderNumber()
-			end
+-- 		local actor = _detalhes.tabela_vigente(2, name)
+-- 		if actor then
+-- 			if healingDone == 0 then
+-- 				healingDone = healingDone + _detalhes:GetOrderNumber()
+-- 			end
 
-			actor.total = healingDone
-			actor.classe = classToken or "UNKNOW"
-		elseif name ~= UNKNOWN and type(name) == "string" and string.len(name) > 1 then
-			local guid = _UnitGUID(name)
-			if guid then
-				local flag
-				if _detalhes.faction_id == faction then --> is from the same faction
-					flag = 0x514
-				else
-					flag = 0x548
-				end
+-- 			actor.total = healingDone
+-- 			actor.classe = classToken or "UNKNOW"
+-- 		elseif name ~= UNKNOWN and type(name) == "string" and string.len(name) > 1 then
+-- 			local guid = _UnitGUID(name)
+-- 			if guid then
+-- 				local flag
+-- 				if _detalhes.faction_id == faction then --> is from the same faction
+-- 					flag = 0x514
+-- 				else
+-- 					flag = 0x548
+-- 				end
 
-				actor = _current_heal_container:PegarCombatente(guid, name, flag, true)
-				actor.total = _detalhes:GetOrderNumber()
-				actor.classe = classToken or "UNKNOW"
+-- 				actor = _current_heal_container:PegarCombatente(guid, name, flag, true)
+-- 				actor.total = _detalhes:GetOrderNumber()
+-- 				actor.classe = classToken or "UNKNOW"
 
-				if flag == 0x548 then
-					--oponent
-					actor.enemy = true
-				end
-			end
-		end
-	end
-end
+-- 				if flag == 0x548 then
+-- 					--oponent
+-- 					actor.enemy = true
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- end
