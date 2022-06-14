@@ -2761,10 +2761,7 @@ function parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, 
 end
 
 function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, in_out)
-		-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, in_out)
-		-- for k,v in pairs(misc_cache) do
-		-- 	print(k,v,2284)
-		-- end
+
 	------------------------------------------------------------------------------------------------
 	--> early checks and fixes
 
@@ -2776,7 +2773,8 @@ function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, al
 		local este_jogador = misc_cache[who_name]
 		if (not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
-			misc_cache[who_name] = este_jogador
+
+			misc_cache[who_name] = este_jogador or {}
 			-- print(2299)
 		end
 
