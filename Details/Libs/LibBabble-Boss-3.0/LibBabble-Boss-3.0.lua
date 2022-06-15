@@ -18,6 +18,7 @@ local GAME_LOCALE = GetLocale()
 
 lib:SetBaseTranslations {
 	---ttg
+	Zort = "Зорт",
 	Argaloth = "Гогонаш",
 	HeraldVolazj = "Ктракс",
 	Shadhar = "Пожиратель магии",
@@ -4566,6 +4567,7 @@ elseif GAME_LOCALE == "esMX" then
 }
 elseif GAME_LOCALE == "ruRU" then
 	lib:SetCurrentTranslations {
+	Zort = "Зорт",
 	Argaloth = "Гогонаш",
 	HeraldVolazj = "Ктракс",
 	Shadhar = "Пожиратель магии",
