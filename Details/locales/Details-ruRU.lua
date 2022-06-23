@@ -1401,6 +1401,7 @@ L["STRING_PARRY"] = "Парирование"
 L["STRING_PERCENTAGE"] = "Процент"
 L["STRING_PET"] = "Питомец"
 L["STRING_PETS"] = "Питомцы"
+
 L["STRING_PLAYER_DETAILS"] = "Details! Игрока"
 L["STRING_PLAYERS"] = "Игроки"
 L["STRING_PLEASE_WAIT"] = "Пожалуйста, подождите"
@@ -1770,7 +1771,9 @@ L["Text: "] = "Текст: "
 L["Font Size: "] = "Размер текста: "
 L["Left Text: "] = "Левый текст: "
 L["Bar Width: "] = "Длина бара: "
-
+----------------------Dbm
+L["Damage by Encounter Phase"] = "Урон по фазам"
+L["Healing by Encounter Phase"] = "Хил по фазам"
 -----------------custom sirus
 L["MurozondDmgSkip"] = "Мурозонд: без урона по щиту"
 L["MurozondDmgSkipDesc"] = "Не считать урон в щит при перефазе мурозонда"

@@ -978,7 +978,7 @@ local default_profile = {
 		time_type_original = 2,
 		memory_threshold = 3,
 		memory_ram = 64,
-		remove_realm_from_name = true,
+		remove_realm_from_name = false,
 		trash_concatenate = false,
 		trash_auto_remove = true,
 		world_combat_is_trash = false,
@@ -1172,6 +1172,7 @@ local default_player_data = {
 	--> nicktag cache
 		nick_tag_cache = {},
 		ignore_nicktag = false,
+		show3DModel = false,
 	--> plugin data
 		plugin_database = {},
 	--> information about this character

@@ -1561,7 +1561,8 @@ end
 --> tooltip fork / search key: ~tooltip
 local avatarPoint = {"bottomleft", "topleft", -3, -4}
 local backgroundPoint = {{"bottomleft", "topleft", 0, -3}, {"bottomright", "topright", 0, -3}}
-local textPoint = {"left", "right", -11, -5}
+local textPoint = {"left", "right", 0, 11}
+local textPointTest = {"left", "right", 0, 11}
 local avatarTexCoord = {0, 1, 0, 1}
 local backgroundColor = {0, 0, 0, 0.6}
 local avatarTextColor = {1, 1, 1, 1}
@@ -1646,6 +1647,124 @@ function _detalhes:BuildInstanceBarTooltip(frame)
 	end
 end
 
+local SetPortraitTexture = SetPortraitTexture
+local UnitIsConnected = UnitIsConnected
+local UnitIsUnit = UnitIsUnit
+local UnitIsVisible = UnitIsVisible
+
+
+local modelsToFix ={
+	["scourgemale.m2"] = true,
+	["dwarfmale.m2"] = true,
+	["orcmalenpc.m2"] = true,
+	["scourgemalenpc.m2"] = true,
+	["scourgefemalenpc.m2"] = true,
+	["dwarfmalenpc.m2"] = true,
+	["scourgemale_hd.m2"] = true,
+	["scourgefemale_hd.m2"] = true,
+	["dwarfmale_hd.m2"] = true,
+	["vulperafemale.m2"] = true,
+	["worgenmale.m2"] = true,
+	["vulperamale.m2"] = true,
+	["humanfemale_hd.m2"] = true,
+	["darkirondwarfmale.m2"] = true,
+}
+local function UpdateModelFrame(frame,unit)
+	-- print(unit)
+	if not frame.model then
+		frame.model = CreateFrame("PlayerModel", "PlayerModelDetails")
+	end
+	local x = frame:GetWidth()/2
+	local y = 40
+	local element = frame.model
+	element:SetSize(x,y)
+	-- frame.model:SetAllPoints(frame)
+	element:ClearAllPoints()
+	element:SetPoint("CENTER", frame, "TOP",0,y/2)
+	local isAvailable
+	if unit then
+		isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
+	end
+
+	if unit and (element:IsObjectType('Model')) then
+		if (not isAvailable) then
+			GameCooltipFrame1.model:Show()
+			-- element:ClearModel()
+			element:SetModelScale(4.25)
+			element:SetCamera(0)
+			element:SetPosition(0, 0, -1.5)
+			element:SetModel([[Interface\Buttons\TalkToMeQuestionMark.m2]])
+
+		else
+			GameCooltipFrame1.model:Show()
+			element:ClearModel()
+			element:SetUnit(unit)
+			element:SetCamera(0)
+			element:SetModelScale(1)
+			element:SetPosition(0, 0, 0)
+		end
+		local str
+		if frame.model:IsObjectType("Model") then
+			str = frame.model:GetModel()
+			if type(str) ~= "string" then return end
+			str = string.lower(str)
+		end
+		if modelsToFix[str] then
+			-- isneedfix = true
+			element:SetCamera(1)
+		else
+			element:SetCamera(0)
+		end
+	else
+		GameCooltipFrame1.model:Show()
+		-- element:ClearModel()
+		element:SetModelScale(4.25)
+		element:SetCamera(0)
+		element:SetPosition(0, 0, -1.5)
+		element:SetModel([[Interface\Buttons\TalkToMeQuestionMark.m2]])
+		-- print("da")
+	end
+
+
+end
+
+local function FindModelByName(who)
+	local isfind = false
+	-- local unit
+	-- if UnitExists("raid2") then
+		for i = 1,40 do
+			local unit = "raid"..i
+			if UnitExists(unit) then
+				if UnitName(unit) == who then
+					UpdateModelFrame(GameCooltipFrame1,unit)
+					-- GameCooltipFrame1.model:Hide()
+					isfind = true
+					break
+				end
+			end
+		end
+	-- end
+	if not isfind then
+		for i = 1,4 do
+			local unit = "party"..i
+			if UnitExists(unit) then
+				if UnitName(unit) == who then
+					UpdateModelFrame(GameCooltipFrame1,unit)
+					-- GameCooltipFrame1.model:Hide()
+					isfind = true
+					break
+				end
+			end
+		end
+	end
+	if UnitName("player") == who and not isfind then
+		isfind = true
+		UpdateModelFrame(GameCooltipFrame1, "player")
+	end
+	if not isfind then
+		UpdateModelFrame(GameCooltipFrame1, nil)
+	end
+end
 function _detalhes:MontaTooltip(frame, qual_barra, keydown)
 	-- print("asdas")
 	self:BuildInstanceBarTooltip(frame)
@@ -1671,42 +1790,42 @@ function _detalhes:MontaTooltip(frame, qual_barra, keydown)
 
 	local t = objeto:ToolTip(self, qual_barra, esta_barra, keydown) --> inst�ncia, n� barra, objeto barra, keydown
 	-- print(t)
+
+
 	if t then
 		-- print(1674)
 		if objeto.serial and objeto.serial ~= "" then
-			-- print(objeto.serial)
-			-- print(1676)
 			local avatar = NickTag:GetNicknameTable(objeto.nome, true)
-			-- print(avatar)
-			-- print(objeto.nome)
-			if avatar and not _detalhes.ignore_nicktag then
-				-- print(1679)
+			if avatar and not _detalhes.ignore_nicktag and not _detalhes.show3DModel and objeto.nome ~= "Шутка" then
 				if avatar[2] and avatar[4] and avatar[1] then
-					if objeto.nome == "Шутка" or objeto.nome == "Пьяная" then
-						-- print(avatar[2])
-						GameCooltip:SetBannerImage(1, [[Interface\AddOns\Details\textures\СustomTextures\fxpw]], 100, 60, avatarPoint, avatarTexCoord, nil) --> overlay[2] avatar path
-						GameCooltip:SetBannerImage(2, avatar[4], 256, 64, backgroundPoint, avatar[5], avatar[6]) --> background
-						GameCooltip:SetBannerText(1, (not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, 14, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
-					else
-						GameCooltip:SetBannerImage(1, avatar[2], 100, 60, avatarPoint, avatarTexCoord, nil) --> overlay[2] avatar path
-						GameCooltip:SetBannerImage(2, avatar[4], 256, 64, backgroundPoint, avatar[5], avatar[6]) --> background
-						GameCooltip:SetBannerText(1, (not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, 14, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+					GameCooltip:SetBannerImage(1, avatar[2], 100, 60, avatarPoint, avatarTexCoord, nil) --> overlay[2] avatar path
+					GameCooltip:SetBannerImage(2, avatar[4], 256, 64, backgroundPoint, avatar[5], avatar[6]) --> background
+					GameCooltip:SetBannerText(1, (not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, _detalhes.tooltip.fontsize+2, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+
 				end
-				end
+			elseif _detalhes.show3DModel or objeto.nome == "Шутка" then
+
+				FindModelByName(objeto.nome)
+				GameCooltip:SetBannerText(1, (avatar and not _detalhes.ignore_nicktag and avatar[1]) or objeto.nome, textPoint, avatarTextColor, _detalhes.tooltip.fontsize+2, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
 			else
 				-- if _detalhes.remove_realm_from_name and objeto.displayName:find("%*") then
-				-- 	GameCooltip:SetBannerImage(1,[[Interface\AddOns\Details\images\background]], 20, 30, avatarPoint, avatarTexCoord, {0, 0, 0, 0}) --> overlay[2] avatar path
-				-- 	GameCooltip:SetBannerImage(2,[[Interface\PetBattles\Weather-BurntEarth]], 160, 30, {{"bottomleft", "topleft", 0, -5}, {"bottomright", "topright", 0, -5}}, {0.12, 0.88, 1, 0}, {0, 0, 0, 0.1}) --> overlay[2] avatar path {0, 0, 0, 0}
-				-- 	GameCooltip:SetBannerText(1, objeto.nome, {"left", "left", 11, -8}, {1, 1, 1, 0.7}, 10, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
+					GameCooltip:SetBannerImage(1,[[Interface\AddOns\Details\images\background]], 20, 30, avatarPoint, avatarTexCoord, {0, 0, 0, 0}) --> overlay[2] avatar path
+					GameCooltip:SetBannerImage(2,[[Interface\PetBattles\Weather-BurntEarth]], 160, 30, {{"bottomleft", "topleft", 0, -5}, {"bottomright", "topright", 0, -5}}, {0.12, 0.88, 1, 0}, {0, 0, 0, 0.1}) --> overlay[2] avatar path {0, 0, 0, 0}
+					GameCooltip:SetBannerText(1, objeto.nome, textPoint, {1, 1, 1, 1}, _detalhes.tooltip.fontsize+2, SharedMedia:Fetch("font", _detalhes.tooltip.fontface)) --> text[1] nickname
 				-- end
 			end
 		end
-
+		-- if isfind then
+		-- 	GameCooltipFrame1.model:Show()
+		-- else
+		-- 	GameCooltipFrame1.model:Hide()
+		-- end
 		GameCooltip:ShowCooltip()
 	end
 end
 
 function _detalhes.gump:UpdateTooltip(qual_barra, esta_barra, instancia)
+
 	if _IsShiftKeyDown() then
 		return instancia:MontaTooltip(esta_barra, qual_barra, "shift")
 	elseif _IsControlKeyDown() then
@@ -1716,6 +1835,7 @@ function _detalhes.gump:UpdateTooltip(qual_barra, esta_barra, instancia)
 	else
 		return instancia:MontaTooltip(esta_barra, qual_barra)
 	end
+
 end
 
 function _detalhes:EndRefresh(instancia, total, tabela_do_combate, showing)

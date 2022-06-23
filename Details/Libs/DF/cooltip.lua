@@ -435,7 +435,9 @@ function DF:CreateCoolTip()
 				end
 
 		frame1:SetScript ("OnLeave", function (self)
-
+			if GameCooltipFrame1.model then
+				GameCooltipFrame1.model:Hide()
+			end
 			if (CoolTip.Type ~= 1 and CoolTip.Type ~= 2) then
 				CoolTip.active = false
 				CoolTip.mouseOver = false
@@ -483,7 +485,9 @@ function DF:CreateCoolTip()
 			CoolTip.active = false
 			CoolTip.buttonClicked = false
 			CoolTip.mouseOver = false
-
+			if GameCooltipFrame1.model then
+				GameCooltipFrame1.model:Hide()
+			end
 			--> reset parent and  strata
 			frame1:SetParent (UIParent)
 			frame2:SetParent (UIParent)

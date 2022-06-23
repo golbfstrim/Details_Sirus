@@ -277,6 +277,11 @@ function parser:GetPetOwner(pet)
 		return "Unknown";
 
 end
+
+local buffs_to_other_players = {
+	[10060] = true, --power infusion
+}
+
 -----------------------------------------------------------------------------------------------------------------------------------------
 	--> DAMAGE 	serach key: ~damage											|
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -724,7 +729,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			then
 				-- if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"]  and _detalhes.announce_firsthit.enabled) then
 				_detalhes:EntrarEmCombate (who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-				if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"] and _detalhes.announce_firsthit.enabled) then
+				if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"] >= GetTime() - 3 and _detalhes.announce_firsthit.enabled) then
 					-- PullTable.HitBy = "|cFFFFFF00 Первый удар|r: неизвестно получается"
 					_detalhes:Msg( "|cFFFFFF00 Первый удар|r: " .. who_name.." по ".. alvo_name)
 				end
@@ -784,6 +789,9 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		-- print(meu_dono.nome)
 		who_name = who_name.." <"..meu_dono.nome..">"
 		-- print(who_name)
+	end
+	if (not este_jogador) then
+		return
 	end
 	--i = i+1
 	--print(i)
@@ -2017,6 +2025,10 @@ end
 			elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
 				--um pet colocando uma aura do dono
 				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+			elseif (buffs_to_other_players[spellid]) then
+				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+			elseif true then
+				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
 			end
 		end
 
@@ -2062,11 +2074,14 @@ end
 					bitfield_swap_cache[alvo_serial] = true
 				end
 
-				if(raid_members_cache[who_serial]) then
-					--> call record debuffs uptime
-					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_IN")
+				-- if(raid_members_cache[who_serial]) then
+				-- 	--> call record debuffs uptime
+				-- 	parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_IN")
 
-				elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e who � alguem de fora da raide
+				-- elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e who � alguem de fora da raide
+				-- 	parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_IN")
+				if true then
+					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_IN")
 					parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_IN")
 				end
 			end
@@ -2274,6 +2289,10 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 				elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
 					--um pet colocando uma aura do dono
 					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
+				elseif (buffs_to_other_players[spellid]) then ---CHECK
+					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
+				elseif true then
+					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
 				end
 			end
 
@@ -2313,10 +2332,13 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 		------------------------------------------------------------------------------------------------
 		--> buff uptime
 			if(_recording_buffs_and_debuffs) then
-				if(raid_members_cache[who_serial]) then
-					--> call record debuffs uptime
+				-- if(raid_members_cache[who_serial]) then
+				-- 	--> call record debuffs uptime
+				-- 	parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_REFRESH")
+				-- elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
+				-- 	parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_REFRESH", amount)
+				if true then
 					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_REFRESH")
-				elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
 					parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_REFRESH", amount)
 				end
 			end
@@ -2347,7 +2369,7 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 							if(ThisDebuffOnTarget) then
 								local base, posBuff, negBuff = UnitAttackPower("player")
 								local AttackPower = base+posBuff+negBuff
-								local base, posBuff, negBuff = UnitRangedAttackPower("player")
+								base, posBuff, negBuff = UnitRangedAttackPower("player")
 								local RangedAttackPower = base+posBuff+negBuff
 								local SpellPower = GetSpellBonusDamage(3)
 
@@ -2416,6 +2438,10 @@ end
 					parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
 				elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
 					--um pet colocando uma aura do dono
+					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
+				elseif (buffs_to_other_players[spellid]) then ---TODO fxpw
+					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
+				elseif true then
 					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
 				end
 			end
@@ -2502,10 +2528,13 @@ end
 		------------------------------------------------------------------------------------------------
 		--> buff uptime
 			if(_recording_buffs_and_debuffs) then
-				if(raid_members_cache[who_serial]) then
-					--> call record debuffs uptime
+				-- if(raid_members_cache[who_serial]) then
+				-- 	--> call record debuffs uptime
+				-- 	parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_OUT")
+				-- elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
+				-- 	parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_OUT")
+				if true then
 					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_OUT")
-				elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
 					parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_OUT")
 				end
 			end
@@ -2725,15 +2754,21 @@ function parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, 
 --> early checks and fixes
 
 	_current_misc_container.need_refresh = true
-
+	if who_name == nil then return end
 ------------------------------------------------------------------------------------------------
 --> get actors
+
 -- if not who_name then who_name = UNKNOWN end
-	local este_jogador = misc_cache[who_name]
-	if(not este_jogador) then --> pode ser um desconhecido ou um pet
-		este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
-		misc_cache[who_name] = este_jogador
-	end
+		local este_jogador = misc_cache [who_name]
+		if (not este_jogador) then --> pode ser um desconhecido ou um pet
+			este_jogador = _current_misc_container:PegarCombatente (who_serial, who_name, who_flags, true)
+			-- if not misc_cache [who_name] then
+				-- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, in_out)
+				-- misc_cache [who_name] = {}
+			-- end
+			misc_cache [who_name] = este_jogador
+		end
+
 
 ------------------------------------------------------------------------------------------------
 --> build containers on the fly
@@ -2769,22 +2804,15 @@ function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, al
 
 	------------------------------------------------------------------------------------------------
 	--> get actors
-
+		-- if not who_name then who_name = "Unknown" end
 		local este_jogador = misc_cache[who_name]
 		if (not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
 
-			misc_cache[who_name] = este_jogador or {}
+			misc_cache[who_name] = este_jogador
 			-- print(2299)
 		end
 
-		-- if not who_name then who_name = UNKNOWN end
-		-- local este_jogador = misc_cache[who_name]
-		-- if (not este_jogador) then --> pode ser um desconhecido ou um pet
-		-- 	este_jogador = _current_misc_container:PegarCombatente(who_serial, who_name, who_flags, true)
-		-- 	misc_cache[who_name] = este_jogador or {}
-		-- 	-- print(2299)
-		-- end
 
 	------------------------------------------------------------------------------------------------
 	--> build containers on the fly
@@ -3240,12 +3268,14 @@ function parser:spellcast(token, time, who_serial, who_name, who_flags, alvo_ser
 			if(not este_jogador) then
 				este_jogador = _current_damage_container:PegarCombatente(who_serial, who_name, who_flags, true)
 			end
+			if (este_jogador) then
 			--> actor spells table
 			local spell = este_jogador.spells._ActorTable[spellid]
-			if(not spell) then
-				spell = este_jogador.spells:PegaHabilidade(spellid, true, token)
-			end
+				if(not spell) then
+					spell = este_jogador.spells:PegaHabilidade(spellid, true, token)
+				end
 			spell.successful_casted = spell.successful_casted + 1
+			end
 		end
 		return
 	end
@@ -3363,6 +3393,11 @@ function parser:ress(token, time, who_serial, who_name, who_flags, alvo_serial, 
 	if(_bit_band(who_flags, AFFILIATION_GROUP) == 0) then
 		return
 	end
+
+	--do not register ress if not in combat
+		if (not Details.in_combat) then
+			return
+		end
 
 	_current_misc_container.need_refresh = true
 
@@ -3573,7 +3608,7 @@ function parser:dead(token, time, who_serial, who_name, who_flags, alvo_serial, 
 	elseif(not _UnitIsFeignDeath(alvo_name)) then
 		if(
 			--> player in your group
-			_bit_band(alvo_flags, AFFILIATION_GROUP) ~= 0 and
+			_bit_band(alvo_flags, AFFILIATION_GROUP) ~= 0 or (damageActor and damageActor.grupo) and 
 			--> must be a player
 			_bit_band(alvo_flags, OBJECT_TYPE_PLAYER) ~= 0 and
 			--> must be in combat
@@ -3585,13 +3620,13 @@ function parser:dead(token, time, who_serial, who_name, who_flags, alvo_serial, 
 				return
 			end
 
-			if(alvo_name == _detalhes.playername) then
-				--print("DEATH", GetTime())
+			-- if(alvo_name == _detalhes.playername) then
+			-- 	--print("DEATH", GetTime())
 
-				if(_detalhes.LatestCombatDone and _detalhes.LatestCombatDone+0.2 > GetTime()) then
-				--	print("Eh Maior que 0.2")
-				end
-			end
+			-- 	if(_detalhes.LatestCombatDone and _detalhes.LatestCombatDone+0.2 > GetTime()) then
+			-- 	--	print("Eh Maior que 0.2")
+			-- 	end
+			-- end
 
 			_current_misc_container.need_refresh = true
 
@@ -3815,6 +3850,7 @@ function _detalhes:CaptureTimeout(table)
 end
 
 function _detalhes:CaptureDisable(capture_type)
+
 	capture_type = string.lower(capture_type)
 
 	if capture_type == "damage" then
@@ -3849,7 +3885,7 @@ function _detalhes:CaptureDisable(capture_type)
 		token_list["SPELL_PERIODIC_ENERGIZE"] = nil
 	elseif capture_type == "spellcast" then
 		token_list["SPELL_CAST_SUCCESS"] = nil
-		token_list["SPELL_CAST_START"] = nil
+		-- token_list["SPELL_CAST_START"] = nil
 	elseif capture_type == "miscdata" then
 		-- dispell
 		token_list["SPELL_DISPEL"] = nil
@@ -3909,7 +3945,7 @@ function _detalhes:CaptureEnable(capture_type)
 		token_list["SPELL_PERIODIC_ENERGIZE"] = parser.energize
 	elseif capture_type == "spellcast" then
 		token_list["SPELL_CAST_SUCCESS"] = parser.spellcast
-		token_list["SPELL_CAST_START"] = parser.spellcast
+		-- token_list["SPELL_CAST_START"] = parser.spellcast
 	elseif capture_type == "miscdata" then
 		-- dispell
 		token_list["SPELL_DISPEL"] = parser.dispell
@@ -3992,7 +4028,7 @@ local all_parser_tokens = {
 	["SPELL_PERIODIC_ENERGIZE"] = "energize",
 
 	["SPELL_CAST_SUCCESS"] = "spellcast",
-	["SPELL_CAST_START"] = "spellcast",
+	-- ["SPELL_CAST_START"] = "spellcast",
 	["SPELL_DISPEL"] = "dispell",
 	["SPELL_STOLEN"] = "dispell",
 	["SPELL_AURA_BROKEN"] = "break_cc",

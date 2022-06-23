@@ -3963,24 +3963,37 @@ function window:CreateFrame1()
 
 		frame1.IgnoreNicknamesSlider.OnSwitch = function (self, _, value)
 			_detalhes.ignore_nicktag = value
+			-- _detalhes.show3DModel = not value
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
 
 		window:CreateLineBackground2 (frame1, "IgnoreNicknamesSlider", "IgnoreNicknamesLabel", Loc ["STRING_OPTIONS_IGNORENICKNAME_DESC"])
 
-	-->  realm name --------------------------------------------------------------------------------------------------------------------------------------------
-
-		g:NewLabel (frame1, _, "$parentRealmNameLabel", "realmNameLabel", Loc ["STRING_OPTIONS_REALMNAME"], "GameFontHighlightLeft")
-		g:NewSwitch (frame1, _, "$parentRealmNameSlider", "realmNameSlider", 60, 20, _, _, _detalhes.remove_realm_from_name, nil, nil, nil, nil, options_switch_template)
-		frame1.realmNameSlider:SetPoint ("left", frame1.realmNameLabel, "right", 2)
-		frame1.realmNameSlider:SetAsCheckBox()
-
-		frame1.realmNameSlider.OnSwitch = function (self, _, value)
-			_detalhes.remove_realm_from_name = value
+	--> new 3d models
+		g:NewLabel (frame1, _, "$parentShow3DModel", "Show3DModelLabel", "Использовать 3D модель (когда возможно)", "GameFontHighlightLeft")
+		g:NewSwitch (frame1, _, "$parentShow3DModelSlider", "Show3DModelSlider", 60, 20, _, _, _detalhes.show3DModel, nil, nil, nil, nil, options_switch_template)
+		frame1.Show3DModelSlider:SetPoint ("left", frame1.Show3DModelLabel, "right", 2)
+		frame1.Show3DModelSlider:SetAsCheckBox()
+		frame1.Show3DModelSlider.OnSwitch = function (self, _, value)
+			_detalhes.show3DModel = value
+			-- _detalhes.ignore_nicktag = not value
 			_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
 		end
+		window:CreateLineBackground2 (frame1, "Show3DModelSlider", "Show3DModelLabel", "Показывает 3D модель над подсказкой Details вместо аватара (только когда возможно отобразить юнит)")
 
-		window:CreateLineBackground2 (frame1, "realmNameSlider", "realmNameLabel", Loc ["STRING_OPTIONS_REALMNAME_DESC"])
+	-->  realm name --------------------------------------------------------------------------------------------------------------------------------------------
+
+		-- g:NewLabel (frame1, _, "$parentRealmNameLabel", "realmNameLabel", Loc ["STRING_OPTIONS_REALMNAME"], "GameFontHighlightLeft")
+		-- g:NewSwitch (frame1, _, "$parentRealmNameSlider", "realmNameSlider", 60, 20, _, _, _detalhes.remove_realm_from_name, nil, nil, nil, nil, options_switch_template)
+		-- frame1.realmNameSlider:SetPoint ("left", frame1.realmNameLabel, "right", 2)
+		-- frame1.realmNameSlider:SetAsCheckBox()
+
+		-- frame1.realmNameSlider.OnSwitch = function (self, _, value)
+		-- 	_detalhes.remove_realm_from_name = value
+		-- 	_detalhes:SendOptionsModifiedEvent (DetailsOptionsWindow.instance)
+		-- end
+
+		-- window:CreateLineBackground2 (frame1, "realmNameSlider", "realmNameLabel", Loc ["STRING_OPTIONS_REALMNAME_DESC"])
 
 	--> Segments Locked
 
@@ -4386,7 +4399,9 @@ function window:CreateFrame1()
 		frame1.avatarNickname:SetPoint (avatar_x_anchor2+109, -171)
 
 		frame1.IgnoreNicknamesLabel:SetPoint (avatar_x_anchor, -215)
-		frame1.realmNameLabel:SetPoint (avatar_x_anchor, -235)
+		frame1.Show3DModelLabel:SetPoint(avatar_x_anchor, -235)
+		-- frame1.realmNameLabel:SetPoint (avatar_x_anchor, -255)
+		
 
 		--frame1.ToolsLabel:SetPoint (avatar_x_anchor, -265)
 		--frame1.EraseDataLabel:SetPoint (avatar_x_anchor, -290)
@@ -11383,7 +11398,7 @@ end --> if not window
 		DetailsOptionsWindow.loading_settings = true
 
 		--> window 1
-		_G.DetailsOptionsWindow1RealmNameSlider.MyObject:SetValue (_detalhes.remove_realm_from_name)
+		-- _G.DetailsOptionsWindow1RealmNameSlider.MyObject:SetValue (_detalhes.remove_realm_from_name)
 		_G.DetailsOptionsWindow1SegmentsLockedSlider.MyObject:SetValue (_detalhes.instances_segments_locked) --locked segments
 
 		_G.DetailsOptionsWindow1NumericalSystemOfADropdown.MyObject:Select (_detalhes.numerical_system)
