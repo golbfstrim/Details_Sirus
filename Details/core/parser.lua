@@ -2754,7 +2754,7 @@ function parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, 
 --> early checks and fixes
 
 	_current_misc_container.need_refresh = true
-	if who_name == nil then return end
+	if who_name == nil then who_name = UNKNOWN end
 ------------------------------------------------------------------------------------------------
 --> get actors
 
@@ -2801,7 +2801,7 @@ function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, al
 	--> early checks and fixes
 
 		_current_misc_container.need_refresh = true
-
+	if who_name == nil then who_name = UNKNOWN end
 	------------------------------------------------------------------------------------------------
 	--> get actors
 		-- if not who_name then who_name = "Unknown" end
