@@ -2985,7 +2985,7 @@ function parser:add_defensive_cooldown(token, time, who_serial, who_name, who_fl
 --> early checks and fixes
 
 	_current_misc_container.need_refresh = true
-
+	if  who_name == nil then who_name = UNKNOWN end
 ------------------------------------------------------------------------------------------------
 --> get actors
 
@@ -3608,7 +3608,7 @@ function parser:dead(token, time, who_serial, who_name, who_flags, alvo_serial, 
 	elseif(not _UnitIsFeignDeath(alvo_name)) then
 		if(
 			--> player in your group
-			_bit_band(alvo_flags, AFFILIATION_GROUP) ~= 0 or (damageActor and damageActor.grupo) and 
+			_bit_band(alvo_flags, AFFILIATION_GROUP) ~= 0 and
 			--> must be a player
 			_bit_band(alvo_flags, OBJECT_TYPE_PLAYER) ~= 0 and
 			--> must be in combat
