@@ -10162,6 +10162,19 @@ function window:CreateFrame10()
 		window:CreateLineBackground2 (frame10, "cloudCaptureSlider", "cloudCaptureLabel", Loc ["STRING_OPTIONS_CLOUD_DESC"] )
 
 
+		--> writeallauras
+		g:NewLabel (frame10, _, "$parentWriteAllAurasLabel", "writeAllAurasLabel", Loc ["WriteAllAuras"], "GameFontHighlightLeft")
+
+		g:NewSwitch (frame10, _, "$parentWriteAllAuraslider", "writeAllAurasSlider", 60, 20, _, _, _detalhes.SirusCustom.WriteAllAuras, nil, nil, nil, nil, options_switch_template)
+		frame10.writeAllAurasSlider:SetPoint ("left", frame10.writeAllAurasLabel, "right", 2)
+		frame10.writeAllAurasSlider:SetAsCheckBox()
+		frame10.writeAllAurasSlider.OnSwitch = function (self, _, value)
+			_detalhes.SirusCustom.WriteAllAuras = value
+		end
+
+		window:CreateLineBackground2 (frame10, "writeAllAurasSlider", "writeAllAurasLabel", Loc ["WriteAllAurasDesc"] )
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	--> Erase Chart Data
@@ -10216,6 +10229,7 @@ function window:CreateFrame10()
 			{"energyCaptureLabel", 8},
 			{"miscCaptureLabel", 9},
 			{"auraCaptureLabel", 10},
+			-- {"auraCaptureLabel", 11},
 		}
 
 		window:arrange_menu (frame10, left_side, window.left_start_at, window.top_start_at)
@@ -10236,7 +10250,9 @@ function window:CreateFrame10()
 			{"energyCaptureImage2", 8},
 			{"miscCaptureImage2", 9},
 			{"auraCaptureImage2", 10},
-			{"cloudCaptureLabel", 11, true},
+			{"writeAllAurasLabel", 11},
+			{"cloudCaptureLabel", 12, true},
+			
 
 		}
 

@@ -2015,20 +2015,22 @@ end
 
 
 		if(_recording_buffs_and_debuffs) then
-			if(who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
-			-- if(raid_members_cache[who_serial] and _in_combat) then
-				-- print(who_serial)
-				--> call record buffs uptime
-				-- print(spellname, "BUFF_UPTIME_IN")
-				parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+			if _detalhes.SirusCustom.WriteAllAuras then
+				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+			else
+				if (who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
+				-- if(raid_members_cache[who_serial] and _in_combat) then
+					-- print(who_serial)
+					--> call record buffs uptime
+					-- print(spellname, "BUFF_UPTIME_IN")
+					parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
 
-			elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
-				--um pet colocando uma aura do dono
-				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
-			elseif (buffs_to_other_players[spellid]) then
-				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
-			elseif true then
-				parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+				elseif (container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
+					--um pet colocando uma aura do dono
+					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+				elseif (buffs_to_other_players[spellid]) then
+					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_IN")
+				end
 			end
 		end
 
@@ -2073,16 +2075,17 @@ end
 				if(bitfield_debuffs[spellname] and raid_members_cache[alvo_serial]) then
 					bitfield_swap_cache[alvo_serial] = true
 				end
-
-				-- if(raid_members_cache[who_serial]) then
-				-- 	--> call record debuffs uptime
-				-- 	parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_IN")
-
-				-- elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e who � alguem de fora da raide
-				-- 	parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_IN")
-				if true then
+				if _detalhes.SirusCustom.WriteAllAuras then
 					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_IN")
 					parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_IN")
+				else
+					if(raid_members_cache[who_serial]) then
+						--> call record debuffs uptime
+						parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_IN")
+
+					elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e who � alguem de fora da raide
+						parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_IN")
+					end
 				end
 			end
 
@@ -2282,17 +2285,19 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 		------------------------------------------------------------------------------------------------
 		--> buff uptime
 			if(_recording_buffs_and_debuffs) then
-				if(who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
-				-- if( raid_members_cache[who_serial] and _in_combat) then
-					--> call record buffs uptime
-					parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
-				elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
-					--um pet colocando uma aura do dono
+				if _detalhes.SirusCustom.WriteAllAuras then
 					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
-				elseif (buffs_to_other_players[spellid]) then ---CHECK
-					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
-				elseif true then
-					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
+				else
+					if (who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
+					-- if( raid_members_cache[who_serial] and _in_combat) then
+						--> call record buffs uptime
+						parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
+					elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
+						--um pet colocando uma aura do dono
+						parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
+					elseif (buffs_to_other_players[spellid]) then ---CHECK
+						parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_REFRESH")
+					end
 				end
 			end
 
@@ -2332,14 +2337,16 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 		------------------------------------------------------------------------------------------------
 		--> buff uptime
 			if(_recording_buffs_and_debuffs) then
-				-- if(raid_members_cache[who_serial]) then
-				-- 	--> call record debuffs uptime
-				-- 	parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_REFRESH")
-				-- elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
-				-- 	parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_REFRESH", amount)
-				if true then
+				if _detalhes.SirusCustom.WriteAllAuras then
 					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_REFRESH")
 					parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_REFRESH", amount)
+				else
+					if(raid_members_cache[who_serial]) then
+						--> call record debuffs uptime
+						parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_REFRESH")
+					elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
+						parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_REFRESH", amount)
+					end
 				end
 			end
 
@@ -2415,6 +2422,9 @@ function parser:unbuff(token, time, who_serial, who_name, who_flags, alvo_serial
 -- print(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, tipo, amount)
 ------------------------------------------------------------------------------------------------
 --> handle shields
+if alvo_name == nil then
+	alvo_name = UNKNOWN;
+end
 if absorb_spell_list[spellid] then
 	escudo[alvo_name] = escudo[alvo_name] or {}
 	-- locate buff
@@ -2432,17 +2442,20 @@ end
 		------------------------------------------------------------------------------------------------
 		--> buff uptime
 			if(_recording_buffs_and_debuffs) then
-				if(who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
-					-- if(raid_members_cache[who_serial] and _in_combat) then
-					--> call record buffs uptime
-					parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
-				elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
-					--um pet colocando uma aura do dono
+				if _detalhes.SirusCustom.WriteAllAuras then
 					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
-				elseif (buffs_to_other_players[spellid]) then ---TODO fxpw
-					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
-				elseif true then
-					parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
+				else
+					if(who_name == alvo_name and raid_members_cache[who_serial] and _in_combat) then
+						-- if(raid_members_cache[who_serial] and _in_combat) then
+						--> call record buffs uptime
+						parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
+					elseif(container_pets[who_serial] and container_pets[who_serial][2] == alvo_serial) then
+						--um pet colocando uma aura do dono
+						parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
+					elseif (buffs_to_other_players[spellid]) then ---TODO fxpw
+						parser:add_buff_uptime(token, time, alvo_serial, alvo_name, alvo_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "BUFF_UPTIME_OUT")
+					end
+
 				end
 			end
 
@@ -2528,14 +2541,17 @@ end
 		------------------------------------------------------------------------------------------------
 		--> buff uptime
 			if(_recording_buffs_and_debuffs) then
-				-- if(raid_members_cache[who_serial]) then
-				-- 	--> call record debuffs uptime
-				-- 	parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_OUT")
-				-- elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
-				-- 	parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_OUT")
-				if true then
+
+				if _detalhes.SirusCustom.WriteAllAuras then
 					parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_OUT")
 					parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_OUT")
+				else
+					if(raid_members_cache[who_serial]) then
+						--> call record debuffs uptime
+						parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, "DEBUFF_UPTIME_OUT")
+					elseif(raid_members_cache[alvo_serial] and not raid_members_cache[who_serial]) then --> alvo � da raide e o caster � inimigo
+						parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spellschool, "DEBUFF_UPTIME_OUT")
+					end
 				end
 			end
 
