@@ -1,3 +1,4 @@
+---@diagnostic disable: redundant-parameter
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 local _detalhes = 		_G._detalhes
@@ -198,7 +199,7 @@ local special_damage_spells = {
 --> damage spells to ignore
 local damage_spells_to_ignore = {
 }
-
+_detalhes.CachedGUIDToPull = {}
 --> expose the ignore spells table to external scripts
 _detalhes.SpellsToIgnore = damage_spells_to_ignore
 
@@ -213,7 +214,7 @@ local _recording_buffs_and_debuffs = false
 
 --> in combat flag
 local _in_combat = false
-local _current_encounter_id
+_G["_current_encounter_id"] = nil
 local _is_storing_cleu = false
 local _in_resting_zone = false
 
@@ -547,7 +548,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		npcId = _tonumber(_sub(who_serial, 8, 12), 16) or 0
 		npcid_cache[who_serial] = npcId
 	end
-		check_boss(npcId)
+	check_boss(npcId)
 	if ignored_npcids[npcId] then
 		return
 	end
@@ -565,173 +566,82 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		--        time,  event,      sguid,      sname,   sflags,      dguid,		dname,    dflags,     arg1,        arg2,arg3,itype;
 	if not _in_combat then
 		if token ~= "SPELL_PERIODIC_DAMAGE" then
-			if (_bit_band(who_flags,COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and _bit_band(alvo_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0)
-			and (IsInInstance())
-			-- (
-			-- 	(who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (who_name) )
-			-- 	or
-			-- 	(alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name) )
-			-- 	or
-			-- 	(alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name) )
-			-- 	or
-			-- 	(not _detalhes.in_group and who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0)
-			-- 	or
-			-- 	(not _detalhes.in_group and alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0)
-			-- )
-			then
-				--A player is attacking a mob
-				-- print('da')
-				_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-				if _detalhes.announce_firsthit.enabled then
-					-- print("--------------------------------------------457")
-					-- PullTable.Link
-					-- local link
-					if spellid <= 10 then
-						-- link = _GetSpellInfo(spellid)
-						PullTable.Link = _GetSpellInfo(spellid)
-					else
-						-- link = GetSpellLink(spellid)
-						PullTable.Link = GetSpellLink(spellid)
-					end
-
-					PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .." по ".. alvo_name
-					-- PullTable.WhoPull = who_name or "Unknown"
-					-- PullTable.TargetName = alvo_name or "Unknown"
-
-					_detalhes:Msg(PullTable.HitBy)
-					-- print("--------------------------------------------488")
-				end
-			elseif (_bit_band(alvo_flags,COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and _bit_band(who_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0)
-			and(IsInInstance())
-			-- (
-			-- 	(who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (who_name) )
-			-- 	or
-			-- 	(alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name) )
-			-- 	or
-			-- 	(not _detalhes.in_group and who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0)
-			-- 	or
-			-- 	(not _detalhes.in_group and alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0)
-			-- )
-			then
-				--A mob is attacking a player
-				if  _detalhes.announce_firsthit.enabled then
-					-- print('da3')
-					_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-					-- print("--------------------------------------------457")
-
-					-- local link
-					if spellid <= 10 then
-						-- link = _GetSpellInfo(spellid)
-						PullTable.Link = _GetSpellInfo(spellid)
-					else
-						-- link = GetSpellLink(spellid)
-						PullTable.Link = GetSpellLink(spellid)
-					end
-
-					PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .." по ".. alvo_name
-					-- PullTable.WhoName = who_name or "Unknown"
-					-- PullTable.TargetName = alvo_name or "Unknown"
-					_detalhes:Msg(PullTable.HitBy)
-					-- print("--------------------------------------------509")
-				end
-			elseif (_bit_band(who_flags,COMBATLOG_OBJECT_CONTROL_PLAYER) ~= 0 and _bit_band(alvo_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0)
-			and (IsInInstance())
-			-- (
-			-- 	(who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (who_name) )
-			-- 	or
-			-- 	(alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name) )
-			-- 	or
-			-- 	(not _detalhes.in_group and who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0)
-			-- 	or
-			-- 	(not _detalhes.in_group and alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0)
-			-- )
-			then
-				--Player's pet attacks a mob
-				-- print('da2')
-				_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-				if _detalhes.announce_firsthit.enabled then
-					-- print("--------------------------------------------457")
-
-					-- local link
-					if spellid <= 10 then
-						-- link = _GetSpellInfo(spellid)
-						PullTable.Link = _GetSpellInfo(spellid)
-					else
-						-- link = GetSpellLink(spellid)
-						PullTable.Link = GetSpellLink(spellid)
-					end
-					-- local whopull
-					local whopet = parser:GetPetOwner(who_serial)
-
-					if (whopet == "Unknown") then
-						PullTable.WhoPull = who_name.." (pet)"
-					else
-						PullTable.WhoPull = whopet
-					end
-
-					PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .. " (" .. PullTable.WhoPull..")" .." по ".. alvo_name
-
-					_detalhes:Msg(PullTable.HitBy)
-
-					-- print("--------------------------------------------540")
-				end
-			elseif (_bit_band(alvo_flags,COMBATLOG_OBJECT_CONTROL_PLAYER) ~= 0 and _bit_band(who_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0)
-			and (IsInInstance())
-			-- (
-			-- 	(who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (who_name) )
-			-- 	or
-			-- 	(alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name) )
-			-- 	or
-			-- 	(not _detalhes.in_group and who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0)
-			-- 	or
-			-- 	(not _detalhes.in_group and alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0)
-			-- )
-
-			then
-				--Mob attacks a player's pet
-
-				_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-				if _detalhes.announce_firsthit.enabled then
-					-- print("--------------------------------------------457")
-
-					-- local link
-					if spellid <= 10 then
-						-- link = _GetSpellInfo(spellid)
-						PullTable.Link = _GetSpellInfo(spellid)
-					else
-						-- link = GetSpellLink(spellid)
-						PullTable.Link = GetSpellLink(spellid)
-					end
-					-- local whopull
-					local whopet = parser:GetPetOwner(alvo_serial)
-
-					if (whopet == "Unknown") then
-						PullTable.WhoPull = alvo_name.." (pet)"
-					else
-						PullTable.WhoPull = whopet
-					end
-
-					PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .." по ".. alvo_name .. " (" .. PullTable.WhoPull..")"
-
-					_detalhes:Msg(PullTable.HitBy)
-
-					-- print("-------------------------------------------570")
-
-				end
-			elseif
-			(
-				(who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (who_name) )
-				or
-				(alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name) )
-				or
-				(not _detalhes.in_group and who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0)
-			)
-			then
-				-- if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"]  and _detalhes.announce_firsthit.enabled) then
+			if (IsInInstance()) then
 				_detalhes:EntrarEmCombate (who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-				if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"] >= GetTime() - 3 and _detalhes.announce_firsthit.enabled) then
-					-- PullTable.HitBy = "|cFFFFFF00 Первый удар|r: неизвестно получается"
-					_detalhes:Msg( "|cFFFFFF00 Первый удар|r: " .. who_name.." по ".. alvo_name)
+
+				if _detalhes.announce_firsthit.enabled then
+					local needMsg = false
+					-- local isPetPull = false
+					if spellid <= 10 then
+						PullTable.Link = _GetSpellInfo(spellid)
+					else
+						PullTable.Link = GetSpellLink(spellid)
+					end
+
+					if (_bit_band(who_flags,COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and _bit_band(alvo_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0) then
+						--A player is attacking a mob
+						-- if _detalhes.announce_firsthit.enabled then
+						if not _detalhes.CachedGUIDToPull[alvo_serial] then
+							_detalhes.CachedGUIDToPull[alvo_serial] = true
+							PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .." по ".. alvo_name
+							-- _detalhes:Msg(PullTable.HitBy)
+							needMsg = true
+						end
+					elseif (_bit_band(alvo_flags,COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and _bit_band(who_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0)  then
+						--A mob is attacking a player
+						-- if  _detalhes.announce_firsthit.enabled then
+						if not _detalhes.CachedGUIDToPull[who_serial] then
+							_detalhes.CachedGUIDToPull[who_serial] = true
+							PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .." по ".. alvo_name
+							-- _detalhes:Msg(PullTable.HitBy)
+							needMsg = true
+						end
+					elseif (_bit_band(who_flags,COMBATLOG_OBJECT_CONTROL_PLAYER) ~= 0 and _bit_band(alvo_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0)	then
+						--Player's pet attacks a mob
+						-- if _detalhes.announce_firsthit.enabled then
+						if not _detalhes.CachedGUIDToPull[alvo_serial] then
+							_detalhes.CachedGUIDToPull[alvo_serial] = true
+							local whopet = parser:GetPetOwner(who_serial)
+
+							if (whopet == "Unknown") then
+								PullTable.WhoPull = who_name.." (pet)"
+							else
+								PullTable.WhoPull = whopet
+							end
+
+							PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .. " (" .. PullTable.WhoPull..")" .." по ".. alvo_name
+							-- _detalhes:Msg(PullTable.HitBy)
+							needMsg = true
+							-- isPetPull = true
+						end
+					elseif (_bit_band(alvo_flags,COMBATLOG_OBJECT_CONTROL_PLAYER) ~= 0 and _bit_band(who_flags,COMBATLOG_OBJECT_TYPE_NPC) ~= 0) then
+						--Mob attacks a player's pet
+						-- if _detalhes.announce_firsthit.enabled then
+						if not _detalhes.CachedGUIDToPull[who_serial] then
+							_detalhes.CachedGUIDToPull[who_serial] = true
+							local whopet = parser:GetPetOwner(alvo_serial)
+
+							if (whopet == "Unknown") then
+								PullTable.WhoPull = alvo_name.." (pet)"
+							else
+								PullTable.WhoPull = whopet
+							end
+							PullTable.HitBy = "|cFFFFFF00 Первый удар|r: " ..(PullTable.Link or "") .. " от " ..(who_name or "Unknown") .." по ".. alvo_name .. " (" .. PullTable.WhoPull..")"
+							-- _detalhes:Msg(PullTable.HitBy)
+							needMsg = true
+							-- isPetPull = true
+						end
+					elseif ((who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (who_name) )
+					or (alvo_flags and _bit_band (alvo_flags, AFFILIATION_GROUP) ~= 0 and _UnitAffectingCombat (alvo_name))
+					or (not _detalhes.in_group and who_flags and _bit_band (who_flags, AFFILIATION_GROUP) ~= 0)) then
+						-- if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"]  and _detalhes.announce_firsthit.enabled) then
+						if (_detalhes.encounter_table.id and _detalhes.encounter_table ["start"] >= GetTime() - 3) then
+							_detalhes:Msg( "|cFFFFFF00 Первый удар|r: " .. who_name.." по ".. alvo_name)
+						end
+					end
+					if needMsg then
+						_detalhes:Msg(PullTable.HitBy)
+					end
 				end
 			end
 		else
@@ -744,13 +654,9 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			end
 		end
 	end
-	--i = i+1
-	--print(i)
 	--[[statistics]]-- _detalhes.statistics.damage_calls = _detalhes.statistics.damage_calls + 1
-
 	_current_damage_container.need_refresh = true
-	--i = i+1
-	--print(i)
+
 	------------------------------------------------------------------------------------------------
 	--> get actors
 	--> source damager
@@ -793,8 +699,6 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 	if (not este_jogador) then
 		return
 	end
-	--i = i+1
-	--print(i)
 	--> his target
 	local jogador_alvo, alvo_dono = damage_cache[alvo_serial] or damage_cache_pets[alvo_serial] or damage_cache[alvo_name], damage_cache_petsOwners[alvo_serial]
 	if not jogador_alvo then
@@ -819,8 +723,6 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		--> � um pet
 		alvo_name = alvo_name.." <"..alvo_dono.nome..">"
 	end
-	--i = i+1
-	--print(i)
 	--> last event
 	este_jogador.last_event = _tempo
 
@@ -840,8 +742,6 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			amount = amount - overkill
 		end
 	end
-	--i = i+1
-	--print(i)
 	if este_jogador.grupo and not este_jogador.arena_enemy and not este_jogador.enemy then --> source = friendly player and not an enemy player
 		--dano to adversario estava caindo aqui por nao estar checando .enemy
 		_current_gtotal[1] = _current_gtotal[1] + amount
@@ -879,8 +779,6 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			t.n = i
 		end
 	end
-	--i = i+1
-	--print(i)
 	------------------------------------------------------------------------------------------------
 	--> time start
 	if not este_jogador.dps_started then
@@ -914,8 +812,6 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			end
 		end
 	end
-	--i = i+1
-	--print(i)
 	------------------------------------------------------------------------------------------------
 	--> firendly fire ~friendlyfire
 		local is_friendly_fire = false
@@ -4598,29 +4494,29 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 			print("player is dead:", UnitHealth("player") < 1)
 		end
 	end
-	for _, npcID in _ipairs(_detalhes.cache_dead_npc) do
-		if _detalhes.encounter_table and _detalhes.encounter_table.id == npcID then
-			local mapID = _detalhes.zone_id
-			local bossIDs = _detalhes:GetBossIds(mapID)
-			if not bossIDs then
-				for id, data in _pairs(_detalhes.EncounterInformation) do
-					if data.name == _detalhes.zone_name then
-						bossIDs = _detalhes:GetBossIds(id)
-						mapID = id
-						break
-					end
-				end
-			end
+	-- for _, npcID in _ipairs(_detalhes.cache_dead_npc) do
+	-- 	if _detalhes.encounter_table and _detalhes.encounter_table.id == npcID then
+	-- 		local mapID = _detalhes.zone_id
+	-- 		local bossIDs = _detalhes:GetBossIds(mapID)
+	-- 		if not bossIDs then
+	-- 			for id, data in _pairs(_detalhes.EncounterInformation) do
+	-- 				if data.name == _detalhes.zone_name then
+	-- 					bossIDs = _detalhes:GetBossIds(id)
+	-- 					mapID = id
+	-- 					break
+	-- 				end
+	-- 			end
+	-- 		end
 
-			local bossIndex = bossIDs and bossIDs[npcID]
-			if bossIndex then
-				local _, _, _, _, maxPlayers = GetInstanceInfo()
-				local difficulty = GetInstanceDifficulty()
-				_detalhes.parser_functions:ENCOUNTER_END(npcID, _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
-				break
-			end
-		end
-	end
+	-- 		local bossIndex = bossIDs and bossIDs[npcID]
+	-- 		if bossIndex then
+	-- 			local _, _, _, _, maxPlayers = GetInstanceInfo()
+	-- 			local difficulty = GetInstanceDifficulty()
+	-- 			_detalhes.parser_functions:ENCOUNTER_END(npcID, _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
+	-- 			break
+	-- 		end
+	-- 	end
+	-- end
 	--elapsed combat time
 	_detalhes.LatestCombatDone = GetTime()
 	_detalhes.tabela_vigente.CombatEndedAt = GetTime()
@@ -4636,7 +4532,7 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 	else
 		--is in a raid or party group
 		C_Timer:After(1, function()
-			local inCombat
+			-- local inCombat
 			if IsInRaid() then
 				--raid
 				local inCombat = false

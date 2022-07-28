@@ -349,6 +349,7 @@ end
 
 -- ~start ~inicio ~novo �ovo
 function _detalhes:EntrarEmCombate(...)
+	
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00started a new combat|r|cFFFF7700", _detalhes.encounter_table and _detalhes.encounter_table.name or "")
 --		local from = debugstack(2, 1, 0)
@@ -508,7 +509,7 @@ function _detalhes:SairDoCombate(bossKilled, from_encounter_end)
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00ended a combat|r|cFFFF7700", _detalhes.encounter_table and _detalhes.encounter_table.name or "")
 	end
-
+	_table_wipe(_detalhes.CachedGUIDToPull)
 	--> in case of something somehow someway call to close the same combat a second time.
 	if _detalhes.tabela_vigente == _detalhes.last_closed_combat then
 		return

@@ -11,9 +11,9 @@ do
 	_detalhes.SpecSpellList = { --~spec
 		-- Unholy Death Knight:
 		[49206] = 252, -- Summon Gargoyle
-		[51099] = 252, -- Dark Transformation, Rank 1
+		-- [51099] = 252, -- Dark Transformation, Rank 1
 		[63560] = 252, -- Dark Transformation, Rank 2
-		[51161] = 252, -- Dark Transformation, Rank 3
+		-- [51161] = 252, -- Dark Transformation, Rank 3
 		[48965] = 252, -- Shadow Infusion, Rank 1
 		[49571] = 252, -- Shadow Infusion, Rank 2
 		[49572] = 252, -- Shadow Infusion, Rank 3
@@ -37,13 +37,13 @@ do
 
 		-- Blood Death Knight:
 		-- [49222] = 250, -- Bone Shield
-		[49941] = 250, -- vskip
+		-- [49941] = 250, -- vskip
 		[55233] = 250, -- Vampiric Blood
 		[49028] = 250, -- Dancing Rune Weapon
-		[48982] = 250, -- Rune Tap
+		-- [48982] = 250, -- Rune Tap
 		[56222] = 250, -- Dark Command
 		[51429] = 250, -- Blood Boil, Rank 5
-		[308113] = 250, -- Blood Boil, Rank 5
+		[308113] = 250, -- 
 
 		-- Balance Druid:
 		[53201] = 102, -- Starfall, Rank 4
@@ -65,7 +65,7 @@ do
 		[62606] = 104, -- Savage Defense
 
 		-- Restoration Druid:
-		[48447] = 105, -- Tranquility, Rank 7
+		-- [48447] = 105, -- Tranquility, Rank 7
 		[48451] = 105, -- Lifebloom, Rank 3
 		[53251] = 105, -- Wild Growth, Rank 4
 		[18562] = 105, -- Swiftmend
@@ -81,6 +81,7 @@ do
 
 		-- Survival Hunter:
 		[60053] = 255, -- razrivnaya
+		[63672] = 255, -- Black Arrow
 
 		-- Arcane Mage:
 		-- [12042] = 62, -- Arcane Power
@@ -94,25 +95,27 @@ do
 		[55360] = 63, -- Living Bomb, Rank 3
 		[42950] = 63, -- Dragon's Breath, Rank 6
 		[42926] = 63, -- Flamestrike, Rank 9
-		[42859] = 63, -- Scorch, Rank 11
-		[42833] = 63, -- Fireball, Rank 16
+		-- [42859] = 63, -- Scorch, Rank 11
+		-- [42833] = 63, -- Fireball, Rank 16
 		[42891] = 63, -- Pyroblast, Rank 12
 
 		-- Frost Mage:
 		[42914] = 64, -- Ice Lance, Rank 3
-		[42842] = 64, -- Frostbolt, Rank 16
+		-- [42842] = 64, -- Frostbolt, Rank 16
 		[47610]	= 64, -- Frostfire Bolt, Rank 2
 		[44572] = 64, -- Deep Freeze
 
 		-- Holy Paladin:
-		[31821] = 65, -- Devotion Aura
+		-- [31821] = 65, -- Devotion Aura
 		[53563] = 65, -- Beacon of Light
-		[48817] = 65, -- Denounce, Rank 5
+		-- [48817] = 65, -- Denounce, Rank 5
 		[48825] = 65, -- Holy Shock, Rank 7
+		[20216] = 65, -- 
+		[20216] = 65, -- 31842
 
 		-- Protection Paladin:
 		[48952] = 66, -- Shield of heaven
-		[61411] = 66, -- Shield of the Righteous, Rank 2
+		-- [61411] = 66, -- Shield of the Righteous, Rank 2
 		[48827] = 66, -- Avenger's Shield, Rank 5
 		[53595] = 66, -- molot pravedn
 		[20911] = 66, -- buff proto
@@ -161,20 +164,20 @@ do
 
 		-- Subtlety Rogue:
 		[51713] = 261, -- shadowdance
-		[36554] = 261, -- iшаг сквозь тень
+		[36554] = 261, -- шаг сквозь тень
 
 		-- Elemental Shaman:
 		-- [61882] = 262, -- Earthquake
 		[60188] = 262, -- Elemental Fury
 		--[29000] = 262, -- Elemental Reach --removed from the game
 		--[62099] = 262, -- Shamanism --removed from the game
-		[51490] = 262, -- Thunderstorm, Rank 1
-		[59156] = 262, -- Thunderstorm, Rank 2
-		[59158] = 262, -- Thunderstorm, Rank 3
+		-- [51490] = 262, -- Thunderstorm, Rank 1
+		-- [59156] = 262, -- Thunderstorm, Rank 2
+		-- [59158] = 262, -- Thunderstorm, Rank 3
 		[59159] = 262, -- Thunderstorm, Rank 4
 		[16166] = 262, -- pokorenye
 		[30706] = 262, -- totem
-		[57522] = 262, -- totem elems
+		-- [57522] = 262, -- totem elems
 		[309231] = 262, -- Earthquake
 		[308000] = 262,
 		[308001] = 262,
@@ -184,7 +187,7 @@ do
 		-- [8042] = 262, -- Earth Shock
 
 		-- Enhancement Shaman:
-		[77223] = 263, -- Mastery: Enhanced Elements
+		-- [77223] = 263, -- Mastery: Enhanced Elements
 		[51533] = 263, -- Feral Spirit
 		-- [58875] = 263, -- Spirit Walk
 		--[51530] = 263, -- Maelstrom Weapon --removed from the game
@@ -192,27 +195,26 @@ do
 		--[8190] = 263, -- Magma Totem --removed from the game
 		[25504] = 263, -- Windfury
 		[17364] = 263, -- Stormstrike
-		[32175] = 263, -- Stormstrike
-		[32176] = 263, -- Stormstrike off hand
-		[16282] = 263, -- Flurry --
-		[10444] = 263, -- Flametongue attack
+		-- [32175] = 263, -- Stormstrike
+		-- [32176] = 263, -- Stormstrike off hand
+		-- [16282] = 263, -- Flurry --
+		-- [10444] = 263, -- Flametongue attack
 		[60103] = 263, -- Lava Lash
-		[30812] = 263, -- Mental Quickness, Rank 1
+		-- [30812] = 263, -- Mental Quickness, Rank 1
 		[30823] = 263, -- lomai menya esli smo
-		[30813] = 263, -- Mental Quickness, Rank 2
-		[30814] = 263, -- Mental Quickness, Rank 3
-		[51521] = 263, -- Improved Stormstrike, Rank 1
-		[51522] = 263, -- Improved Stormstrike, Rank 2
+		-- [30813] = 263, -- Mental Quickness, Rank 2
+		-- [30814] = 263, -- Mental Quickness, Rank 3
+		-- [51521] = 263, -- Improved Stormstrike, Rank 1
+		-- [51522] = 263, -- Improved Stormstrike, Rank 2
 
 		-- Restoration Shaman:
 		[51566] = 264, -- Tidal Waves, Rank 5
-		[55459] = 264, -- Chain Heal, Rank 7
-		[16196] = 264, -- Resurgence
-		--[974] = 264, -- Earth Shield --can be used by all specs as a talent
-		-- [52127] = 264, -- Water Shield
---		[57960] = 264, -- Restorative Waves, Rank 9
+		-- [55459] = 264, -- Chain Heal, Rank 7
+		-- [16196] = 264, -- Resurgence
 		[61301] = 264, -- Riptide, Rank 4
 		[49284] = 264, -- schit zemli
+		[51886] = 264, -- очищение духа
+		[55198] = 264, -- приливные волны
 
 
 		-- Affliction :
@@ -1376,7 +1378,7 @@ do
 		[109248]	=	true,-- Binding Shot
 		[149365]	=	true,-- Dire Beast
 		[120679]	=	true,-- Dire Beast
-		[3045]	=	true,-- Rapid Fire
+		-- [3045]	=	true,-- Rapid Fire
 		[19574]	=	true,-- Bestial Wrath
 		[19386]	=	true,-- Wyvern Sting
 		[19434]	=	true,-- Aimed Shot
@@ -1501,7 +1503,7 @@ do
 		--shaman
 		[51505]	=	true, --lava burst
 		[8050]	=	true, --flame shock
-		[117014]	=	true, --elemental blast
+		-- [117014]	=	true, --elemental blast
 		[403]	=	true, --lightning bolt
 		--[45284]	=	true, --lightning bolt
 		[421]	=	true, --chain lightining
@@ -1509,7 +1511,7 @@ do
 		[25504]	=	true, --windfury
 		[8042]	=	true, --earthshock
 		[26364]	=	true, --lightning shield
-		[117014]	=	true, --elemental blast
+		-- [117014]	=	true, --elemental blast
 		[73683]	=	true, --unleash flame
 		[115356]	=	true, -- Stormblast
 		[60103]	=	true, -- Lava Lash
@@ -1543,7 +1545,7 @@ do
 		[603]	=	true, --doom
 		[108371]	=	true, --Harvest life
 		[17962]	=	true, -- Conflagrate
-		[105174]	=	true, -- Hand of Gul'dan
+		-- [105174]	=	true, -- Hand of Gul'dan
 		[146739]	=	true, -- Corruption
 		[30283]	=	true, -- Shadowfury
 		[104232]	=	true, -- Rain of Fire
