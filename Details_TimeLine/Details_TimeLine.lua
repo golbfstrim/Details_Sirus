@@ -1494,6 +1494,9 @@ end
 
 function TimeLine:AuraOn(time, _, who_serial, who_name, who_flags, target_serial, target_name, target_flags, spellid, spellname, spelltype, auratype, amount)
 	if auratype == "DEBUFF" then
+		if not target_name then
+			target_name = UNKNOWN
+		end
 		--> is the target a player?
 		if _bit_band(target_flags, 0x00000400) ~= 0 then
 			--> is the source an enemy?
