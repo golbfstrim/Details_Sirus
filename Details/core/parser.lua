@@ -2146,6 +2146,7 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 --> handle shields
 ------------------------------------------------------------------------------------------------
 		--> healing done(shields)
+		if not alvo_name then alvo_name = UNKNOWN end
 		-- this needs to be outside buff / debuffs for boss mechanics which absorb damage.
 		if(absorb_spell_list[spellid]) then
 			escudo[alvo_name] = escudo[alvo_name] or {}
