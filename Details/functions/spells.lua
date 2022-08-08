@@ -1015,7 +1015,8 @@ do
 		[317293] = 10, -- bronze statuette
 
 		[55277] = 12, -- shmn ttm
-
+		--ttg
+		[318754] = 7, --ench ttg
 		-- weapons
 		[317905] = 10,   --- духовный барьер ТТГ
 		[317907] = 10,
@@ -1142,7 +1143,7 @@ do
 		[31002] = 300, -- Pendant of the Null Rune
 		[30999] = 300, -- Pendant of Withering
 		[30994] = 300, -- Pendant of Thawing
-		[31000] = 300, --
+		-- [31000] = 300, --
 		[23506]= 20, -- Arena Grand Master Usage (Aura of Protection)
 		[12561] = 60, -- Goblin Construction Helmet usage
 		[31771] = 20, -- Runed Fungalcap usage
