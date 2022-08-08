@@ -662,7 +662,7 @@
 
 			------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 			-- grava o objeto no mapa do container
-			if nome == nil then nome  = "UNKNOWN" end
+			if nome == nil then nome  = UNKNOWN end
 			local size = #self._ActorTable+1
 			-- print(size,665)
 			self._ActorTable [size] = novo_objeto --> grava na tabela de indexes

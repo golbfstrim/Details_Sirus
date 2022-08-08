@@ -27,5 +27,5 @@ L["STRING_TOOLTIP"] = "Показать данные временной лини
 L["STRING_TYPE"] = "Тип:"
 L["STRING_TYPE_COOLDOWN"] = "Восстановление"
 L["STRING_TYPE_DEBUFF"] = "Дебафф"
-L["STRING_UNKNOWN"] = "неизвестно"
+L["STRING_UNKNOWN"] = "Неизвестно"
 

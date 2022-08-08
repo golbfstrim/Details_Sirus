@@ -2146,7 +2146,7 @@ function parser:buff_refresh(token, time, who_serial, who_name, who_flags, alvo_
 --> handle shields
 ------------------------------------------------------------------------------------------------
 		--> healing done(shields)
-		if not alvo_name then alvo_name = UNKNOWN end
+		if alvo_name == nil then alvo_name = UNKNOWN end
 		-- this needs to be outside buff / debuffs for boss mechanics which absorb damage.
 		if(absorb_spell_list[spellid]) then
 			escudo[alvo_name] = escudo[alvo_name] or {}
@@ -4495,29 +4495,29 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 			print("player is dead:", UnitHealth("player") < 1)
 		end
 	end
-	-- for _, npcID in _ipairs(_detalhes.cache_dead_npc) do
-	-- 	if _detalhes.encounter_table and _detalhes.encounter_table.id == npcID then
-	-- 		local mapID = _detalhes.zone_id
-	-- 		local bossIDs = _detalhes:GetBossIds(mapID)
-	-- 		if not bossIDs then
-	-- 			for id, data in _pairs(_detalhes.EncounterInformation) do
-	-- 				if data.name == _detalhes.zone_name then
-	-- 					bossIDs = _detalhes:GetBossIds(id)
-	-- 					mapID = id
-	-- 					break
-	-- 				end
-	-- 			end
-	-- 		end
+	for _, npcID in _ipairs(_detalhes.cache_dead_npc) do
+		if _detalhes.encounter_table and _detalhes.encounter_table.id == npcID then
+			local mapID = _detalhes.zone_id
+			local bossIDs = _detalhes:GetBossIds(mapID)
+			if not bossIDs then
+				for id, data in _pairs(_detalhes.EncounterInformation) do
+					if data.name == _detalhes.zone_name then
+						bossIDs = _detalhes:GetBossIds(id)
+						mapID = id
+						break
+					end
+				end
+			end
 
-	-- 		local bossIndex = bossIDs and bossIDs[npcID]
-	-- 		if bossIndex then
-	-- 			local _, _, _, _, maxPlayers = GetInstanceInfo()
-	-- 			local difficulty = GetInstanceDifficulty()
-	-- 			_detalhes.parser_functions:ENCOUNTER_END(npcID, _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
-	-- 			break
-	-- 		end
-	-- 	end
-	-- end
+			local bossIndex = bossIDs and bossIDs[npcID]
+			if bossIndex then
+				local _, _, _, _, maxPlayers = GetInstanceInfo()
+				local difficulty = GetInstanceDifficulty()
+				_detalhes.parser_functions:ENCOUNTER_END(npcID, _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
+				break
+			end
+		end
+	end
 	--elapsed combat time
 	_detalhes.LatestCombatDone = GetTime()
 	_detalhes.tabela_vigente.CombatEndedAt = GetTime()
