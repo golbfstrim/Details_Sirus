@@ -89,9 +89,6 @@ function Details:OpenPlayerBreakdown (windowObject, playerObject)
 end
 
 function _detalhes:AbreJanelaInfo (jogador, from_att_change, refresh, ShiftKeyDown, ControlKeyDown)
--- print("DSAFA")
-	-- print (debugstack())
-	-- print("dsafasfs")
 
 	if (not _detalhes.row_singleclick_overwrite [self.atributo] or not _detalhes.row_singleclick_overwrite [self.atributo][self.sub_atributo]) then
 		_detalhes:FechaJanelaInfo()
@@ -140,7 +137,6 @@ function _detalhes:AbreJanelaInfo (jogador, from_att_change, refresh, ShiftKeyDo
 	info.instancia = self --> salva a refer�ncia da inst�ncia que pediu o info
 
 	info.target_text = Loc ["STRING_TARGETS"] .. ":"
-	-- print("fasfga")
 	info.target_member = "total"
 	info.target_persecond = false
 
@@ -165,9 +161,9 @@ function _detalhes:AbreJanelaInfo (jogador, from_att_change, refresh, ShiftKeyDo
 	local avatar
 	if (serial ~= "") then
 		avatar = NickTag:GetNicknameTable (serial)
-		-- print(avatar)
+
 	end
-	-- print(avatar)
+
 	if (avatar and avatar [1]) then
 		info.nome:SetText ((not _detalhes.ignore_nicktag and avatar [1]) or nome)
 	end

@@ -5263,7 +5263,7 @@ end
 -------------------------------------------add function to show that f skull
 --actor 1 is who will receive the sum from actor2
 function Details.SumDamageActors(actor1, actor2, actorContainer)
-	print(actor1, actor2, actorContainer)
+	-- print(actor1, actor2, actorContainer)
 	--general
 	actor1.total = actor1.total + actor2.total
 	actor1.damage_taken = actor1.damage_taken + actor2.damage_taken

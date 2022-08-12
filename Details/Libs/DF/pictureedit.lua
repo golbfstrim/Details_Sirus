@@ -474,7 +474,6 @@ local CreateImageEditorFrame = function()
 					SelectionBox_Left:SetPoint ("topleft", UIParent, "bottomleft", x1, y1)
 					SelectionBox_Left:SetPoint ("bottomleft", UIParent, "bottomleft", x1, y2)
 
-					print (1)
 				else
 					--bottom
 
