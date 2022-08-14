@@ -357,10 +357,10 @@ function _G._detalhes:Start()
 		if (self.tutorial.logons == 100) then --  and self.tutorial.logons < 104
 			if (not self.tutorial.feedback_window1 and not _detalhes.streamer_config.no_alerts) then
 				--> check if isn't inside an instance
-				if (_detalhes:IsInCity()) then
-					self.tutorial.feedback_window1 = true
-					_detalhes:ShowFeedbackRequestWindow()
-				end
+				-- if (_detalhes:IsInCity()) then
+				-- 	self.tutorial.feedback_window1 = true
+				-- 	_detalhes:ShowFeedbackRequestWindow()
+				-- end
 			end
 		end
 

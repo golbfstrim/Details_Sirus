@@ -295,17 +295,12 @@ function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_fl
 			-- else
 				-- _detalhes:SendMsgToChannel(msg, channel, _detalhes.announce_interrupts.whisper)
 			-- end
-			
 		end
 	elseif channel == "PRINT" then
 		local custom = _detalhes.announce_interrupts.custom
 
-		local spellname
-		if spellid > 10 then
-			spellname = GetSpellLink(extraSpellID)
-		else
-			spellname = _GetSpellInfo(extraSpellID)
-		end
+		local spellname = select(1,GetSpellInfo(extraSpellID))
+
 
 		if custom ~= "" then
 			custom = custom:gsub("{spell}", spellname)

@@ -10391,7 +10391,7 @@ function window:CreateFrame11()
 
 			local channel = _detalhes.announce_interrupts.channel
 			_detalhes.announce_interrupts.channel = "PRINT"
-			_detalhes:interrupt_announcer (nil, nil, nil, _detalhes.playername, nil, nil, "A Monster", nil, 1766, "Kick", nil, 106523, "Cataclysm", nil)
+			_detalhes:interrupt_announcer (nil, nil, nil, _detalhes.playername, nil, nil, "A Monster", nil, 1766, "Kick", nil, 57994, "Cataclysm", nil)
 			_detalhes.announce_interrupts.channel = channel
 
 		end)
