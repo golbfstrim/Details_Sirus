@@ -298,9 +298,10 @@ function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_fl
 		end
 	elseif channel == "PRINT" then
 		local custom = _detalhes.announce_interrupts.custom
-
+		-- print(custom)
+		-- print(extraSpellID)
 		local spellname = select(1,GetSpellInfo(extraSpellID))
-
+		-- print(spellname)
 
 		if custom ~= "" then
 			custom = custom:gsub("{spell}", spellname)

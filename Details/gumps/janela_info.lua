@@ -58,9 +58,25 @@ local spellInfoSettings = {
 	amount = 6,
 }
 
+_detalhes.player_details_tabs = {}
+info.currentTabsInUse =  {}
 ------------------------------------------------------------------------------------------------------------------------------
 --self = instancia
 --jogador = classe_damage ou classe_heal
+
+function Details:GetBreakdownTabsInUse()
+	return info.currentTabsInUse
+end
+
+function Details:GetBreakdownTabByName(tabName, tablePool)
+	tablePool = tablePool or _detalhes.player_details_tabs
+	for index = 1, #tablePool do
+		local tab = tablePool[index]
+		if (tab.tabname == tabName) then
+			return tab, index
+		end
+	end
+end
 
 --return the combat being used to show the data in the opened breakdown window
 function Details:GetCombatFromBreakdownWindow()
@@ -80,6 +96,10 @@ end
 --return the actor object in use by the breakdown window
 function Details:GetPlayerObjectFromBreakdownWindow()
 	return info.jogador
+end
+
+function Details:GetBreakdownWindow()
+	return Details.janela_info
 end
 
 --english alias
@@ -378,7 +398,7 @@ function gump:TrocaBackgroundInfo()
 	elseif (info.atributo == 3) then --> REGEN
 		info.bg1_sec_texture:SetTexture (nil)
 		info.tipo = 2
-		info.targets:SetText ("Vindo de:")
+		info.targets:SetText ("Цели :") -- todo
 
 	elseif (info.atributo == 4) then --> MISC
 		info.bg1_sec_texture:SetTexture (nil)
@@ -1490,8 +1510,13 @@ local elvui_skin = function()
 
 	--class icon
 	window.SetClassIcon = function (player, class)
+		if (player.spellicon) then
+			window.classe_icone:SetTexture(player.spellicon)
+			window.classe_icone:SetTexCoord(.1, .9, .1, .9)
+	
+		elseif (player.spec) then
 
-		if (player.spec) then
+		-- if (player.spec) then
 			window.classe_icone:SetTexture ([[Interface\AddOns\Details\images\spec_icons_normal_alpha]])
 			window.classe_icone:SetTexCoord (_unpack (_detalhes.class_specs_coords [player.spec]))
 			--esta_barra.icone_classe:SetVertexColor (1, 1, 1)
@@ -2568,7 +2593,8 @@ function gump:CriaJanelaInfo()
 			height = 16,
 		}
 
-		_detalhes:CreatePlayerDetailsTab ("Avoidance", Loc ["STRING_INFO_TAB_AVOIDANCE"], --[1] tab name [2] localized name
+		_detalhes:CreatePlayerDetailsTab ("Avoidance", --[1] tab name
+			Loc ["STRING_INFO_TAB_AVOIDANCE"], --[2] localized name
 			function (tabOBject, playerObject)  --[2] condition
 				if (playerObject.isTank) then
 					return true
@@ -2844,7 +2870,8 @@ function gump:CriaJanelaInfo()
 		height = 16,
 	}
 
-	_detalhes:CreatePlayerDetailsTab ("Auras", "Auras", --[1] tab name [2] localized name
+	_detalhes:CreatePlayerDetailsTab ("Auras", --[1] tab name
+		Loc["Auras"],  --[2] localized name
 		function (tabOBject, playerObject)  --[2] condition
 			return true
 		end,
@@ -3279,6 +3306,10 @@ function gump:CriaJanelaInfo()
 					--main player - seta no primeiro box
 						local spellid = data [1].id
 						local name, _, icon = _GetSpellInfo (spellid)
+						if (not name) then
+							--no spell found? - tbc problem
+							return
+						end
 						local petName = data [3]
 
 						bar [1]:SetTexture (icon) --bar[1] = spellicon bar[2] = statusbar
@@ -3784,11 +3815,11 @@ function gump:CriaJanelaInfo()
 			local bar3 = frame3.bars [self.index]
 
 			bar1[2]:SetStatusBarColor (.5, .5, .5, 1)
-			bar1[2].icon:SetTexCoord (0, 1, 0, 1)
+			-- bar1[2].icon:SetTexCoord (0, 1, 0, 1)
 			bar2[2]:SetStatusBarColor (unpack (bar_color))
-			bar2[2].icon:SetTexCoord (0, 1, 0, 1)
+			-- bar2[2].icon:SetTexCoord (0, 1, 0, 1)
 			bar3[2]:SetStatusBarColor (unpack (bar_color))
-			bar3[2].icon:SetTexCoord (0, 1, 0, 1)
+			-- bar3[2].icon:SetTexCoord (0, 1, 0, 1)
 
 			frame1.tooltip:Hide()
 			frame2.tooltip:Hide()
@@ -4283,11 +4314,11 @@ function gump:CriaJanelaInfo()
 			local bar3 = frame3.bars [self.index]
 
 			bar1[2]:SetStatusBarColor (.5, .5, .5, 1)
-			bar1[2].icon:SetTexCoord (0, 1, 0, 1)
+			-- bar1[2].icon:SetTexCoord (0, 1, 0, 1)
 			bar2[2]:SetStatusBarColor (unpack (bar_color))
-			bar2[2].icon:SetTexCoord (0, 1, 0, 1)
+			-- bar2[2].icon:SetTexCoord (0, 1, 0, 1)
 			bar3[2]:SetStatusBarColor (unpack (bar_color))
-			bar3[2].icon:SetTexCoord (0, 1, 0, 1)
+			-- bar3[2].icon:SetTexCoord (0, 1, 0, 1)
 
 			frame1.tooltip:Hide()
 			frame2.tooltip:Hide()
@@ -4320,7 +4351,7 @@ function gump:CriaJanelaInfo()
 				bar:SetValue (100)
 				bar:SetHeight (14)
 				bar.icon = spellicon
-
+				bar.icon:SetTexCoord(0, 1, 0, 1)
 				if (is_target) then
 					bar:SetScript ("OnEnter", on_enter_target)
 					bar:SetScript ("OnLeave", on_leave_target)
@@ -4392,7 +4423,7 @@ function gump:CriaJanelaInfo()
 
 				tooltip.casts_label = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.casts_label:SetPoint ("TOPLEFT", tooltip, "TOPLEFT", x_start, -2 + (y*0))
-				tooltip.casts_label:SetText ("Total Casts:")
+				tooltip.casts_label:SetText ("Применений:")
 				tooltip.casts_label:SetJustifyH ("LEFT")
 				tooltip.casts_label2 = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.casts_label2:SetPoint ("TOPRIGHT", tooltip, "TOPRIGHT", -x_start, -2 + (y*0))
@@ -4405,7 +4436,7 @@ function gump:CriaJanelaInfo()
 
 				tooltip.hits_label = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.hits_label:SetPoint ("TOPLEFT", tooltip, "TOPLEFT", x_start, -14 + (y*1))
-				tooltip.hits_label:SetText ("Total Hits:")
+				tooltip.hits_label:SetText ("Попаданий:")
 				tooltip.hits_label:SetJustifyH ("LEFT")
 				tooltip.hits_label2 = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.hits_label2:SetPoint ("TOPRIGHT", tooltip, "TOPRIGHT", -x_start, -14 + (y*1))
@@ -4418,7 +4449,7 @@ function gump:CriaJanelaInfo()
 
 				tooltip.average_label = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.average_label:SetPoint ("TOPLEFT", tooltip, "TOPLEFT", x_start, -26 + (y*2))
-				tooltip.average_label:SetText ("Average:")
+				tooltip.average_label:SetText ("Среднее:")
 				tooltip.average_label:SetJustifyH ("LEFT")
 				tooltip.average_label2 = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.average_label2:SetPoint ("TOPRIGHT", tooltip, "TOPRIGHT", -x_start, -26 + (y*2))
@@ -4431,7 +4462,7 @@ function gump:CriaJanelaInfo()
 
 				tooltip.crit_label = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.crit_label:SetPoint ("TOPLEFT", tooltip, "TOPLEFT", x_start, -38 + (y*3))
-				tooltip.crit_label:SetText ("Critical:")
+				tooltip.crit_label:SetText ("Крит:")
 				tooltip.crit_label:SetJustifyH ("LEFT")
 				tooltip.crit_label2 = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.crit_label2:SetPoint ("TOPRIGHT", tooltip, "TOPRIGHT", -x_start, -38 + (y*3))
@@ -4444,7 +4475,7 @@ function gump:CriaJanelaInfo()
 
 				tooltip.uptime_label = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.uptime_label:SetPoint ("TOPLEFT", tooltip, "TOPLEFT", x_start, -50 + (y*4))
-				tooltip.uptime_label:SetText ("Uptime:")
+				tooltip.uptime_label:SetText ("Длительность:")
 				tooltip.uptime_label:SetJustifyH ("LEFT")
 				tooltip.uptime_label2 = tooltip:CreateFontString (nil, "overlay", "GameFontHighlightSmall")
 				tooltip.uptime_label2:SetPoint ("TOPRIGHT", tooltip, "TOPRIGHT", -x_start, -50 + (y*4))
@@ -4527,6 +4558,7 @@ function gump:CriaJanelaInfo()
 					bar:SetValue (0)
 					bar:SetHeight (14)
 					bar.icon = spellicon
+					bar.icon:SetTexCoord(0, 1, 0, 1)
 
 					bar.lefttext = bar:CreateFontString (nil, "OVERLAY", "GameFontHighlightSmall")
 					local _, size, flags = bar.lefttext:GetFont()
@@ -4922,7 +4954,7 @@ info.selectedTab = "Summary"
 
 _detalhes.player_details_tabs = {}
 
-function _detalhes:CreatePlayerDetailsTab (tabname, localized_name, condition, fillfunction, onclick, oncreate, iconSettings)
+function _detalhes:CreatePlayerDetailsTab (tabname, localized_name, condition, fillfunction, onclick, oncreate, iconSettings,replace)
 	if (not tabname) then
 		tabname = "unnamed"
 	end
@@ -5052,6 +5084,7 @@ function _detalhes:CreatePlayerDetailsTab (tabname, localized_name, condition, f
 			end
 		end
 	end)
+	return newTabButton, newTabButton.frame
 
 end
 
@@ -5299,18 +5332,19 @@ local row_on_enter = function (self)
 	if (self.isAlvo) then --> monta o tooltip do alvo
 		--> talvez devesse escurecer a janela no fundo... pois o tooltip � transparente e pode confundir
 		GameTooltip:SetOwner (self, "ANCHOR_TOPRIGHT")
-
+		
 		if (self.spellid == "enemies") then --> damage taken enemies
 			if (not self.minha_tabela or not self.minha_tabela:MontaTooltipDamageTaken (self, self._index, info.instancia)) then  -- > poderia ser aprimerado para uma tailcall
 				return
 			end
-		elseif (not self.minha_tabela or not self.minha_tabela:MontaTooltipAlvos (self, self._index, info.instancia)) then  -- > poderia ser aprimerado para uma tailcall
+			GameTooltip:Show()
+			self:SetHeight (CONST_TARGET_HEIGHT + 1)
 			return
 		end
 
-		self:SetHeight (CONST_TARGET_HEIGHT + 1)
-
-		GameTooltip:Show()
+		if (not self.minha_tabela or not self.minha_tabela:MontaTooltipAlvos (self, self._index, info.instancia)) then  -- > poderia ser aprimerado para uma tailcall
+			return
+		end
 
 	elseif (self.isMain) then
 
@@ -5479,7 +5513,11 @@ end
 local function CriaTexturaBarra (instancia, barra)
 
 	barra.textura = _CreateFrame ("StatusBar", nil, barra)
+
+	-- barra.textura:SetFrameLevel (barra:GetFrameLevel()+1)
+
 	barra.textura:SetAllPoints (barra)
+	-- barra.textura:SetAlpha (0.5)
 
 	local texture = SharedMedia:Fetch ("statusbar", _detalhes.player_details_window.bar_texture)
 	barra.textura:SetStatusBarTexture (texture)
@@ -5540,42 +5578,48 @@ end
 local target_on_enter = function (self)
 
 	local barra = self:GetParent():GetParent()
-
+	
 	if (barra.show and type (barra.show) == "number") then
 		local actor = barra.other_actor or info.jogador
 		local spell = actor.spells and actor.spells:PegaHabilidade (barra.show)
 		if (spell) then
-
+		
 			local ActorTargetsSortTable = {}
 			local ActorTargetsContainer
-
-			local attribute, sub_attribute = info.instancia:GetDisplay()
-			if (attribute == 1 or attribute == 3) then
-				ActorTargetsContainer = spell.targets
+			local total = 0
+			
+			if (spell.isReflection) then
+				ActorTargetsContainer = spell.extra
 			else
-				if (sub_attribute == 3) then --overheal
-					ActorTargetsContainer = spell.targets_overheal
-				elseif (sub_attribute == 6) then --absorbs
-					ActorTargetsContainer = spell.targets_absorbs
-				else
+				local attribute, sub_attribute = info.instancia:GetDisplay()
+				if (attribute == 1 or attribute == 3) then
 					ActorTargetsContainer = spell.targets
+				else
+					if (sub_attribute == 3) then --overheal
+						ActorTargetsContainer = spell.targets_overheal
+					elseif (sub_attribute == 6) then --absorbs
+						ActorTargetsContainer = spell.targets_absorbs
+					else
+						ActorTargetsContainer = spell.targets
+					end
 				end
 			end
-
+			
 			--add and sort
 			for target_name, amount in _pairs (ActorTargetsContainer) do
 				--print (target_name, amount)
 				ActorTargetsSortTable [#ActorTargetsSortTable+1] = {target_name, amount or 0}
+				total = total + (amount or 0)
 			end
 			table.sort (ActorTargetsSortTable, _detalhes.Sort2)
-
+			
 			local spellname = _GetSpellInfo (barra.show)
-
+			
 			GameTooltip:SetOwner (self, "ANCHOR_TOPRIGHT")
 			GameTooltip:AddLine (barra.index .. ". " .. spellname)
 			GameTooltip:AddLine (info.target_text)
 			GameTooltip:AddLine (" ")
-
+			
 			--get time type
 			local meu_tempo
 			if (_detalhes.time_type == 1 or not actor.grupo) then
@@ -5583,29 +5627,60 @@ local target_on_enter = function (self)
 			elseif (_detalhes.time_type == 2) then
 				meu_tempo = info.instancia.showing:GetCombatTime()
 			end
-
+			
 			local SelectedToKFunction = _detalhes.ToKFunctions [_detalhes.ps_abbreviation]
+			
+			if (spell.isReflection) then
+				_detalhes:FormatCooltipForSpells()
+				GameCooltip:SetOwner(self, "BOTTOMRIGHT", "TOP", 4, -2)
 
-			for index, target in ipairs (ActorTargetsSortTable) do
-				if (target [2] > 0) then
-					local class = _detalhes:GetClass (target [1])
-					if (class and _detalhes.class_coords [class]) then
-						local cords = _detalhes.class_coords [class]
-						if (info.target_persecond) then
-							GameTooltip:AddDoubleLine (index .. ". |TInterface\\AddOns\\Details\\images\\classes_small_alpha:14:14:0:0:128:128:"..cords[1]*128 ..":"..cords[2]*128 ..":"..cords[3]*128 ..":"..cords[4]*128 .."|t " .. target [1], _detalhes:comma_value ( _math_floor (target [2] / meu_tempo) ), 1, 1, 1, 1, 1, 1)
+				_detalhes:AddTooltipSpellHeaderText ("Заклинаний отражено", {1, 0.9, 0.0, 1}, 1, select(3, _GetSpellInfo(spell.id)), 0.1, 0.9, 0.1, 0.9) --localize-me
+				_detalhes:AddTooltipHeaderStatusbar (1, 1, 1, 0.4)
+
+				GameCooltip:AddIcon(select(3, _GetSpellInfo(spell.id)), 1, 1, 16, 16, .1, .9, .1, .9)
+				_detalhes:AddTooltipHeaderStatusbar (1, 1, 1, 0.5)
+
+				local topDamage = ActorTargetsSortTable[1] and ActorTargetsSortTable[1][2]
+
+				for index, target in ipairs (ActorTargetsSortTable) do 
+					if (target [2] > 0) then
+						local spellId = target[1]
+						local damageDone = target[2]
+						local spellName, _, spellIcon = _GetSpellInfo(spellId)
+						GameCooltip:AddLine(spellName, SelectedToKFunction (_, damageDone) .. " (" .. floor(damageDone / topDamage * 100) .. "%)")
+						GameCooltip:AddIcon(spellIcon, 1, 1, 16, 16, .1, .9, .1, .9)
+						_detalhes:AddTooltipBackgroundStatusbar (false, damageDone / topDamage * 100)
+					end
+				end
+
+				GameCooltip:Show()
+
+				self.texture:SetAlpha (1)
+				self:SetAlpha (1)
+				barra:GetScript("OnEnter")(barra)
+				return
+			else
+				for index, target in ipairs (ActorTargetsSortTable) do 
+					if (target [2] > 0) then
+						local class = _detalhes:GetClass (target [1])
+						if (class and _detalhes.class_coords [class]) then
+							local cords = _detalhes.class_coords [class]
+							if (info.target_persecond) then
+								GameTooltip:AddDoubleLine (index .. ". |TInterface\\AddOns\\Details\\images\\classes_small_alpha:14:14:0:0:128:128:"..cords[1]*128 ..":"..cords[2]*128 ..":"..cords[3]*128 ..":"..cords[4]*128 .."|t " .. target [1], _detalhes:comma_value ( _math_floor (target [2] / meu_tempo) ), 1, 1, 1, 1, 1, 1)
+							else
+								GameTooltip:AddDoubleLine (index .. ". |TInterface\\AddOns\\Details\\images\\classes_small_alpha:14:14:0:0:128:128:"..cords[1]*128 ..":"..cords[2]*128 ..":"..cords[3]*128 ..":"..cords[4]*128 .."|t " .. target [1], SelectedToKFunction (_, target [2]), 1, 1, 1, 1, 1, 1)
+							end
 						else
-							GameTooltip:AddDoubleLine (index .. ". |TInterface\\AddOns\\Details\\images\\classes_small_alpha:14:14:0:0:128:128:"..cords[1]*128 ..":"..cords[2]*128 ..":"..cords[3]*128 ..":"..cords[4]*128 .."|t " .. target [1], SelectedToKFunction (_, target [2]), 1, 1, 1, 1, 1, 1)
-						end
-					else
-						if (info.target_persecond) then
-							GameTooltip:AddDoubleLine (index .. ". " .. target [1], _detalhes:comma_value ( _math_floor (target [2] / meu_tempo)), 1, 1, 1, 1, 1, 1)
-						else
-							GameTooltip:AddDoubleLine (index .. ". " .. target [1], SelectedToKFunction (_, target [2]), 1, 1, 1, 1, 1, 1)
+							if (info.target_persecond) then
+								GameTooltip:AddDoubleLine (index .. ". " .. target [1], _detalhes:comma_value ( _math_floor (target [2] / meu_tempo)), 1, 1, 1, 1, 1, 1)
+							else
+								GameTooltip:AddDoubleLine (index .. ". " .. target [1], SelectedToKFunction (_, target [2]), 1, 1, 1, 1, 1, 1)
+							end
 						end
 					end
 				end
 			end
-
+			
 			GameTooltip:Show()
 		else
 			GameTooltip:SetOwner (self, "ANCHOR_TOPRIGHT")
@@ -5623,7 +5698,7 @@ local target_on_enter = function (self)
 		GameTooltip:AddLine (Loc ["STRING_MORE_INFO"], 1, 1, 1)
 		GameTooltip:Show()
 	end
-
+	
 	self.texture:SetAlpha (1)
 	self:SetAlpha (1)
 	barra:GetScript("OnEnter")(barra)
@@ -5631,6 +5706,7 @@ end
 
 local target_on_leave = function (self)
 	GameTooltip:Hide()
+	GameCooltip:Hide()
 	self:GetParent():GetParent():GetScript("OnLeave")(self:GetParent():GetParent())
 	self.texture:SetAlpha (.7)
 	self:SetAlpha (.7)
@@ -5654,7 +5730,7 @@ function gump:CriaNovaBarraInfo1 (instancia, index)
 	local y = (index-1) * (CONST_BAR_HEIGHT + 1)
 	y = y*-1 --> baixo
 
-	esta_barra:SetPoint ("LEFT", janela, "LEFT")
+	esta_barra:SetPoint ("LEFT", janela, "LEFT", CONST_BAR_HEIGHT, 0)
 	esta_barra:SetPoint ("RIGHT", janela, "RIGHT")
 	esta_barra:SetPoint ("TOP", janela, "TOP", 0, y)
 	esta_barra:SetFrameLevel (janela:GetFrameLevel() + 1)

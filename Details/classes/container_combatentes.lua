@@ -208,7 +208,7 @@
 
 	--> read the actor flag
 	local read_actor_flag = function (novo_objeto, dono_do_pet, serial, flag, nome, container_type)
-		if nome == nil then return end
+		if nome == nil then nome = UNKNOWN return end
 		if (flag) then
 
 			--> � um player
@@ -771,11 +771,11 @@
 		local mapa = self._NameIndexTable
 		local conteudo = self._ActorTable
 		for i = 1, #conteudo do
-			if mapa [conteudo[i].nome] then
+			-- if mapa [conteudo[i].nome] then
 				mapa [conteudo[i].nome] = i
-			else
-				mapa [conteudo[i].nome] = {}
-			end
+			-- else
+				-- mapa [conteudo[i].nome] = {}
+			-- end
 		end
 	end
 

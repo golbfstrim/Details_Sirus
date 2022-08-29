@@ -82,6 +82,7 @@ do
 				[528] = true, -- The Eye of Eternity
 				[530] = true, -- Ulduar
 				[925] = true, -- The Bronze Sanctuary
+				[914] = true, -- zort
 			}
 
 			--must fail in map and encounter id to not store data
@@ -199,6 +200,8 @@ do
 				[84017] = 3, --Shadhar
 				-- tg
 				[70010] = 1, --norigorn
+				--zort
+				[50702] = 1, --zort
 
 			}
 

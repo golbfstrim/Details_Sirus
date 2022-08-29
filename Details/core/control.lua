@@ -310,7 +310,7 @@ function _detalhes:StartCombat(...)
 end
 
 local check_for_encounter_start = function()
-	if _current_encounter_id then
+	if _detalhes._current_encounter_id then
 		return
 	end
 
@@ -349,13 +349,12 @@ end
 
 -- ~start ~inicio ~novo �ovo
 function _detalhes:EntrarEmCombate(...)
-	
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00started a new combat|r|cFFFF7700", _detalhes.encounter_table and _detalhes.encounter_table.name or "")
 --		local from = debugstack(2, 1, 0)
 --		print(from)
 	end
-
+	if not UnitAffectingCombat("player") then return end
 	local check_combat = check_for_encounter_start()
 	if check_combat then
 		C_Timer:After(3, check_for_encounter_start)

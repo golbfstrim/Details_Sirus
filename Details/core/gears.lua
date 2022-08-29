@@ -8,7 +8,7 @@ local select = select
 local floor = floor
 
 local GetNumGroupMembers = GetNumGroupMembers
-
+local LibGroupTalents = LibStub ("LibGroupTalents-1.0")
 local LibGroupInSpecT = LibStub ("LibGroupInSpecT-1.1") --disabled due to classic wow
 
 local storageDebug = true
@@ -1003,7 +1003,7 @@ function _detalhes.storage:GetIDsToGuildSync()
 					for index, encounter in ipairs (encounterTable) do
 						if (encounter.servertime) then
 							if (myGuildName == encounter.guild) then
-							tinsert (IDs, encounter.servertime)
+								tinsert (IDs, encounter.servertime)
 							end
 						end
 					end
@@ -1983,7 +1983,7 @@ function ilvl_core:QueryInspect (unitName, callback, param1)
 			end
 		end
 	elseif (IsInGroup()) then
-		for i = 1, GetNumGroupMembers()-1 do
+		for i = 1, GetNumGroupMembers() do
 			if (GetUnitName ("party" .. i, true) == unitName) then
 				unitid = "party" .. i
 				break

@@ -48,6 +48,7 @@ do
 		-- Balance Druid:
 		[53201] = 102, -- Starfall, Rank 4
 		[48465] = 102, -- Starfire, Rank 10
+		[48468] = 102, -- Insect Swarm, Rank 7
 		[24858] = 102, -- so va
 		[50516] = 102,  -- TaiFuN
 
@@ -77,11 +78,15 @@ do
 
 		-- Marksmanship Hunter:
 		[3045] = 254, -- Rapid Fire
-		[53209] = 254, -- himera
+		-- [53209] = 254, -- himera
+		[53209] = 254, -- Chimera Shot
+		[19506] = 254, -- Trueshot Aura
 
 		-- Survival Hunter:
-		[60053] = 255, -- razrivnaya
-		[63672] = 255, -- Black Arrow
+		-- [60053] = 255, -- razrivnaya
+		-- [63672] = 255, -- Black Arrow
+		[63672] = 255, -- Black Arrow Rank 6
+		[60053] = 255, -- Explosive Shot Rank 4
 
 		-- Arcane Mage:
 		-- [12042] = 62, -- Arcane Power
@@ -225,6 +230,10 @@ do
 		[308044] = 265,			-- Саван смерти - 308044
 
 		-- Demonology Warlock:
+		[30146] = 266, -- Summon Felguard
+		[47241] = 266, -- Metamorphosis
+		[47240] = 266, -- Demonic Pact, Rank 5
+		[47825] = 266, -- Soul Fire, Rank 6
 		-- [30146] = 266, -- Summon Felguard
 		[59762] = 266, -- meta
 		--[1949] = 266, -- Hellfire --removed from the game
@@ -237,6 +246,7 @@ do
 		[308059] = 266,	-- Яросный инфернал - 308059
 
 		-- Destruction Warlock:
+		[59172] = 267, -- Chaos Bolt, Rank 4
 		[17877] = 267, -- Shadowburn
 		[80240] = 267, -- Havoc
 		[5740] = 267, -- Rain of Fire
@@ -1379,7 +1389,7 @@ do
 		[109248]	=	true,-- Binding Shot
 		[149365]	=	true,-- Dire Beast
 		[120679]	=	true,-- Dire Beast
-		-- [3045]	=	true,-- Rapid Fire
+		[3045]	=	true,-- Rapid Fire
 		[19574]	=	true,-- Bestial Wrath
 		[19386]	=	true,-- Wyvern Sting
 		[19434]	=	true,-- Aimed Shot

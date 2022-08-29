@@ -18,7 +18,8 @@ local GAME_LOCALE = GetLocale()
 
 lib:SetBaseTranslations {
 	----custom
-	["TolGarod"] = "TolGarod",
+	["TolGarod"] = "ТолГарод",
+	["Zort"] = "Пустота Зорта",
 	["Tol'GarotPrison"] = "Тюрьма ТолГарода",
 	["Abyssal Depths"] = "Abyssal Depths",
 	["Ahn'kahet: The Old Kingdom"] = "Ahn'kahet: The Old Kingdom",
@@ -1700,6 +1701,7 @@ elseif GAME_LOCALE == "esMX" then
 elseif GAME_LOCALE == "ruRU" then
 	lib:SetCurrentTranslations {
 	["TolGarod"] = "ТолГарод",
+	["Zort"] = "Пустота Зорта",
 	["Tol'GarotPrison"] ="Тюрьма ТолГарода",
 	-- ["Abyssal Depths"] = "",
 	["Ahn'kahet: The Old Kingdom"] = "Ан'кахет: Старое Королевство",

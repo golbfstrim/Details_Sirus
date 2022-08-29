@@ -3399,19 +3399,19 @@ function atributo_damage:ToolTip_DamageTaken (instancia, numero, barra, keydown)
 				end
 
 				--special cases - Monk stagger
-				if (nome == self.nome and self.classe == "MONK") then
-					local ff = este_agressor.friendlyfire [nome]
-					if (ff and ff.total > 0) then
-						local staggerDamage = ff.spells [124255] or 0
-						if (staggerDamage > 0) then
-							if (table_added) then
-								table_added [2] = table_added [2] + staggerDamage
-							else
-								meus_agressores [#meus_agressores+1] = {name, staggerDamage, "MONK", este_agressor}
-							end
-						end
-					end
-				end
+				-- if (nome == self.nome and self.classe == "MONK") then
+				-- 	local ff = este_agressor.friendlyfire [nome]
+				-- 	if (ff and ff.total > 0) then
+				-- 		local staggerDamage = ff.spells [124255] or 0
+				-- 		if (staggerDamage > 0) then
+				-- 			if (table_added) then
+				-- 				table_added [2] = table_added [2] + staggerDamage
+				-- 			else
+				-- 				meus_agressores [#meus_agressores+1] = {name, staggerDamage, "MONK", este_agressor}
+				-- 			end
+				-- 		end
+				-- 	end
+				-- end
 			end
 		end
 

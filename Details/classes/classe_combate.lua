@@ -106,6 +106,20 @@ function combate:GetDeaths()
 	return self.last_events_tables
 end
 
+function combate:GetPlayerDeaths(deadPlayerName)
+	local allDeaths = self:GetDeaths()
+	local deaths = {}
+
+	for i = 1, #allDeaths do
+		local thisDeath = allDeaths[i]
+		local thisPlayerName = thisDeath[3]
+		if (deadPlayerName == thisPlayerName) then
+			deaths[#deaths+1] = thisDeath
+		end
+	end
+
+	return deaths
+end
 function combate:GetCombatId()
 	return self.combat_id
 end
@@ -321,6 +335,7 @@ function combate:NovaTabela(iniciada, _tabela_overall, combatId, ...)
 
 	--> players in the raid
 	esta_tabela.raid_roster = {}
+	esta_tabela.raid_roster_indexed = {}
 
 	--> frags
 	esta_tabela.frags = {}

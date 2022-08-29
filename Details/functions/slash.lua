@@ -483,7 +483,7 @@ function SlashCmdList.DETAILS (msg, editbox)
 		local guid = _detalhes:FindGUIDFromName ("Ditador")
 		print (guid)
 
-		for i = 1, GetNumGroupMembers()-1, 1 do
+		for i = 1, GetNumGroupMembers(), 1 do
 			local name, realm = UnitName ("party"..i)
 			print (name, " -- ", realm)
 		end
@@ -672,7 +672,7 @@ function SlashCmdList.DETAILS (msg, editbox)
 		--self:SetFont(fontFile, fontSize, fontFlags);
 
 	elseif (msg == "error") then
-		a = nil + 1
+		local a = nil + 1
 
 	--> debug
 	elseif (command == "resetcapture") then
