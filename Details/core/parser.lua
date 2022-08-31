@@ -652,7 +652,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 				if (_detalhes.last_combat_time + 10 < _tempo) then
 					_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 				end
-			else
+			elseif not (_bit_band(who_flags, REACTION_FRIENDLY) ~= 0 and _bit_band(alvo_flags, REACTION_FRIENDLY) ~= 0) and (_bit_band(who_flags, AFFILIATION_GROUP) ~= 0 or _bit_band(who_flags, AFFILIATION_GROUP) ~= 0) then
 				_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 			end
 		end
@@ -3286,7 +3286,7 @@ function parser:ress(token, time, who_serial, who_name, who_flags, alvo_serial, 
 	end
 
 	--do not register ress if not in combat
-		if (not _detalhes:IsInCombat()) then
+		if (not Details.in_combat) then
 			return
 		end
 
@@ -4159,9 +4159,9 @@ function _detalhes.parser_functions:ENCOUNTER_START(encounterID, encounterName, 
 
 	-- TEMP
 	--> leave the current combat when the encounter start, if is doing a mythic plus dungeons, check if the options alows to create a dedicated segment for the boss fight
-	if (_in_combat and not _detalhes.tabela_vigente.is_boss) then
-		_detalhes:SairDoCombate()
-	end
+	-- if (_in_combat and not _detalhes.tabela_vigente.is_boss) then
+	-- 	_detalhes:SairDoCombate()
+	-- end
 
 	-- local encounterID, encounterName, difficultyID, raidSize = ...
 	-- print(...)
@@ -4328,10 +4328,10 @@ local check_for_encounter_end = function()
 	if not _detalhes._current_encounter_id then
 		return
 	end
-
+	local inCombat = false
 	if IsInRaid() then
 		--raid
-		local inCombat = false
+		inCombat = false
 		for i = 1, GetNumGroupMembers() do
 			if UnitAffectingCombat("raid" .. i) then
 				inCombat = true
@@ -4344,7 +4344,7 @@ local check_for_encounter_end = function()
 		end
 	elseif IsInGroup() then
 		--party(dungeon)
-		local inCombat = false
+		inCombat = false
 		for i = 1, GetNumGroupMembers() -1 do
 			if UnitAffectingCombat("party" .. i) then
 				inCombat = true
@@ -4512,10 +4512,10 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 	else
 		--is in a raid or party group
 		C_Timer:After(1, function()
-			-- local inCombat
+			local inCombat
 			if IsInRaid() then
 				--raid
-				local inCombat = false
+				inCombat = false
 				for i = 1, GetNumGroupMembers() do
 					if UnitAffectingCombat("raid" .. i) then
 						inCombat = true
@@ -4528,7 +4528,7 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 				end
 			elseif IsInGroup() then
 				--party(dungeon)
-				local inCombat = false
+				inCombat = false
 				for i = 1, GetNumGroupMembers() -1 do
 					if(UnitAffectingCombat("party" .. i)) then
 						inCombat = true
