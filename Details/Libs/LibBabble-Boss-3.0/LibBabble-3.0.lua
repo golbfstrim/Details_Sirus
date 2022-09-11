@@ -1,6 +1,6 @@
 -- LibBabble-3.0 is hereby placed in the Public Domain
 -- Credits: ckknight
-local LIBBABBLE_MAJOR, LIBBABBLE_MINOR = "LibBabble-3.0", 2
+local LIBBABBLE_MAJOR, LIBBABBLE_MINOR = "LibBabble-3.0", 3
 
 local LibBabble = LibStub:NewLibrary(LIBBABBLE_MAJOR, LIBBABBLE_MINOR)
 if not LibBabble then
