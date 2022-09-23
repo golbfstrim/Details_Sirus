@@ -400,11 +400,11 @@
 
 		local listener = _detalhes:CreateEventListener()
 
-		function listener:on_enter_combat (event, combat, encounterId)
+		function listener:on_enter_combat(event, combat, encounterId)
 
 		end
 
-		function listener:on_leave_combat (event, combat)
+		function listener:on_leave_combat(event, combat)
 
 		end
 

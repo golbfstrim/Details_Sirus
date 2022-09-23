@@ -5278,8 +5278,10 @@ function window:CreateFrame3()
 			instance:ChangeSkin (skin_name)
 
 			if (instance._ElvUIEmbed) then
-				local AS, ASL = unpack (AddOnSkins)
-				AS:Embed_Details()
+				if AddOnSkins then
+				local AS, ASL = unpack(AddOnSkins)
+					AS:Embed_Details()
+				end
 			end
 
 			if (_detalhes.options_group_edit and not DetailsOptionsWindow.loading_settings) then
@@ -5287,8 +5289,10 @@ function window:CreateFrame3()
 					if (this_instance ~= instance) then
 						this_instance:ChangeSkin (skin_name)
 						if (this_instance._ElvUIEmbed) then
-							local AS, ASL = unpack (AddOnSkins)
-							AS:Embed_Details()
+							if AddOnSkins then
+								local AS, ASL = unpack (AddOnSkins)
+								AS:Embed_Details()
+							end
 						end
 					end
 				end

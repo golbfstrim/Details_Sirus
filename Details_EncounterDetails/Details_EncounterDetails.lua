@@ -108,7 +108,7 @@ local function CreatePluginFrames ()
 	EncounterDetails.combat_boss_found = false
 
 	--> OnEvent Table
-	function EncounterDetails:OnDetailsEvent (event, ...)
+	function EncounterDetails:OnDetailsEvent(event, ...)
 
 		--> when main frame became hide
 		if (event == "HIDE") then --> plugin hidded, disabled
@@ -1130,7 +1130,7 @@ function EncounterDetails:OpenAndRefresh (_, segment)
 	_G [frame:GetName().."SegmentsDropdown"].MyObject:Refresh()
 
 	if (segment) then
-		_combat_object = EncounterDetails:GetCombat (segment)
+		_combat_object = EncounterDetails:GetCombat(segment)
 		EncounterDetails._segment = segment
 
 		DebugMessage ("there's a segment to use:", segment, _combat_object, _combat_object and _combat_object.is_boss)

@@ -2018,14 +2018,14 @@ do
 		function DeathGraphs:UpdateOverall()
 			DeathGraphs:ClearOverall()
 
-			local death_table = DeathGraphs:GetBossTable (DeathGraphs.db.last_boss , nil, CONST_DBTYPE_DEATH)
-			local player_table = DeathGraphs:GetPlayerTable (death_table, DeathGraphs.db.last_player)
+			local death_table = DeathGraphs:GetBossTable(DeathGraphs.db.last_boss , nil, CONST_DBTYPE_DEATH)
+			local player_table = DeathGraphs:GetPlayerTable(death_table, DeathGraphs.db.last_player)
 
 			local numeric = {}
 			for spellid, amount in pairs (player_table.overall) do
 				tinsert (numeric, {spellid, amount})
 			end
-			table.sort (numeric, DeathGraphs.Sort2) --> sort by index 2
+			table.sort(numeric, DeathGraphs.Sort2) --> sort by index 2
 
 			for i, spelltable in ipairs (numeric) do
 				local t = overall[i]

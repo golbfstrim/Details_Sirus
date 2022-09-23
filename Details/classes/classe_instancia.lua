@@ -47,7 +47,7 @@ local segmentos = _detalhes.segmentos
 
 		--> set metatables
 		for index = 1, #_detalhes.tabela_instancias do
-			local instancia = _detalhes.tabela_instancias [index]
+			local instancia = _detalhes.tabela_instancias[index]
 			if (not _getmetatable (instancia)) then
 				_setmetatable (_detalhes.tabela_instancias[index], _detalhes)
 			end
@@ -88,7 +88,7 @@ local segmentos = _detalhes.segmentos
 ------------------------------------------------------------------------------------------------------------------------
 
 --> API: call a function to all enabled instances
-function _detalhes:InstanceCall (funcao, ...)
+function _detalhes:InstanceCall(funcao, ...)
 	if (type (funcao) == "string") then
 		funcao = _detalhes [funcao]
 	end
@@ -100,7 +100,7 @@ function _detalhes:InstanceCall (funcao, ...)
 end
 
 --> chama a fun��o para ser executada em todas as inst�ncias	(internal)
-function _detalhes:InstanciaCallFunction (funcao, ...)
+function _detalhes:InstanciaCallFunction(funcao, ...)
 	for index, instancia in _ipairs (_detalhes.tabela_instancias) do
 		if (instancia:IsAtiva()) then --> s� reabre se ela estiver ativa
 			funcao (_, instancia, ...)
@@ -109,7 +109,7 @@ function _detalhes:InstanciaCallFunction (funcao, ...)
 end
 
 --> chama a fun��o para ser executada em todas as inst�ncias	(internal)
-function _detalhes:InstanciaCallFunctionOffline (funcao, ...)
+function _detalhes:InstanciaCallFunctionOffline(funcao, ...)
 	for index, instancia in _ipairs (_detalhes.tabela_instancias) do
 		funcao (_, instancia, ...)
 	end

@@ -568,8 +568,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 	if not _in_combat then
 		if token ~= "SPELL_PERIODIC_DAMAGE" then
 			if (IsInInstance()) then
-				_detalhes:EntrarEmCombate (who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
-
+				_detalhes:StartCombat(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 				if _detalhes.announce_firsthit.enabled then
 					local needMsg = false
 					-- local isPetPull = false
@@ -650,10 +649,10 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			if token == "SPELL_PERIODIC_DAMAGE" and who_name == _detalhes.playername then
 				--> faz o calculo dos 10 segundos
 				if (_detalhes.last_combat_time + 10 < _tempo) then
-					_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
+					_detalhes:StartCombat(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 				end
 			elseif not (_bit_band(who_flags, REACTION_FRIENDLY) ~= 0 and _bit_band(alvo_flags, REACTION_FRIENDLY) ~= 0) and (_bit_band(who_flags, AFFILIATION_GROUP) ~= 0 or _bit_band(who_flags, AFFILIATION_GROUP) ~= 0) then
-				_detalhes:EntrarEmCombate(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
+				_detalhes:StartCombat(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 			end
 		end
 	end
@@ -1565,7 +1564,7 @@ function parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, 
 		-- if ( _in_resting_zone) then
 			-- return
 		-- end
-		_detalhes:EntrarEmCombate (who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
+		_detalhes:StartCombat(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
 		-- parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overhealing, absorbed, critical, is_shield)
 		return
 	end
@@ -4075,7 +4074,7 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 		end
 
 		if not _in_combat then
-			_detalhes:EntrarEmCombate()
+			_detalhes:StartCombat()
 		end
 
 		_current_combat.pvp = true
@@ -4299,11 +4298,11 @@ function _detalhes.parser_functions:PLAYER_REGEN_DISABLED(...)
 			_detalhes:SairDoCombate()
 		end
 
-		_detalhes:EntrarEmCombate()
+		_detalhes:StartCombat()
 	end
 
 	if not _detalhes:CaptureGet("damage") then
-		_detalhes:EntrarEmCombate()
+		_detalhes:StartCombat()
 	end
 
 	--> essa parte do solo mode ainda sera usada?
@@ -4744,7 +4743,7 @@ function _detalhes:CreateBattlegroundSegment()
 		_detalhes:SairDoCombate()
 	end
 
-	_detalhes:EntrarEmCombate()
+	_detalhes:StartCombat()
 end
 
 -- ~load
@@ -5056,7 +5055,7 @@ end
 --serach key: ~cache
 function _detalhes:UpdateParserGears()
 	--> refresh combat tables
-	_current_combat = _detalhes.tabela_vigente
+	_current_combat = _detalhes.tabela_vigente or {}
 	_current_combat_cleu_events = _current_combat and _current_combat.cleu_events
 
 	--> last events pointer

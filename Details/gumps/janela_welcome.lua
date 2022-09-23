@@ -1074,7 +1074,7 @@ local window_openned_at = time()
 
 			_detalhes.zone_type = "pvp"
 
-			_detalhes:EntrarEmCombate()
+			_detalhes:StartCombat()
 
 			_detalhes:StartTestBarUpdate()
 

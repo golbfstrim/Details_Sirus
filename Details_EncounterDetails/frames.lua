@@ -2022,10 +2022,10 @@ _detalhes.EncounterDetailsTempWindow = function (EncounterDetails)
 
 	local build_actor_menu = function()
 		local t = {}
-		local combat = EncounterDetails:GetCombat (EncounterDetails._segment)
+		local combat = EncounterDetails:GetCombat(EncounterDetails._segment)
 
 		if (combat) then
-			local AllDamageCharacters = combat:GetActorList (DETAILS_ATTRIBUTE_DAMAGE)
+			local AllDamageCharacters = combat:GetActorList(DETAILS_ATTRIBUTE_DAMAGE)
 			for index, character in ipairs (AllDamageCharacters) do
 				if (character:IsEnemy()) then
 					tinsert (t, {label = character:name(), value = character:name(), icon = "Interface\\AddOns\\Details_EncounterDetails\\images\\icon", onclick = on_select_actor_spell, iconcolor = "silver"})

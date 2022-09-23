@@ -355,10 +355,10 @@ function _detalhes:EntrarEmCombate(...)
 --		print(from)
 	end
 	if not UnitAffectingCombat("player") then return end
-	local check_combat = check_for_encounter_start()
-	if check_combat then
-		C_Timer:After(3, check_for_encounter_start)
-	end
+	-- local check_combat = check_for_encounter_start()
+	-- if check_combat then
+	-- 	C_Timer:After(3, check_for_encounter_start)
+	-- end
 
 	if not _detalhes.tabela_historico.tabelas[1] then
 		_detalhes.tabela_overall = _detalhes.combate:NovaTabela()
@@ -1024,7 +1024,7 @@ function _detalhes:CreateArenaSegment()
 	_detalhes:TimeDataRegister("Enemy Team Healing", string_arena_enemyteam_heal, nil, "Details!", "v1.0",[[Interface\ICONS\Ability_DualWield]], true, true)
 
 	--> inicia um novo combate
-	_detalhes:EntrarEmCombate()
+	_detalhes:StartCombat()
 
 	--> sinaliza que esse combate � arena
 	_detalhes.tabela_vigente.arena = true

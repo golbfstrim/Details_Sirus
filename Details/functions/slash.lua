@@ -1407,7 +1407,7 @@ Damage Update Status: @INSTANCEDAMAGESTATUS
 		end
 
 		--> create a new combat to be the overall for the mythic run
-		_detalhes:EntrarEmCombate()
+		_detalhes:StartCombat()
 
 		--> get the current combat just created and the table with all past segments
 		local newCombat = _detalhes:GetCurrentCombat()

@@ -41,10 +41,12 @@
 --> core
 
 	--> reconstr�i o mapa do container
-		local function ReconstroiMapa (tabela)
+		local function ReconstroiMapa(tabela)
 			local mapa = {}
 			for i = 1, #tabela._ActorTable do
-				mapa [tabela._ActorTable[i].nome] = i
+				if tabela._ActorTable[i] and tabela._ActorTable[i].nome then
+					mapa[tabela._ActorTable[i].nome] = i
+				end
 			end
 			tabela._NameIndexTable = mapa
 		end

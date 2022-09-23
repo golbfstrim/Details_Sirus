@@ -831,7 +831,6 @@ local BossIDs = {
 	[38112] = true, -- Falric
 	[38113] = true, -- Marwyn
 	[37226] = true, -- The Lich King
-	[38113] = true, -- Marvyn
 
 	-- Obsidian Sanctum
 	[30451] = true, -- Shadron

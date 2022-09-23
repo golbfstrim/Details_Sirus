@@ -148,7 +148,7 @@ do
 				[34780] = 2, -- Lord Jaraxxus
 				[34467] = 3, -- Faction Champions
 				[34451] = 3, -- Faction Champions
-				[34497] = 4, -- The Twin Val'kyr
+				[34496] = 4, -- The Twin Val'kyr
 				[34564] = 5, -- Anub'arak
 			-- Naxxramas
 				[15956] = 1, -- Anub'Rekhan
