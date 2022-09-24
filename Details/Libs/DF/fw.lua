@@ -42,14 +42,14 @@ function DF.IsClassicWow()
 	return false
 end
 
-function DF.UnitGroupRolesAssigned (unitId)
+function DF.UnitGroupRolesAssigned(unitId)
 	local role = LibGroupTalents:GetUnitRole(unitId)
-	if role then 
-		if role == "melee" or role == "caster" then 
+	if role then
+		if role == "melee" or role == "caster" then
 			role = "DAMAGER"
-		elseif role == "tank" then 
+		elseif role == "tank" then
 			role = "TANK"
-		elseif role == "healer" then 
+		elseif role == "healer" then
 			role = "HEALER"
 		else
 			role = "NONE"
@@ -82,7 +82,7 @@ local function GetFeralSubSpec(unit)
 	--16858 = Feral Aggression (0 points in bear) - Increased attack power reduction of demo roar and increase ferocious bite damage.
 	--16931 = Thick Hide - Increase armor from cloth and leather items. 
 	local points = LibGroupTalents:UnitHasTalent(unit, GetSpellInfo(57881), LibGroupTalents:GetActiveTalentGroup(unit))
-	if points and points > 0 then 
+	if points and points > 0 then
 		return 3 -- we are a guardian druid
 	else
 		return 2
@@ -96,7 +96,7 @@ local function GetFeralSubSpec(unit)
 	--16858 = Feral Aggression (0 points in bear) - Increased attack power reduction of demo roar and increase ferocious bite damage.
 	--16931 = Thick Hide - Increase armor from cloth and leather items. 
 	local points = LibGroupTalents:UnitHasTalent(unit, GetSpellInfo(57881), LibGroupTalents:GetActiveTalentGroup(unit))
-	if points and points > 0 then 
+	if points and points > 0 then
 		return 3 -- we are a guardian druid
 	else
 		return 2
@@ -114,9 +114,9 @@ function DF.GetSpecialization(unit)
 			if maxPoints < pointsSpent then
 				maxPoints = pointsSpent
 				if select(2, UnitClass(unit)) == "DRUID" and i >= 2 then
-					if i == 3 then 
+					if i == 3 then
 						specIdx = 4
-					elseif i == 2 then 
+					elseif i == 2 then
 						specIdx = GetFeralSubSpec(unit)
 					end
 				else
@@ -1107,7 +1107,7 @@ end
 
 	--volatile menu can be called several times, each time all settings are reset and a new menu is built using the same widgets
 	function DF:BuildMenuVolatile (parent, menu, x_offset, y_offset, height, use_two_points, text_template, dropdown_template, switch_template, switch_is_box, slider_template, button_template, value_change_hook)
-		
+
 		if (not parent.widget_list) then
 			DF:SetAsOptionsPanel (parent)
 		end
@@ -1189,7 +1189,7 @@ end
 					if (value_change_hook) then
 						dropdown:SetHook ("OnOptionSelected", value_change_hook)
 					end
-					
+
 					--> hook list (hook list is wiped when getting the widget)
 					if (widget_table.hooks) then
 						for hookName, hookFunc in pairs (widget_table.hooks) do
@@ -1200,7 +1200,7 @@ end
 					if (widget_table.id) then
 						parent.widgetids [widget_table.id] = dropdown
 					end
-					
+
 					local size = dropdown.hasLabel.widget:GetStringWidth() + 140 + 4
 					if (size > max_x) then
 						max_x = size
@@ -1220,11 +1220,11 @@ end
 					switch._get = widget_table.get
 					switch.widget_type = "toggle"
 					switch.OnSwitch = widget_table.set
-					
+
 					if (value_change_hook) then
 						switch:SetHook ("OnSwitch", value_change_hook)
 					end
-					
+
 					--> hook list
 					if (widget_table.hooks) then
 						for hookName, hookFunc in pairs (widget_table.hooks) do
@@ -1249,7 +1249,7 @@ end
 					if (widget_table.id) then
 						parent.widgetids [widget_table.id] = switch
 					end
-					
+
 					local size = switch.hasLabel:GetStringWidth() + 60 + 4
 					if (size > max_x) then
 						max_x = size
@@ -1281,7 +1281,7 @@ end
 					if (value_change_hook) then
 						slider:SetHook ("OnValueChange", value_change_hook)
 					end
-					
+
 					if (widget_table.thumbscale) then
 						slider:SetThumbSize (slider.thumb.originalWidth * widget_table.thumbscale, nil)
 					else
@@ -1297,10 +1297,10 @@ end
 
 					slider.hasLabel.text = widget_table.name .. (use_two_points and ": " or "")
 					slider.hasLabel:SetTemplate(widget_table.text_template or text_template)
-					
+
 					slider:SetPoint ("left", slider.hasLabel, "right", 2)
 					slider.hasLabel:SetPoint (cur_x, cur_y)
-					
+
 					if (widget_table.id) then
 						parent.widgetids [widget_table.id] = slider
 					end
@@ -1329,11 +1329,11 @@ end
 					else
 						colorpick:SetColor (default_value, g, b, a)
 					end
-					
+
 					if (value_change_hook) then
 						colorpick:SetHook ("OnColorChanged", value_change_hook)
 					end
-					
+
 					--> hook list
 					if (widget_table.hooks) then
 						for hookName, hookFunc in pairs (widget_table.hooks) do
@@ -1343,10 +1343,10 @@ end
 
 					colorpick.hasLabel.text = widget_table.name .. (use_two_points and ": " or "")
 					colorpick.hasLabel:SetTemplate(widget_table.text_template or text_template)
-					
+
 					colorpick:SetPoint ("left", colorpick.hasLabel, "right", 2)
 					colorpick.hasLabel:SetPoint (cur_x, cur_y)
-					
+
 					if (widget_table.id) then
 						parent.widgetids [widget_table.id] = colorpick
 					end
@@ -1358,7 +1358,7 @@ end
 
 				--button
 				elseif (widget_table.type == "execute" or widget_table.type == "button") then
-					
+
 					local button = getMenuWidgetVolative(parent, "button", widgetIndexes)
 					widget_created = button
 
@@ -1375,9 +1375,9 @@ end
 					button:SetPoint (cur_x, cur_y)
 					button.tooltip = widget_table.desc
 					button.widget_type = "execute"
-					
+
 					--> execute doesn't trigger global callback
-					
+
 					--> hook list
 					if (widget_table.hooks) then
 						for hookName, hookFunc in pairs (widget_table.hooks) do
@@ -1388,7 +1388,7 @@ end
 					if (widget_table.id) then
 						parent.widgetids [widget_table.id] = button
 					end
-					
+
 					local size = button:GetWidth() + 4
 					if (size > max_x) then
 						max_x = size
@@ -1417,7 +1417,7 @@ end
 					textentry.hasLabel:SetPoint (cur_x, cur_y)
 
 					--> text entry doesn't trigger global callback
-					
+
 					--> hook list
 					if (widget_table.hooks) then
 						for hookName, hookFunc in pairs (widget_table.hooks) do
@@ -1428,7 +1428,7 @@ end
 					if (widget_table.id) then
 						parent.widgetids [widget_table.id] = textentry
 					end
-					
+
 					local size = textentry.hasLabel:GetStringWidth() + 60 + 4
 					if (size > max_x) then
 						max_x = size
@@ -1439,13 +1439,13 @@ end
 				if (widget_table.nocombat) then
 					tinsert (disable_on_combat, widget_created)
 				end
-			
+
 				if (widget_table.spacement) then
 					cur_y = cur_y - 30
 				else
 					cur_y = cur_y - 20
 				end
-				
+
 				if (widget_table.type == "breakline" or cur_y < height) then
 					cur_y = y_offset
 					cur_x = cur_x + max_x + 30
@@ -3843,7 +3843,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 --> pool
 
-do    
+do
     local get = function(self)
         local object = tremove(self.notUse, #self.notUse)
         if (object) then
@@ -3871,29 +3871,29 @@ do
                 tinsert(self.notUse, object)
                 break
             end
-        end        
+        end
     end
 
     local reset = function(self)
         for i = #self.inUse, 1, -1 do
             local object = tremove(self.inUse, i)
             tinsert(self.notUse, object)
-        end        
+        end
 	end
 
 	--only hide objects in use, do not disable them
 		local hide = function(self)
 			for i = #self.inUse, 1, -1 do
 				self.inUse[i]:Hide()
-			end 
+			end
 		end
 
 	--only show objects in use, do not enable them
 		local show = function(self)
 			for i = #self.inUse, 1, -1 do
 				self.inUse[i]:Show()
-			end 
-		end	
+			end
+		end
 
 	--return the amount of objects 
 		local getamount = function(self)
