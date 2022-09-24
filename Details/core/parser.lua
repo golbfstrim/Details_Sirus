@@ -4033,7 +4033,7 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 
 	_detalhes.time_type = _detalhes.time_type_original
 
-	_detalhes:CheckChatOnZoneChange(zoneType)
+	-- _detalhes:CheckChatOnZoneChange(zoneType)
 
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) zone change:", _detalhes.zone_name, "is a", _detalhes.zone_type, "zone.")
