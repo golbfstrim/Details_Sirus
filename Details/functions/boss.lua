@@ -7,7 +7,7 @@ do
 	local _table_insert = table.insert --> lua local
 	local _table_remove = table.remove --> lua local
 	local _unpack = unpack --> lua local
-	local _GetRealZoneText = GetRealZoneText --api local
+
 	local _GetCurrentMapAreaID = GetCurrentMapAreaID --api local
 	
 	_detalhes.EncounterInformation = {}
@@ -21,12 +21,6 @@ do
 		if _detalhes.EncounterInformation[zoneMapID] then
 			return true
 		else
-			local mapname = _GetRealZoneText()
-			for _, data in _pairs(_detalhes.EncounterInformation) do
-				if data.name == mapname then
-					return true
-				end
-			end
 			return false
 		end
 	end

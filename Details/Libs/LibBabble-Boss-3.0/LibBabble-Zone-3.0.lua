@@ -18,7 +18,7 @@ local GAME_LOCALE = GetLocale()
 
 lib:SetBaseTranslations {
 	----custom
-	["TolGarod"] = "ТолГарод",
+	["TolGarod"] = "TolGarod",
 	["Zort"] = "Пустота Зорта",
 	["Tol'GarotPrison"] = "Тюрьма ТолГарода",
 	["Abyssal Depths"] = "Abyssal Depths",

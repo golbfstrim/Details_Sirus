@@ -1939,6 +1939,7 @@ local barra_scripts_onmouseup = function(self, button)
 			if(not self.minha_tabela) then
 				return _detalhes:Msg("this bar is waiting update.")
 			end
+			-- print("dsaf")
 			self._instance:AbreJanelaInfo(self.minha_tabela, nil, nil, is_shift_down, is_control_down)
 		end
 	end

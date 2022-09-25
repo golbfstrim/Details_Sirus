@@ -9,6 +9,7 @@ local floor = floor
 
 local GetNumGroupMembers = GetNumGroupMembers
 local LibGroupTalents = LibStub ("LibGroupTalents-1.0")
+
 local LibGroupInSpecT = LibStub ("LibGroupInSpecT-1.1") --disabled due to classic wow
 
 local storageDebug = true
@@ -1003,7 +1004,7 @@ function _detalhes.storage:GetIDsToGuildSync()
 					for index, encounter in ipairs (encounterTable) do
 						if (encounter.servertime) then
 							if (myGuildName == encounter.guild) then
-								tinsert (IDs, encounter.servertime)
+							tinsert (IDs, encounter.servertime)
 							end
 						end
 					end

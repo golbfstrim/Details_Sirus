@@ -657,11 +657,11 @@ do --> data for Trial of the Crusader
 	}
 
 	local ENCOUNTER_ID_CL = {
-		34797, 34780, clID, 34496, 34564,
+		34797, 34780, clID, 34497, 34564,
 		[34797] = 1, --The Beasts of Northrend
 		[34780] = 2, --Lord Jaraxxus
 		[clID] = 3, --Faction Champions
-		[34496] = 4, --The Twin Val'kyr
+		[34497] = 4, --The Twin Val'kyr
 		[34564] = 5, --Anub'arak
 	}
 

@@ -309,19 +309,57 @@ function _detalhes:StartCombat(...)
 	return _detalhes:EntrarEmCombate(...)
 end
 
+local check_for_encounter_start = function()
+	if _current_encounter_id then
+		return
+	end
+
+	local mapid = _GetCurrentMapAreaID()
+	local boss_ids = _detalhes:GetBossIds(mapid)
+	if not boss_ids then
+		return
+	end
+
+	local unit_id = ((GetNumRaidMembers() == 0) and "party") or "raid"
+	for i = 0, math.max(GetNumRaidMembers(), GetNumPartyMembers()) do
+		local unit_target
+		if i == 0 then
+			unit_id = "player"
+			unit_target = (i == 0 and "target")
+		else
+			unit_id = ((GetNumRaidMembers() == 0) and "party") or "raid"
+			unit_target = unit_id..i.."target"
+		end
+
+		local guid = UnitGUID(unit_target)
+		if guid and (bit.band(guid:sub(1, 5), 0x00F) == 3 or bit.band(guid:sub(1, 5), 0x00F) == 5) then
+			local encounterID = tonumber(guid:sub(9, 12), 16)
+			local bossindex = boss_ids[encounterID]
+			if bossindex and UnitAffectingCombat(unit_id) then
+				local _, _, _, _, maxPlayers = GetInstanceInfo()
+				local difficulty = GetInstanceDifficulty()
+				_detalhes.parser_functions:ENCOUNTER_START(encounterID, _detalhes:GetBossName(mapid, bossindex), difficulty, maxPlayers)
+				break
+			elseif bossindex then
+				return true
+			end
+		end
+	end
+end
 
 -- ~start ~inicio ~novo �ovo
 function _detalhes:EntrarEmCombate(...)
+	
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00started a new combat|r|cFFFF7700", _detalhes.encounter_table and _detalhes.encounter_table.name or "")
 --		local from = debugstack(2, 1, 0)
 --		print(from)
 	end
-	if not UnitAffectingCombat("player") then return end
-	-- local check_combat = check_for_encounter_start()
-	-- if check_combat then
-	-- 	C_Timer:After(3, check_for_encounter_start)
-	-- end
+
+	local check_combat = check_for_encounter_start()
+	if check_combat then
+		C_Timer:After(3, check_for_encounter_start)
+	end
 
 	if not _detalhes.tabela_historico.tabelas[1] then
 		_detalhes.tabela_overall = _detalhes.combate:NovaTabela()
