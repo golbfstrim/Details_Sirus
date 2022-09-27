@@ -1016,6 +1016,7 @@ do
 		[310210] = 2, -- t5 war absorb
 
 		[313530] = 12, -- stn hrth trnkt
+		[319738] = 6, -- hpal ttg
 
 		-- Custom
 		[304736] = 10, -- Priest, Divine Charm (T4), T4
