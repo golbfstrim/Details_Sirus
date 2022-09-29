@@ -6,6 +6,7 @@ local Loc = LibStub("AceLocale-3.0"):GetLocale( "Details" )
 local _tempo = time()
 local _
 local DetailsFramework = DetailsFramework
+local UnitGroupRolesAssigned = DetailsFramework.UnitGroupRolesAssigned
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --> local pointers
@@ -21,23 +22,23 @@ local _GetCurrentMapAreaID = GetCurrentMapAreaID --wow api local
 local _IsInRaid = IsInRaid --wow api local
 local _IsInGroup = IsInGroup --wow api local
 local _GetNumGroupMembers = GetNumGroupMembers --wow api local
-local _UnitGroupRolesAssigned = DetailsFramework.UnitGroupRolesAssigned
 local _GetTime = GetTime
 -- local _select = select
-local _UnitBuff = UnitBuff
+-- local _UnitBuff = UnitBuff
 
-local _cstr = string.format --lua local
+-- local _cstr = string.format --lua local
 local _sub = string.sub --lua local
 local _table_insert = table.insert --lua local
 local _select = select --lua local
 local _bit_band = bit.band --lua local
 local _math_floor = math.floor --lua local
 local _table_remove = table.remove --lua local
+
 local _ipairs = ipairs --lua local
 local _pairs = pairs --lua local
 local _table_sort = table.sort --lua local
 local _type = type --lua local
-local _math_ceil = math.ceil --lua local
+-- local _math_ceil = math.ceil --lua local
 local _table_wipe = table.wipe --lua local
 local _strsplit = strsplit
 local _tonumber = tonumber
@@ -240,10 +241,10 @@ local sub_pet_ids = {
 	[15438] = true, -- fire elemental
 }
 
---> encoutner rules
-local ignored_npc_ids = {
-	["1234567890"] = true,
-}
+-- --> encoutner rules
+-- local ignored_npc_ids = {
+-- 	["1234567890"] = true,
+-- }
 
 local overridespell = { ---------- переопределение id спелов чтобы не было разных
 	[308001] = 308000, ----shaman elem t5 thorns to 308000
@@ -346,22 +347,22 @@ _detalhes.PrintEncounterRecord = function(self)
 
 	local encounterID = self.Boss
 	local diff = self.Diff
-
+	local value, rank, combatTime = 0, 0, 0
 	if(diff == 15 or diff == 16) then
+		print(diff)
 
-		local value, rank, combatTime = 0, 0, 0
 
-		if(encounterID == lastRecordFound.id and diff == lastRecordFound.diff) then
+		if (encounterID == lastRecordFound.id and diff == lastRecordFound.diff) then
 			--> is the same encounter, no need to find the value again.
 			value, rank, combatTime = lastRecordFound.value, lastRecordFound.rank, lastRecordFound.combatTime
 		else
 			local db = _detalhes.GetStorage()
 
-			local role = _UnitGroupRolesAssigned("player")
-			local isDamage =(role == "DAMAGER") or(role == "TANK") --or true
+			local role = UnitGroupRolesAssigned("player")
+			local isDamage = (role == "DAMAGER" or role == "NONE") or (role == "TANK") --or true
 			local bestRank, encounterTable = _detalhes.storage:GetBestFromPlayer(diff, encounterID, isDamage and "damage" or "healing", _detalhes.playername, true)
 
-			if(bestRank) then
+			if (bestRank) then
 				local playerTable, onEncounter, rankPosition = _detalhes.storage:GetPlayerGuildRank(diff, encounterID, isDamage and "damage" or "healing", _detalhes.playername, true)
 
 				value = bestRank[1] or 0
@@ -386,7 +387,7 @@ _detalhes.PrintEncounterRecord = function(self)
 
 		_detalhes:Msg("|cFFFFBB00Your Best Score|r:", _detalhes:ToK2((value) / combatTime) .. "[|cFFFFFF00Guild Rank: " .. rank .. "|r]") --> localize-me
 
-		if((not combatTime or combatTime == 0) and not _detalhes.SyncWarning) then
+		if ((not combatTime or combatTime == 0) and not _detalhes.SyncWarning) then
 			_detalhes:Msg("|cFFFF3300you may need sync the rank within the guild, type '|cFFFFFF00/details rank|r'|r") --> localize-me
 			_detalhes.SyncWarning = true
 		end
@@ -411,34 +412,33 @@ end
 [15]=1
 --]=]
 
-local function check_boss(npcID)
-	if not _is_in_instance or (_detalhes._current_encounter_id or not npcID) then
-		return
-	end
+-- local function check_boss(npcID)
+-- 	if not _is_in_instance or (_detalhes._current_encounter_id or not npcID) then
+-- 		return
+-- 	end
 
-	local mapID = _detalhes.zone_id
-	local bossIDs = _detalhes:GetBossIds(mapID)
-	if not bossIDs then
-		for id, data in _pairs(_detalhes.EncounterInformation) do
-			if data.name == _detalhes.zone_name then
-				bossIDs = _detalhes:GetBossIds(id)
-				mapID = id
-				break
-			end
-		end
-		if not bossIDs then
-			return
-		end
-	end
+-- 	local mapID = _detalhes.zone_id
+-- 	local bossIDs = _detalhes:GetBossIds(mapID)
+-- 	if not bossIDs then
+-- 		for id, data in _pairs(_detalhes.EncounterInformation) do
+-- 			if data.name == _detalhes.zone_name then
+-- 				bossIDs = _detalhes:GetBossIds(id)
+-- 				mapID = id
+-- 				break
+-- 			end
+-- 		end
+-- 		if not bossIDs then
+-- 			return
+-- 		end
+-- 	end
 
-	local bossIndex = bossIDs[npcID]
-	if bossIndex then
-		local _, _, _, _, maxPlayers = GetInstanceInfo()
-		local difficulty = GetInstanceDifficulty()
-		_detalhes.parser_functions:ENCOUNTER_START(_detalhes:GetBossEncounter(mapID, bossIndex), _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
-	end
-end
-
+-- 	local bossIndex = bossIDs[npcID]
+-- 	if bossIndex then
+-- 		local _, _, _, _, maxPlayers = GetInstanceInfo()
+-- 		local difficulty = GetInstanceDifficulty()
+-- 		_detalhes.parser_functions:ENCOUNTER_START(_detalhes:GetBossEncounter(mapID, bossIndex), _detalhes:GetBossName(mapID, bossIndex), difficulty, maxPlayers)
+-- 	end
+-- end
 function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
 ------------------------------------------------------------------------------------------------
 
@@ -467,7 +467,9 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 	if overridespell[spellid] then
 		spellid = overridespell[spellid]
 	end
-
+	-- if spellid == 49269 then
+	-- 	spellname = spellname.. " (Перегрузка)"
+	-- end
 	--check if the target actor isn't in the temp blacklist
 	--	if ignore_actors[alvo_serial] then
 	--		return
@@ -525,35 +527,29 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 	end
 
 	--> npcId check for ignored npcs
-	if _bit_band(alvo_flags, OBJECT_CONTROL_NPC) ~= 0 then
-		local npcId = npcid_cache[alvo_serial]
-		if not npcId then
-			npcId = _tonumber(_sub(alvo_serial, 8, 12), 16) or 0
-			npcid_cache[alvo_serial] = npcId
-		end
-
-		check_boss(npcId)
-
-		if ignored_npcids[npcId] then
-			return
-		end
+	local npcId = npcid_cache[alvo_serial]
+	if not npcId then
+		npcId = _tonumber(_select(6, _strsplit("-", alvo_serial)) or 0)
+		npcId = _tonumber(_sub(alvo_serial, 8, 12), 16) or 0
+		npcid_cache[alvo_serial] = npcId
 	end
 
-	if _bit_band(who_flags, OBJECT_CONTROL_NPC) ~= 0 then
-		local npcId = npcid_cache[who_serial]
-		if not npcId then
-			npcId = _tonumber(_sub(who_serial, 8, 12), 16) or 0
-			npcid_cache[who_serial] = npcId
-		end
-
-		check_boss(npcId)
-
-		if ignored_npcids[npcId] then
-			return
-		end
+	if ignored_npcids[npcId] then
+		return
 	end
+
+	--source
+	npcId = npcid_cache[who_serial]
+	if not npcId then
+		npcId = _tonumber(_sub(who_serial, 8, 12), 16) or 0
+		npcid_cache[who_serial] = npcId
+	end
+
+	if ignored_npcids[npcId] then
+		return
+	end
+
 	if absorbed and absorbed > 0 and alvo_name and escudo[alvo_name] and who_name then
-
 		parser:heal_absorb(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed,spelltype)
 	end
 
@@ -690,9 +686,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 		end
 	elseif meu_dono then
 		--> � um pet
-
 		who_name = who_name.." <"..meu_dono.nome..">"
-
 	end
 
 	--> his target
@@ -869,7 +863,7 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			local friend = este_jogador.friendlyfire[alvo_name] or este_jogador:CreateFFTable(alvo_name)
 
 			friend.total = friend.total + amount
-			friend.spells[spellid] =(friend.spells[spellid] or 0) + amount
+			friend.spells[spellid] = (friend.spells[spellid] or 0) + amount
 
 			------------------------------------------------------------------------------------------------
 			--> damage taken
@@ -905,7 +899,6 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 			meu_dono.targets[alvo_name] =(meu_dono.targets[alvo_name] or 0) + amount
 
 			meu_dono.last_event = _tempo
-			-- print(alvo_flags)
 			-- if (RAID_TARGET_FLAGS [alvo_flags]) then
 			-- 	--> add the amount done for the owner
 			-- 	meu_dono.raid_targets [alvo_flags] = (meu_dono.raid_targets [alvo_flags] or 0) + amount
@@ -972,180 +965,8 @@ function parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_ser
 
 
 		return spell_damage_func(spell, alvo_serial, alvo_name, alvo_flags, amount, who_name, resisted, blocked, absorbed, critical, glacing, token)
-	end
-
-	--special rule for LOTM
-function parser:LOTM_damage(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
-
-	if(absorbed) then
-		amount = absorbed +(amount or 0)
-	end
-
-	local healingActor = healing_cache[who_serial]
-	if(healingActor and healingActor.spells) then
-		healingActor.total = healingActor.total -(amount or 0)
-
-		local spellTable = healingActor.spells:GetSpell(183998)
-		if(spellTable) then
-			spellTable.anti_heal =(spellTable.anti_heal or 0) + amount
-		end
-	end
-
-	local t = last_events_cache[who_name]
-
-	if(not t) then
-		t = _current_combat:CreateLastEventsTable(who_name)
-	end
-
-	local i = t.n
-
-	local this_event = t[i]
-
-	if(not this_event) then
-		return print("Parser Event Error -> Set to 16 DeathLogs and /reload", i, _death_event_amt)
-	end
-
-	this_event[1] = true --> true if this is a damage || false for healing
-	this_event[2] = spellid --> spellid || false if this is a battle ress line
-	this_event[3] = amount --> amount of damage or healing
-	this_event[4] = time --> parser time
-	this_event[5] = _UnitHealth(who_name) --> current unit heal
-	this_event[6] = who_name --> source name
-	this_event[7] = absorbed
-	this_event[8] = school
-	this_event[9] = true --> friendly fire
-	this_event[10] = overkill
-
-	i = i + 1
-
-	if(i == _death_event_amt+1) then
-		t.n = 1
-	else
-		t.n = i
-	end
-
-	local damageActor = damage_cache[who_serial]
-	if(damageActor) then
-		--damage taken
-		damageActor.damage_taken = damageActor.damage_taken + amount
-		if(not damageActor.damage_from[who_name]) then --> adiciona a pool de dano tomado de quem
-			damageActor.damage_from[who_name] = true
-		end
-
-		--friendly fire
-		damageActor.friendlyfire_total = damageActor.friendlyfire_total + amount
-		local friend = damageActor.friendlyfire[who_name] or damageActor:CreateFFTable(who_name)
-		friend.total = friend.total + amount
-		friend.spells[spellid] =(friend.spells[spellid] or 0) + amount
-	end
 end
 
-	--special rule of SLT
-function parser:SLT_damage(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overkill, school, resisted, blocked, absorbed, critical, glacing, crushing)
-
-	--> damager
-	local este_jogador, meu_dono = damage_cache[who_serial] or damage_cache_pets[who_serial] or damage_cache[who_name], damage_cache_petsOwners[who_serial]
-
-	if(not este_jogador) then --> pode ser um desconhecido ou um pet
-
-		este_jogador, meu_dono, who_name = _current_damage_container:PegarCombatente(who_serial, who_name, who_flags, true)
-
-		if(meu_dono) then --> � um pet
-			if(who_serial ~= "") then
-				damage_cache_pets[who_serial] = este_jogador
-				damage_cache_petsOwners[who_serial] = meu_dono
-			end
-			--conferir se o dono j� esta no cache
-			if(not damage_cache[meu_dono.serial] and meu_dono.serial ~= "") then
-				damage_cache[meu_dono.serial] = meu_dono
-			end
-		else
-			if(who_flags) then --> ter certeza que n�o � um pet
-				if(who_serial ~= "") then
-					damage_cache[who_serial] = este_jogador
-				else
-					if(who_name:find("%[")) then
-						damage_cache[who_name] = este_jogador
-						local _, _, icon = _GetSpellInfo(spellid or 1)
-						este_jogador.spellicon = icon
-						--print("no serial actor", spellname, who_name, "added to cache.")
-					else
-						--_detalhes:Msg("Unknown actor with unknown serial ", spellname, who_name)
-					end
-				end
-			end
-		end
-
-	elseif(meu_dono) then
-		--> � um pet
-		who_name = who_name .. " <" .. meu_dono.nome .. ">"
-	end
-
-	--> his target
-	local jogador_alvo, alvo_dono = damage_cache[alvo_serial] or damage_cache_pets[alvo_serial] or damage_cache[alvo_name], damage_cache_petsOwners[alvo_serial]
-
-	if(not jogador_alvo) then
-
-		jogador_alvo, alvo_dono, alvo_name = _current_damage_container:PegarCombatente(alvo_serial, alvo_name, alvo_flags, true)
-
-		if(alvo_dono) then
-			if(alvo_serial ~= "") then
-				damage_cache_pets[alvo_serial] = jogador_alvo
-				damage_cache_petsOwners[alvo_serial] = alvo_dono
-			end
-			--conferir se o dono j� esta no cache
-			if(not damage_cache[alvo_dono.serial] and alvo_dono.serial ~= "") then
-				damage_cache[alvo_dono.serial] = alvo_dono
-			end
-		else
-			if(alvo_flags and alvo_serial ~= "") then --> ter certeza que n�o � um pet
-				damage_cache[alvo_serial] = jogador_alvo
-			end
-		end
-
-	elseif(alvo_dono) then
-		--> � um pet
-		alvo_name = alvo_name .. " <" .. alvo_dono.nome .. ">"
-	end
-
-	--> last event
-	este_jogador.last_event = _tempo
-
-	--> record death log
-	local t = last_events_cache[alvo_name]
-
-	if(not t) then
-		t = _current_combat:CreateLastEventsTable(alvo_name)
-	end
-
-	local i = t.n
-
-	local this_event = t[i]
-
-	if(not this_event) then
-		return print("Parser Event Error -> Set to 16 DeathLogs and /reload", i, _death_event_amt)
-	end
-
-	this_event[1] = true --> true if this is a damage || false for healing
-	this_event[2] = spellid --> spellid || false if this is a battle ress line
-	this_event[3] = amount --> amount of damage or healing
-	this_event[4] = time --> parser time
-	this_event[5] = _UnitHealth(alvo_name) --> current unit heal
-	this_event[6] = who_name --> source name
-	this_event[7] = absorbed
-	this_event[8] = spelltype or school
-	this_event[9] = false
-	this_event[10] = overkill
-
-	i = i + 1
-
-	if(i == _death_event_amt+1) then
-		t.n = 1
-	else
-		t.n = i
-	end
-
-end
 
 	--function parser:swingmissed(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, missType, amountMissed)
 function parser:swingmissed(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, missType, amountMissed) --, amountMissed, arg1
@@ -1157,7 +978,6 @@ function parser:rangemissed(token, time, who_serial, who_name, who_flags, alvo_s
 end
 
 	-- ~miss
-	-- local indexformurzik = 1
 function parser:missed(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, missType, amountMissed, arg1, arg2, arg3)
 
 	------------------------------------------------------------------------------------------------
@@ -1165,7 +985,6 @@ function parser:missed(token, time, who_serial, who_name, who_flags, alvo_serial
 	if overridespell[spellid] then
 		spellid = overridespell[spellid]
 	end
-
 		if (not alvo_name) then
 			--> no target name, just quit
 			return
@@ -1258,7 +1077,6 @@ function parser:missed(token, time, who_serial, who_name, who_flags, alvo_serial
 
 			este_jogador.totalabsorbed = este_jogador.totalabsorbed + amountMissed
 			if _detalhes.SirusCustom.MurazondDmgSkip and alvo_name == "Мурозонд" then
-
 				return
 			end
 
@@ -1269,7 +1087,6 @@ function parser:missed(token, time, who_serial, who_name, who_flags, alvo_serial
 
 			este_jogador.totalabsorbed = este_jogador.totalabsorbed + amountMissed
 			if _detalhes.SirusCustom.MurazondDmgSkip and alvo_name == "Мурозонд" then
-
 				return
 			end
 			return parser:range("RANGE_DAMAGE", time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amountMissed, -1, 1, nil, nil, nil, false, false, false, false)
@@ -1278,7 +1095,6 @@ function parser:missed(token, time, who_serial, who_name, who_flags, alvo_serial
 
 			este_jogador.totalabsorbed = este_jogador.totalabsorbed + amountMissed
 			if _detalhes.SirusCustom.MurazondDmgSkip and alvo_name == "Мурозонд" then
-
 				return
 			end
 			return parser:spell_dmg(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amountMissed, -1, 1, nil, nil, nil, false, false, false, false)
@@ -1361,15 +1177,14 @@ function parser:summon(token, time, who_serial, who_name, who_flags, alvo_serial
 	if(not _detalhes.capture_real["damage"] and not _detalhes.capture_real["heal"]) then
 		return
 	end
+	if (not who_name) then
+		who_name = "[*] " .. spellName
+	end
 
 
 	-- only treat SPELL_CREATE like SPELL_SUMMON for snake trap.
 	if (token == "SPELL_CREATE" and not spell_create_is_summon[spellid]) then
 		return
-	end
-
-	if(not who_name) then
-		who_name = "[*] " .. spellName
 	end
 
 	--> pet summon another pet
@@ -1501,58 +1316,135 @@ end
 		-- sort oldest buffs to the top
 		return a.timestamp < b.timestamp
 	end
+function parser:heal_denied(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellidAbsorb, spellnameAbsorb, spellschoolAbsorb, serialHealer, nameHealer, flagsHealer, flags2Healer, spellidHeal, spellnameHeal, typeHeal, amountDenied)
 
-	function parser:heal_absorb(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed, spelltype)
-		local found_absorb
+	--	print(who_name, alvo_name, nameHealer, spellidHeal, spellnameHeal, typeHeal, amountDenied)
+		if(not _in_combat) then
+			return
+		end
 
-		escudo[alvo_name] = escudo[alvo_name] or {}
-		for _, absorb in ipairs(escudo[alvo_name]) do
-			-- check if we have twin val'kyr light essence and we took fire damage
-			if absorb.spellid == 65686 then
-				if _bit_band(spelltype, 0x4) == spelltype then
-					-- honestly I don't think this should be tracked as healing by details, the healing meters would be flooded with useless info.
-					--found_absorb = absorb
-					--break
-					return
-				end
-			-- check if we have twin val'kyr dark essence and we took shadow damage
-			elseif absorb.spellid == 65684 then
-				if _bit_band(spelltype, 0x20) == spelltype then
-					-- see above
-					--found_absorb = absorb
-					--break
-					return
-				end
-			-- check if its a frost ward
-			elseif frost_ward_absorb_list[absorb.spellid] then
-				-- only pick if its frost damage
-				if (_bit_band(spelltype, 0x10) == spelltype) then
-					found_absorb = absorb
-					break -- exit since wards are priority
-				end
-			-- check if its a fire ward
-			elseif fire_ward_absorb_list[absorb.spellid] then
-				-- only pick if its fire damage
-				if (_bit_band(spelltype, 0x4) == spelltype) then
-					found_absorb = absorb
-					break -- exit since wards are priority
-				end
-			-- check if its a shadow ward
-			elseif shadow_ward_absorb_list[absorb.spellid] then
-				-- only pick if its shadow damage
-				if (_bit_band(spelltype, 0x20) == spelltype) then
-					found_absorb = absorb
-					break -- exit since wards are priority
-				end
-			else
-				found_absorb = absorb
-				break -- exit since this should be the oldest absorb added and not a ward
+		--> check invalid serial against pets
+		if(who_serial == "") then
+			if(who_flags and _bit_band(who_flags, OBJECT_TYPE_PETS) ~= 0) then --> � um pet
+				return
 			end
 		end
-		if found_absorb then
-			return parser:heal(token, time, found_absorb.serial, found_absorb.name, found_absorb.flags, alvo_serial, alvo_name, alvo_flags, found_absorb.spellid, found_absorb.spellname, nil, absorbed, 0, 0, nil, true)
-		end -- should we do something if it expected to absorb but couldn't?
+
+		--> no name, use spellname
+		if(not who_name) then
+			if(not spellname) then
+				--print("ERROR:", token, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellidAbsorb, spellnameAbsorb, spellschoolAbsorb, serialHealer, nameHealer, flagsHealer, flags2Healer, spellidHeal, spellnameHeal, typeHeal, amountDenied)
+			end
+			--who_name = "[*] "..spellname
+			who_name = "[*] " ..(spellname or "--unknown spell--")
+		end
+
+		--> no target, just ignore
+		if(not alvo_name) then
+			return
+		end
+
+		--> if no spellid
+		if(not spellidAbsorb) then
+			spellidAbsorb = 1
+			spellnameAbsorb = "unknown"
+			spellschoolAbsorb = 1
+		end
+
+		if(is_using_spellId_override) then
+			spellidAbsorb = override_spellId[spellidAbsorb] or spellidAbsorb
+			spellidHeal = override_spellId[spellidHeal] or spellidHeal
+		end
+
+	------------------------------------------------------------------------------------------------
+	--> get actors
+
+		local este_jogador, meu_dono = healing_cache[who_serial]
+		if(not este_jogador) then --> pode ser um desconhecido ou um pet
+			este_jogador, meu_dono, who_name = _current_heal_container:PegarCombatente(who_serial, who_name, who_flags, true)
+			if(not meu_dono and who_flags and who_serial ~= "") then --> se n�o for um pet, adicionar no cache
+				healing_cache[who_serial] = este_jogador
+			end
+		end
+
+		local jogador_alvo, alvo_dono = healing_cache[alvo_serial]
+		if(not jogador_alvo) then
+			jogador_alvo, alvo_dono, alvo_name = _current_heal_container:PegarCombatente(alvo_serial, alvo_name, alvo_flags, true)
+			if(not alvo_dono and alvo_flags and also_serial ~= "") then
+				healing_cache[alvo_serial] = jogador_alvo
+			end
+		end
+
+		este_jogador.last_event = _tempo
+
+		------------------------------------------------
+
+		este_jogador.totaldenied = este_jogador.totaldenied + amountDenied
+
+		--> actor spells table
+		local spell = este_jogador.spells._ActorTable[spellidAbsorb]
+		if(not spell) then
+			spell = este_jogador.spells:PegaHabilidade(spellidAbsorb, true, token)
+			if(_current_combat.is_boss and who_flags and _bit_band(who_flags, OBJECT_TYPE_ENEMY) ~= 0) then
+				_detalhes.spell_school_cache[spellnameAbsorb] = spellschoolAbsorb or 1
+			end
+		end
+
+		--return spell:Add(alvo_serial, alvo_name, alvo_flags, cura_efetiva, who_name, absorbed, critical, overhealing)
+		return spell_heal_func(spell, alvo_serial, alvo_name, alvo_flags, amountDenied, spellidHeal, token, nameHealer, overhealing)
+
 	end
+function parser:heal_absorb(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, absorbed, spelltype)
+	local found_absorb
+
+	escudo[alvo_name] = escudo[alvo_name] or {}
+	for _, absorb in ipairs(escudo[alvo_name]) do
+		-- check if we have twin val'kyr light essence and we took fire damage
+		if absorb.spellid == 65686 then
+			if _bit_band(spelltype, 0x4) == spelltype then
+				-- honestly I don't think this should be tracked as healing by details, the healing meters would be flooded with useless info.
+				--found_absorb = absorb
+				--break
+				return
+			end
+		-- check if we have twin val'kyr dark essence and we took shadow damage
+		elseif absorb.spellid == 65684 then
+			if _bit_band(spelltype, 0x20) == spelltype then
+				-- see above
+				--found_absorb = absorb
+				--break
+				return
+			end
+		-- check if its a frost ward
+		elseif frost_ward_absorb_list[absorb.spellid] then
+			-- only pick if its frost damage
+			if (_bit_band(spelltype, 0x10) == spelltype) then
+				found_absorb = absorb
+				break -- exit since wards are priority
+			end
+		-- check if its a fire ward
+		elseif fire_ward_absorb_list[absorb.spellid] then
+			-- only pick if its fire damage
+			if (_bit_band(spelltype, 0x4) == spelltype) then
+				found_absorb = absorb
+				break -- exit since wards are priority
+			end
+		-- check if its a shadow ward
+		elseif shadow_ward_absorb_list[absorb.spellid] then
+			-- only pick if its shadow damage
+			if (_bit_band(spelltype, 0x20) == spelltype) then
+				found_absorb = absorb
+				break -- exit since wards are priority
+			end
+		else
+			found_absorb = absorb
+			break -- exit since this should be the oldest absorb added and not a ward
+		end
+	end
+	if found_absorb then
+		return parser:heal(token, time, found_absorb.serial, found_absorb.name, found_absorb.flags, alvo_serial, alvo_name, alvo_flags, found_absorb.spellid, found_absorb.spellname, nil, absorbed, 0, 0, nil, true)
+	end -- should we do something if it expected to absorb but couldn't?
+end
 
 function parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overhealing, absorbed, critical, is_shield)
 
@@ -1560,14 +1452,17 @@ function parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, 
 --> early checks and fixes
 
 	--> only capture heal if is in combat
-	if(not _in_combat) then
-		if(not _in_resting_zone) then
+	if (not _in_combat) then
+		if ( not _in_resting_zone) then
 			return
 		end
+		-- _detalhes:StartCombat(who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags)
+		-- parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overhealing, absorbed, critical, is_shield)
+		-- return
 	end
 
 	--> check invalid serial against pets
-	if(who_serial == "") then
+	if (who_serial == "") then
 		if(who_flags and _bit_band(who_flags, OBJECT_TYPE_PETS) ~= 0) then --> � um pet
 			return
 		end
@@ -1666,6 +1561,9 @@ function parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, 
 		this_event[7] = is_shield
 		this_event[8] = absorbed
 
+		for a = 1,#this_event do
+			this_event[a] = this_event[a] or nil
+		end
 		i = i + 1
 
 		if(i == _death_event_amt+1) then
@@ -1773,63 +1671,6 @@ function parser:heal(token, time, who_serial, who_name, who_flags, alvo_serial, 
 		--return spell:Add(alvo_serial, alvo_name, alvo_flags, cura_efetiva, who_name, absorbed, critical, overhealing)
 		return spell_heal_func(spell, alvo_serial, alvo_name, alvo_flags, cura_efetiva, who_name, absorbed, critical, overhealing)
 	end
-end
-
-function parser:SLT_healing(token, time, who_serial, who_name, who_flags, alvo_serial, alvo_name, alvo_flags, spellid, spellname, spelltype, amount, overhealing, absorbed, critical, is_shield)
-
---> get actors
-	local este_jogador, meu_dono = healing_cache[who_serial]
-	if(not este_jogador) then --> pode ser um desconhecido ou um pet
-		este_jogador, meu_dono, who_name = _current_heal_container:PegarCombatente(who_serial, who_name, who_flags, true)
-		if(not meu_dono and who_flags and who_serial ~= "") then --> se n�o for um pet, adicionar no cache
-			healing_cache[who_serial] = este_jogador
-		end
-	end
-
-	local jogador_alvo, alvo_dono = healing_cache[alvo_serial]
-	if(not jogador_alvo) then
-		jogador_alvo, alvo_dono, alvo_name = _current_heal_container:PegarCombatente(alvo_serial, alvo_name, alvo_flags, true)
-		if(not alvo_dono and alvo_flags and alvo_serial ~= "") then
-			healing_cache[alvo_serial] = jogador_alvo
-		end
-	end
-
-	este_jogador.last_event = _tempo
-
-	local t = last_events_cache[alvo_name]
-
-	if(not t) then
-		t = _current_combat:CreateLastEventsTable(alvo_name)
-	end
-
-	local i = t.n
-
-	local this_event = t[i]
-
-	this_event[1] = false --> true if this is a damage || false for healing
-	this_event[2] = spellid --> spellid || false if this is a battle ress line
-	this_event[3] = amount --> amount of damage or healing
-	this_event[4] = time --> parser time
-	this_event[5] = _UnitHealth(alvo_name) --> current unit heal
-	this_event[6] = who_name --> source name
-	this_event[7] = is_shield
-	this_event[8] = absorbed
-
-	i = i + 1
-
-	if(i == _death_event_amt+1) then
-		t.n = 1
-	else
-		t.n = i
-	end
-
-	local spell = este_jogador.spells._ActorTable[spellid]
-	if(not spell) then
-		spell = este_jogador.spells:PegaHabilidade(spellid, true, token)
-		spell.neutral = true
-	end
-
-	return spell_heal_func(spell, alvo_serial, alvo_name, alvo_flags, absorbed + amount - overhealing, who_name, absorbed, critical, overhealing, nil)
 end
 
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -1971,7 +1812,6 @@ end
 
 			if(_recording_ability_with_buffs) then
 				if(who_name == _detalhes.playername) then
-
 
 					--> record debuff uptime
 					local SoloDebuffUptime = _current_combat.SoloDebuffUptime
@@ -2564,8 +2404,6 @@ function parser:add_bad_debuff_uptime(token, time, who_serial, who_name, who_fla
 				this_event[9] = false
 				this_event[10] = false
 
-
-
 				i = i + 1
 
 				if(i == _death_event_amt+1) then
@@ -2653,7 +2491,6 @@ function parser:add_debuff_uptime(token, time, who_serial, who_name, who_flags, 
 ------------------------------------------------------------------------------------------------
 --> get actors
 
--- if not who_name then who_name = UNKNOWN end
 		local este_jogador = misc_cache [who_name]
 		if (not este_jogador) then --> pode ser um desconhecido ou um pet
 			este_jogador = _current_misc_container:PegarCombatente (who_serial, who_name, who_flags, true)
@@ -2720,6 +2557,7 @@ function parser:add_buff_uptime(token, time, who_serial, who_name, who_flags, al
 		local spell = este_jogador.buff_uptime_spells._ActorTable[spellid]
 		if(not spell) then
 			spell = este_jogador.buff_uptime_spells:PegaHabilidade(spellid, true, "BUFF_UPTIME")
+
 		end
 		return spell_misc_func(spell, alvo_serial, alvo_name, alvo_flags, who_name, este_jogador, "BUFF_OR_DEBUFF", in_out)
 
@@ -3154,11 +2992,11 @@ function parser:spellcast(token, time, who_serial, who_name, who_flags, alvo_ser
 			end
 			if (este_jogador) then
 			--> actor spells table
-			local spell = este_jogador.spells._ActorTable[spellid]
-				if(not spell) then
-					spell = este_jogador.spells:PegaHabilidade(spellid, true, token)
-				end
-			spell.successful_casted = spell.successful_casted + 1
+				local spell = este_jogador.spells._ActorTable[spellid]
+					if(not spell) then
+						spell = este_jogador.spells:PegaHabilidade(spellid, true, token)
+					end
+				spell.successful_casted = spell.successful_casted + 1
 			end
 		end
 		return
@@ -3464,10 +3302,19 @@ function parser:dead(token, time, who_serial, who_name, who_flags, alvo_serial, 
 
 ------------------------------------------------------------------------------------------------
 --> build dead
-	if _bit_band(alvo_flags, OBJECT_CONTROL_NPC) ~= 0 then
-		local npcID = npcid_cache[alvo_serial]
-		if npcID then
-			_table_insert(_detalhes.cache_dead_npc, npcID)
+	local encounterID = tonumber(alvo_serial:sub(-12, -7), 16)
+	if _detalhes.encounter_table and _detalhes.encounter_table.id == encounterID then
+		local mapid = _GetCurrentMapAreaID()
+		local boss_ids = _detalhes:GetBossIds(mapid)
+		if not boss_ids then
+			return
+		end
+
+		local bossindex = boss_ids[encounterID]
+		if bossindex then
+			local _, _, _, _, maxPlayers = GetInstanceInfo()
+			local difficulty = GetInstanceDifficulty()
+			_detalhes.parser_functions:ENCOUNTER_END(encounterID, _detalhes:GetBossName(mapid, bossindex), difficulty, maxPlayers)
 		end
 	end
 
@@ -3649,7 +3496,7 @@ end
 local token_list = {
 	-- neutral
 	["SPELL_SUMMON"] = parser.summon,
-	["SPELL_CREATE"] = parser.summon,
+	-- ["SPELL_CREATE"] = parser.summon,
 --	["SPELL_CAST_FAILED"] = parser.spell_fail
 }
 
@@ -3734,7 +3581,6 @@ function _detalhes:CaptureTimeout(table)
 end
 
 function _detalhes:CaptureDisable(capture_type)
-
 	capture_type = string.lower(capture_type)
 
 	if capture_type == "damage" then
@@ -3816,7 +3662,7 @@ function _detalhes:CaptureEnable(capture_type)
 	elseif capture_type == "heal" then
 		token_list["SPELL_HEAL"] = parser.heal
 		token_list["SPELL_PERIODIC_HEAL"] = parser.heal
-		-- token_list["SPELL_HEAL_ABSORBED"] = parser.heal_denied
+		token_list["SPELL_HEAL_ABSORBED"] = parser.heal_denied
 		_recording_healing = true
 	elseif capture_type == "aura" then
 		token_list["SPELL_AURA_APPLIED"] = parser.buff
@@ -3856,7 +3702,7 @@ parser.original_functions = {
 	["missed"] = parser.missed,
 	["environment"] = parser.environment,
 	["heal"] = parser.heal,
-	-- ["heal_denied"] = parser.heal_denied,
+	["heal_denied"] = parser.heal_denied,
 	["buff"] = parser.buff,
 	["unbuff"] = parser.unbuff,
 	["buff_refresh"] = parser.buff_refresh,
@@ -3902,7 +3748,7 @@ local all_parser_tokens = {
 
 	["SPELL_HEAL"] = "heal",
 	["SPELL_PERIODIC_HEAL"] = "heal",
-	-- ["SPELL_HEAL_ABSORBED"] = "heal_denied",
+	["SPELL_HEAL_ABSORBED"] = "heal_denied",
 
 	["SPELL_AURA_APPLIED"] = "buff",
 	["SPELL_AURA_REMOVED"] = "unbuff",
@@ -4032,12 +3878,12 @@ function _detalhes:Check_ZONE_CHANGED_NEW_AREA(...)
 	end
 
 	-- TODO
-	-- if _detalhes.encounter_table and _detalhes.encounter_table.id == 36597 then
-	-- 	_table_wipe(_detalhes.encounter_table)
-	-- 	if _detalhes.debug then
-	-- 		_detalhes:Msg ("(debug) map changed with encounter table pointing to the lich king encounter, wiping the encounter table.")
-	-- 	end
-	-- end
+	if _detalhes.encounter_table and _detalhes.encounter_table.id == 36597 then
+		_table_wipe(_detalhes.encounter_table)
+		if _detalhes.debug then
+			_detalhes:Msg ("(debug) map changed with encounter table pointing to the lich king encounter, wiping the encounter table.")
+		end
+	end
 
 	_detalhes.time_type = _detalhes.time_type_original
 
@@ -4169,17 +4015,15 @@ function _detalhes.parser_functions:ENCOUNTER_START(...)
 		_detalhes.TellDamageRecord.Diff = difficultyID
 	end
 
-	_detalhes._current_encounter_id = encounterID
+	_current_encounter_id = encounterID
 	_detalhes.boss1_health_percent = 1
 
 	local dbm_mod, dbm_time = _detalhes.encounter_table.DBM_Mod, _detalhes.encounter_table.DBM_ModTime
 	_table_wipe(_detalhes.encounter_table)
 
-
-	-- local zoneName = _GetInstanceInfo()
-
-	-- local zoneMapID = _GetCurrentMapAreaID()
-	local zoneMapID = _detalhes.zone_id
+	-- local encounterID, encounterName, difficultyID, raidSize = ...
+	local zoneName = _GetInstanceInfo()
+	local zoneMapID = _GetCurrentMapAreaID()
 
 	--print(encounterID, encounterName, difficultyID, raidSize)
 	_detalhes.encounter_table.phase = 1
@@ -4192,7 +4036,7 @@ function _detalhes.parser_functions:ENCOUNTER_START(...)
 	_detalhes.encounter_table.name = encounterName
 	_detalhes.encounter_table.diff = difficultyID
 	_detalhes.encounter_table.size = raidSize
-	_detalhes.encounter_table.zone = _detalhes.zone_name
+	_detalhes.encounter_table.zone = zoneName
 	_detalhes.encounter_table.mapid = zoneMapID
 
 	if dbm_mod and dbm_time == time() then --pode ser time() � usado no start pra saber se foi no mesmo segundo.
@@ -4322,10 +4166,10 @@ local check_for_encounter_end = function()
 	if not _detalhes._current_encounter_id then
 		return
 	end
-
+	local inCombat = false
 	if IsInRaid() then
 		--raid
-		local inCombat = false
+		inCombat = false
 		for i = 1, GetNumGroupMembers() do
 			if UnitAffectingCombat("raid" .. i) then
 				inCombat = true
@@ -4338,7 +4182,7 @@ local check_for_encounter_end = function()
 		end
 	elseif IsInGroup() then
 		--party(dungeon)
-		local inCombat = false
+		inCombat = false
 		for i = 1, GetNumGroupMembers() -1 do
 			if UnitAffectingCombat("party" .. i) then
 				inCombat = true
@@ -4453,7 +4297,10 @@ function _detalhes:RunScheduledEventsAfterCombat(OnRegenEnabled)
 		end
 	end
 end
-
+local function sair_do_combate()
+	_detalhes.tabela_vigente.playing_solo = true
+	_detalhes:SairDoCombate()
+end
 function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00PLAYER_REGEN_ENABLED|r event triggered.")
@@ -4499,15 +4346,14 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 
 	--> playing alone, just finish the combat right now
 	if not _IsInGroup() and not IsInRaid() then
-		_detalhes.tabela_vigente.playing_solo = true
-		_detalhes:SairDoCombate()
+		C_Timer:After(1, sair_do_combate)
 	else
 		--is in a raid or party group
 		C_Timer:After(1, function()
-			-- local inCombat
+			local inCombat
 			if IsInRaid() then
 				--raid
-				local inCombat = false
+				inCombat = false
 				for i = 1, GetNumGroupMembers() do
 					if UnitAffectingCombat("raid" .. i) then
 						inCombat = true
@@ -4520,7 +4366,7 @@ function _detalhes.parser_functions:PLAYER_REGEN_ENABLED(...)
 				end
 			elseif IsInGroup() then
 				--party(dungeon)
-				local inCombat = false
+				inCombat = false
 				for i = 1, GetNumGroupMembers() -1 do
 					if(UnitAffectingCombat("party" .. i)) then
 						inCombat = true
@@ -4633,9 +4479,9 @@ end
 -- end
 
 function _detalhes.parser_functions:PLAYER_ROLES_ASSIGNED(...)
-	if _detalhes.last_assigned_role ~= _UnitGroupRolesAssigned("player") then
+	if _detalhes.last_assigned_role ~= UnitGroupRolesAssigned("player") then
 		_detalhes:CheckSwitchOnLogon(true)
-		_detalhes.last_assigned_role = _UnitGroupRolesAssigned("player")
+		_detalhes.last_assigned_role = UnitGroupRolesAssigned("player")
 	end
 end
 
@@ -5048,7 +4894,7 @@ end
 --serach key: ~cache
 function _detalhes:UpdateParserGears()
 	--> refresh combat tables
-	_current_combat = _detalhes.tabela_vigente
+	_current_combat = _detalhes.tabela_vigente or {}
 	_current_combat_cleu_events = _current_combat and _current_combat.cleu_events
 
 	--> last events pointer

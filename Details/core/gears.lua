@@ -8,7 +8,6 @@ local select = select
 local floor = floor
 
 local GetNumGroupMembers = GetNumGroupMembers
-local LibGroupTalents = LibStub ("LibGroupTalents-1.0")
 
 local LibGroupInSpecT = LibStub ("LibGroupInSpecT-1.1") --disabled due to classic wow
 

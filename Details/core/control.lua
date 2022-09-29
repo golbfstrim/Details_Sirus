@@ -349,7 +349,6 @@ end
 
 -- ~start ~inicio ~novo �ovo
 function _detalhes:EntrarEmCombate(...)
-	
 	if _detalhes.debug then
 		_detalhes:Msg("(debug) |cFFFFFF00started a new combat|r|cFFFF7700", _detalhes.encounter_table and _detalhes.encounter_table.name or "")
 --		local from = debugstack(2, 1, 0)
@@ -401,7 +400,6 @@ function _detalhes:EntrarEmCombate(...)
 	_table_wipe(_detalhes.pets_no_owner)
 	_detalhes.container_pets:BuscarPets()
 
-	_table_wipe(_detalhes.cache_dead_npc)
 	_table_wipe(_detalhes.cache_damage_group)
 	_table_wipe(_detalhes.cache_healing_group)
 	_detalhes:UpdateParserGears()
@@ -418,7 +416,7 @@ function _detalhes:EntrarEmCombate(...)
 		boss_found(encounter_table.index, encounter_table.name, encounter_table.zone, encounter_table.mapid, encounter_table.diff, encounter_table.id)
 	else
 		--> if we don't have this infor right now, lets check in few seconds dop
-		if _detalhes:IsInInstance() then
+		if _detalhes.EncounterInformation[_detalhes.zone_id] then
 			_detalhes:ScheduleTimer("ReadBossFrames", 1)
 			_detalhes:ScheduleTimer("ReadBossFrames", 30)
 		end
@@ -1562,8 +1560,7 @@ end
 --> tooltip fork / search key: ~tooltip
 local avatarPoint = {"bottomleft", "topleft", -3, -4}
 local backgroundPoint = {{"bottomleft", "topleft", 0, -3}, {"bottomright", "topright", 0, -3}}
-local textPoint = {"left", "right", 0, 11}
-local textPointTest = {"left", "right", 0, 11}
+local textPoint = {"left", "right", -11, -5}
 local avatarTexCoord = {0, 1, 0, 1}
 local backgroundColor = {0, 0, 0, 0.6}
 local avatarTextColor = {1, 1, 1, 1}
@@ -1790,11 +1787,7 @@ function _detalhes:MontaTooltip(frame, qual_barra, keydown)
 	end
 
 	local t = objeto:ToolTip(self, qual_barra, esta_barra, keydown) --> inst�ncia, n� barra, objeto barra, keydown
-	-- print(t)
-
-
 	if t then
-		-- print(1674)
 		if objeto.serial and objeto.serial ~= "" then
 			local avatar = NickTag:GetNicknameTable(objeto.nome, true)
 			if avatar and not _detalhes.ignore_nicktag and not _detalhes.show3DModel and objeto.nome ~= "Шутка" then
@@ -1816,17 +1809,11 @@ function _detalhes:MontaTooltip(frame, qual_barra, keydown)
 				-- end
 			end
 		end
-		-- if isfind then
-		-- 	GameCooltipFrame1.model:Show()
-		-- else
-		-- 	GameCooltipFrame1.model:Hide()
-		-- end
 		GameCooltip:ShowCooltip()
 	end
 end
 
 function _detalhes.gump:UpdateTooltip(qual_barra, esta_barra, instancia)
-
 	if _IsShiftKeyDown() then
 		return instancia:MontaTooltip(esta_barra, qual_barra, "shift")
 	elseif _IsControlKeyDown() then
@@ -1836,7 +1823,6 @@ function _detalhes.gump:UpdateTooltip(qual_barra, esta_barra, instancia)
 	else
 		return instancia:MontaTooltip(esta_barra, qual_barra)
 	end
-
 end
 
 function _detalhes:EndRefresh(instancia, total, tabela_do_combate, showing)
