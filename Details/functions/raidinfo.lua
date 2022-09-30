@@ -1362,5 +1362,76 @@ do --> data for zort
 	})
 end
 
+do --> data for hyjal
+	local INSTANCE_MAPID = 864
+	local HDIMAGESPATH = "Details\\images\\raid"
+	local HDFILEPREFIX = "TheBronzeSanctuary"  --TODO
+	local LOADINGSCREEN_FILE, LOADINGSCREEN_COORDS = "LoadScreenMalygos", {0, 1, 285/1024, 875/1024}
+	local EJ_DUNGEONBG = "UI-EJ-DUNGEONBUTTON-WORLD"
+	local EJ_LOREBG = "UI-EJ-LOREBG-WORLD"
+
+	local PORTRAIT_LIST = {
+		"UI-EJ-BOSS-Zort",
+		"UI-EJ-BOSS-Zort",
+		"UI-EJ-BOSS-Zort",
+		"UI-EJ-BOSS-Zort",
+		"UI-EJ-BOSS-Zort",
+	}
+
+
+
+	local ENCOUNTER_ID_CL = {
+		17767,17808,17888,17842,17968,
+		[17767] = 1,
+		[17808] = 2,
+		[17888] = 3,
+		[17842] = 4,
+		[17968] = 5
+	}
+
+	local BOSSNAMES = {
+		LBB["Rage Winterchill"],
+		LBB["Anetheron"],
+		LBB["Kaz'rogal"],
+		LBB["Azgalor"],
+		LBB["Archimonde"],
+
+	}
+
+	local ENCOUNTERS = {}
+
+	for i = 1, #PORTRAIT_LIST do
+		local encounterTable = {
+			boss = BOSSNAMES[i],
+			portrait = "Interface\\EncounterJournal\\"..PORTRAIT_LIST[i],
+		}
+		tinsert(ENCOUNTERS, encounterTable)
+	end
+
+	_detalhes:InstallEncounter({
+		id = INSTANCE_MAPID,
+
+		name = LBZ["Zort"],
+		icons = "Interface\\AddOns\\"..HDIMAGESPATH.."\\"..HDFILEPREFIX.."_BossFaces",
+		icon = "Interface\\EncounterJournal\\"..EJ_DUNGEONBG,
+		is_raid = true,
+		backgroundFile = {file = "Interface\\Glues\\LOADINGSCREENS\\"..LOADINGSCREEN_FILE, coords = LOADINGSCREEN_COORDS},
+		backgroundEJ = "Interface\\EncounterJournal\\"..EJ_LOREBG,
+
+		encounter_ids2 = ENCOUNTER_ID_CL,
+		boss_names = BOSSNAMES,
+		encounters = ENCOUNTERS,
+
+		boss_ids = {
+			[17767] = 1,
+			[17808] = 2,
+			[17888] = 3,
+			[17842] = 4,
+			[17968] = 5
+		},
+	})
+end
+
 -- /run local mapID, isContenent = GetCurrentMapAreaID() print(mapID, isContenent)
 -- zort 914
+-- 864 хиджал
