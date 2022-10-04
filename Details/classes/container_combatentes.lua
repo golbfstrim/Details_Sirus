@@ -208,7 +208,7 @@
 
 	--> read the actor flag
 	local read_actor_flag = function (novo_objeto, dono_do_pet, serial, flag, nome, container_type)
-		if nome == nil then return end
+		if nome == nil then nome = UNKNOWN return end
 		if (flag) then
 
 			--> � um player

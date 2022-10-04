@@ -310,7 +310,7 @@ function _detalhes:StartCombat(...)
 end
 
 local check_for_encounter_start = function()
-	if _current_encounter_id then
+	if _detalhes._current_encounter_id then
 		return
 	end
 
@@ -354,7 +354,7 @@ function _detalhes:EntrarEmCombate(...)
 --		local from = debugstack(2, 1, 0)
 --		print(from)
 	end
-
+	-- if not UnitAffectingCombat("player") then return end
 	local check_combat = check_for_encounter_start()
 	if check_combat then
 		C_Timer:After(3, check_for_encounter_start)
@@ -400,6 +400,7 @@ function _detalhes:EntrarEmCombate(...)
 	_table_wipe(_detalhes.pets_no_owner)
 	_detalhes.container_pets:BuscarPets()
 
+	_table_wipe(_detalhes.cache_dead_npc)
 	_table_wipe(_detalhes.cache_damage_group)
 	_table_wipe(_detalhes.cache_healing_group)
 	_detalhes:UpdateParserGears()
@@ -416,7 +417,7 @@ function _detalhes:EntrarEmCombate(...)
 		boss_found(encounter_table.index, encounter_table.name, encounter_table.zone, encounter_table.mapid, encounter_table.diff, encounter_table.id)
 	else
 		--> if we don't have this infor right now, lets check in few seconds dop
-		if _detalhes.EncounterInformation[_detalhes.zone_id] then
+		if _detalhes:IsInInstance() then
 			_detalhes:ScheduleTimer("ReadBossFrames", 1)
 			_detalhes:ScheduleTimer("ReadBossFrames", 30)
 		end

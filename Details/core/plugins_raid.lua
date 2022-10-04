@@ -295,7 +295,6 @@ function _detalhes:interrupt_announcer(token, time, who_serial, who_name, who_fl
 			-- else
 				-- _detalhes:SendMsgToChannel(msg, channel, _detalhes.announce_interrupts.whisper)
 			-- end
-			
 		end
 	elseif channel == "PRINT" then
 		local custom = _detalhes.announce_interrupts.custom

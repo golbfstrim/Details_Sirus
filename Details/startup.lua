@@ -267,7 +267,7 @@ function _G._detalhes:Start()
 			self.listener:RegisterEvent ("UNIT_NAME_UPDATE")
 
 			self.listener:RegisterEvent ("PLAYER_ROLES_ASSIGNED")
-			self.listener:RegisterEvent ("ROLE_CHANGED_INFORM")
+			-- self.listener:RegisterEvent ("ROLE_CHANGED_INFORM")
 
 			self.listener:RegisterEvent ("UNIT_FACTION")
 

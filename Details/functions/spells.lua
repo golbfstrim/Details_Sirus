@@ -1017,11 +1017,14 @@ do
 
 		[313530] = 12, -- stn hrth trnkt
 		[319738] = 6, -- hpal ttg
-
+		[319996] = 6,
+		[320110] = 6,
+		[320221] = 6,
+		[319189] = 10, -- запы зорт
 		-- Custom
 		[304736] = 10, -- Priest, Divine Charm (T4), T4
 		[305082] = 10, -- Priest, Power Word: Shield (T4), T4
-
+		[315529] = 10, -- расколотое солнце
 		-- trinkets
 		[317293] = 10, -- bronze statuette
 
